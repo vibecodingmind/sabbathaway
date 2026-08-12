@@ -122,7 +122,7 @@ export const PaymentCheckoutModal: React.FC<PaymentCheckoutModalProps> = ({
             <div className="space-y-2">
               <h3 className="text-2xl font-black text-slate-900 dark:text-white">Membership Activated!</h3>
               <p className="text-sm text-slate-600 dark:text-slate-300 max-w-md mx-auto">
-                Welcome to the <span className="font-bold text-[#FF385C]">{successReceipt.plan}</span> network. Your 12-month membership is active until <span className="font-semibold text-slate-900 dark:text-white">{successReceipt.expirationDate}</span>.
+                Welcome to the <span className="font-bold text-[#1B5E4A]">{successReceipt.plan}</span> network. Your 12-month membership is active until <span className="font-semibold text-slate-900 dark:text-white">{successReceipt.expirationDate}</span>.
               </p>
             </div>
 
@@ -151,7 +151,7 @@ export const PaymentCheckoutModal: React.FC<PaymentCheckoutModalProps> = ({
 
             <button
               onClick={onClose}
-              className="w-full py-3.5 rounded-2xl bg-[#FF385C] text-white font-bold hover:bg-[#E03150] transition-all shadow-lg shadow-rose-500/20"
+              className="w-full py-3.5 rounded-2xl bg-[#1B5E4A] text-white font-bold hover:bg-[#E03150] transition-all shadow-lg shadow-rose-500/20"
             >
               Continue to AdventistStay
             </button>
@@ -166,7 +166,7 @@ export const PaymentCheckoutModal: React.FC<PaymentCheckoutModalProps> = ({
                 <div className="flex items-center gap-2">
                   <span className="text-sm font-black text-slate-900 dark:text-white">{planInfo.name} Plan</span>
                   {planInfo.badge && (
-                    <span className="px-2 py-0.5 rounded-full bg-[#FF385C] text-white text-[10px] font-bold">
+                    <span className="px-2 py-0.5 rounded-full bg-[#1B5E4A] text-white text-[10px] font-bold">
                       {planInfo.badge}
                     </span>
                   )}
@@ -174,7 +174,7 @@ export const PaymentCheckoutModal: React.FC<PaymentCheckoutModalProps> = ({
                 <p className="text-xs text-slate-600 dark:text-slate-400 mt-0.5">{planInfo.tagline}</p>
               </div>
               <div className="text-right">
-                <span className="text-2xl font-black text-[#FF385C]">${payableAmount}</span>
+                <span className="text-2xl font-black text-[#1B5E4A]">${payableAmount}</span>
                 <span className="text-xs text-slate-500 block font-medium">/ year</span>
               </div>
             </div>
@@ -182,7 +182,7 @@ export const PaymentCheckoutModal: React.FC<PaymentCheckoutModalProps> = ({
             {/* Household / Family Coverage Input */}
             <div className="p-4 rounded-2xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700 space-y-3">
               <div className="flex items-center gap-2">
-                <Building2 className="w-4 h-4 text-[#FF385C]" />
+                <Building2 className="w-4 h-4 text-[#1B5E4A]" />
                 <h3 className="text-xs font-bold text-slate-900 dark:text-white uppercase tracking-wider">
                   Household / Family Membership Details
                 </h3>
@@ -200,7 +200,7 @@ export const PaymentCheckoutModal: React.FC<PaymentCheckoutModalProps> = ({
                     required
                     value={householdName}
                     onChange={e => setHouseholdName(e.target.value)}
-                    className="w-full px-3 py-2 rounded-xl text-xs border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-[#FF385C]"
+                    className="w-full px-3 py-2 rounded-xl text-xs border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-[#1B5E4A]"
                     placeholder="e.g. The Johnson Family"
                   />
                 </div>
@@ -212,7 +212,7 @@ export const PaymentCheckoutModal: React.FC<PaymentCheckoutModalProps> = ({
                     type="text"
                     value={coveredMembersInput}
                     onChange={e => setCoveredMembersInput(e.target.value)}
-                    className="w-full px-3 py-2 rounded-xl text-xs border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-[#FF385C]"
+                    className="w-full px-3 py-2 rounded-xl text-xs border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-[#1B5E4A]"
                     placeholder="e.g. John Johnson, Mary Johnson, Caleb Johnson"
                   />
                 </div>
@@ -230,7 +230,7 @@ export const PaymentCheckoutModal: React.FC<PaymentCheckoutModalProps> = ({
                   onClick={() => setProvider('stripe')}
                   className={`p-3 rounded-2xl border text-center transition-all flex flex-col items-center gap-1.5 ${
                     provider === 'stripe'
-                      ? 'border-[#FF385C] bg-rose-50/50 dark:bg-rose-950/30 text-[#FF385C] ring-2 ring-[#FF385C]'
+                      ? 'border-[#1B5E4A] bg-rose-50/50 dark:bg-rose-950/30 text-[#1B5E4A] ring-2 ring-[#1B5E4A]'
                       : 'border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-400 hover:border-slate-300'
                   }`}
                 >
@@ -243,7 +243,7 @@ export const PaymentCheckoutModal: React.FC<PaymentCheckoutModalProps> = ({
                   onClick={() => setProvider('paypal')}
                   className={`p-3 rounded-2xl border text-center transition-all flex flex-col items-center gap-1.5 ${
                     provider === 'paypal'
-                      ? 'border-[#FF385C] bg-rose-50/50 dark:bg-rose-950/30 text-[#FF385C] ring-2 ring-[#FF385C]'
+                      ? 'border-[#1B5E4A] bg-rose-50/50 dark:bg-rose-950/30 text-[#1B5E4A] ring-2 ring-[#1B5E4A]'
                       : 'border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-400 hover:border-slate-300'
                   }`}
                 >
@@ -256,7 +256,7 @@ export const PaymentCheckoutModal: React.FC<PaymentCheckoutModalProps> = ({
                   onClick={() => setProvider('pesapal')}
                   className={`p-3 rounded-2xl border text-center transition-all flex flex-col items-center gap-1.5 ${
                     provider === 'pesapal'
-                      ? 'border-[#FF385C] bg-rose-50/50 dark:bg-rose-950/30 text-[#FF385C] ring-2 ring-[#FF385C]'
+                      ? 'border-[#1B5E4A] bg-rose-50/50 dark:bg-rose-950/30 text-[#1B5E4A] ring-2 ring-[#1B5E4A]'
                       : 'border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-400 hover:border-slate-300'
                   }`}
                 >
@@ -330,7 +330,7 @@ export const PaymentCheckoutModal: React.FC<PaymentCheckoutModalProps> = ({
               <button
                 type="submit"
                 disabled={isProcessing}
-                className="px-6 py-2.5 rounded-2xl bg-[#FF385C] text-white text-xs font-bold hover:bg-[#E03150] transition-all disabled:opacity-50 flex items-center gap-2 shadow-lg shadow-rose-500/20"
+                className="px-6 py-2.5 rounded-2xl bg-[#1B5E4A] text-white text-xs font-bold hover:bg-[#E03150] transition-all disabled:opacity-50 flex items-center gap-2 shadow-lg shadow-rose-500/20"
               >
                 {isProcessing ? (
                   <>Processing Webhook Verification...</>

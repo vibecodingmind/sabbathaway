@@ -1,0 +1,391 @@
+// AdventistStay — production-ready domain schema (SQLite for zero-ops local;
+// swap provider to postgresql + DATABASE_URL for production).
+
+generator client {
+  provider = "prisma-client"
+  output   = "../generated/prisma"
+}
+
+datasource db {
+  provider = "sqlite"
+}
+
+model User {
+  id                     String   @id @default(cuid())
+  email                  String   @unique
+  passwordHash           String
+  name                   String
+  avatarUrl              String   @default("")
+  role                   String   @default("GUEST") // GUEST | HOST | ADMIN
+  guestCategory          String?
+  verificationTier       String   @default("UNVERIFIED")
+  familyVerificationLevel Int?
+  homeChurchName         String   @default("")
+  homeChurchCity         String   @default("")
+  conferenceName         String   @default("")
+  pastorName             String   @default("")
+  pastorEmail            String?
+  membershipYear         Int      @default(2026)
+  bio                    String   @default("")
+  verifiedAt             String?
+  phone                  String   @default("")
+  languagePreference     String   @default("en")
+  accountStatus          String   @default("ACTIVE") // ACTIVE | SUSPENDED | DEACTIVATED
+  isHostApproved         Boolean  @default(false)
+  createdAt              DateTime @default(now())
+  updatedAt              DateTime @updatedAt
+
+  listings               Listing[]
+  guestStayRequests      StayRequest[] @relation("GuestStays")
+  hostStayRequests       StayRequest[] @relation("HostStays")
+  sentMessages           Message[]     @relation("SentMessages")
+  receivedMessages       Message[]     @relation("ReceivedMessages")
+  reviews                Review[]
+  verificationRequests   VerificationRequest[]
+  memberships            Membership[]
+  transactions           PaymentTransaction[]
+  safetyReports          SafetyReport[] @relation("ReporterReports")
+  auditLogs              AuditLog[]
+  favorites              Favorite[]
+  familyProfile          FamilyProfile?
+}
+
+model Listing {
+  id                    String   @id @default(cuid())
+  hostId                String
+  host                  User     @relation(fields: [hostId], references: [id], onDelete: Cascade)
+  hostName              String
+  familyName            String   @default("")
+  familyStory           String   @default("")
+  spouseInfo            String?
+  childrenInfo          String?
+  familyInterestsJson   String   @default("[]")
+  sabbathActivitiesJson String   @default("[]")
+  languagesSpokenJson   String   @default("[]")
+  hostingPreferences    String   @default("")
+  verificationLevel     Int      @default(1)
+  hostAvatar            String   @default("")
+  hostChurchName        String   @default("")
+  hostVerificationTier  String   @default("UNVERIFIED")
+  title                 String
+  description           String   @default("")
+  propertyType          String   @default("Family Home Stay")
+  city                  String
+  stateProvince         String   @default("")
+  country               String
+  lat                   Float    @default(0)
+  lng                   Float    @default(0)
+  nearestChurchName     String   @default("")
+  nearestChurchDistance Float    @default(0)
+  nearestChurchAddress  String   @default("")
+  maxGuests             Int      @default(2)
+  bedrooms              Int      @default(1)
+  bathrooms             Int      @default(1)
+  imagesJson            String   @default("[]")
+  familyPhotosJson      String   @default("[]")
+  amenitiesJson         String   @default("[]")
+  experienceTypesJson   String   @default("[]")
+  hospitalityPerksJson  String   @default("{}")
+  sabbathFeaturesJson   String   @default("{}")
+  houseRulesJson        String   @default("[]")
+  stayPurposesJson      String   @default("[]")
+  rating                Float    @default(5)
+  reviewCount           Int      @default(0)
+  featured              Boolean  @default(false)
+  categoriesJson        String   @default("[]")
+  responseRate          Int?
+  acceptanceRate        Int?
+  responseTime          String?
+  lastActive            String?
+  minStayNights         Int?
+  maxStayNights         Int?
+  exchangeType          String?
+  whatGuestsGainJson    String   @default("[]")
+  householdContribution String?
+  dietaryStyle          String?
+  livingArrangements    String?
+  internetSpeed         String?
+  petsOnProperty        String?
+  gettingHereDirections String?
+  nearbyAttractionsJson String   @default("[]")
+  isApproved            Boolean  @default(false)
+  isDisabled            Boolean  @default(false)
+  createdAt             DateTime @default(now())
+  updatedAt             DateTime @updatedAt
+
+  stayRequests          StayRequest[]
+  reviews               Review[]
+  favorites             Favorite[]
+}
+
+model StayRequest {
+  id                   String   @id @default(cuid())
+  listingId            String
+  listing              Listing  @relation(fields: [listingId], references: [id], onDelete: Cascade)
+  listingTitle         String
+  listingCity          String
+  listingImage         String   @default("")
+  guestId              String
+  guest                User     @relation("GuestStays", fields: [guestId], references: [id], onDelete: Cascade)
+  guestName            String
+  guestAvatar          String   @default("")
+  guestChurch          String   @default("")
+  guestVerificationTier String  @default("UNVERIFIED")
+  hostId               String
+  host                 User     @relation("HostStays", fields: [hostId], references: [id], onDelete: Cascade)
+  hostName             String
+  checkInDate          String
+  checkOutDate         String
+  guestCount           Int      @default(1)
+  purpose              String
+  purposeNote          String   @default("")
+  status               String   @default("PENDING")
+  checkInInstructions  String?
+  createdAt            DateTime @default(now())
+  updatedAt            DateTime @updatedAt
+
+  messages             Message[]
+  reviews              Review[]
+}
+
+model Message {
+  id            String   @id @default(cuid())
+  stayRequestId String?
+  stayRequest   StayRequest? @relation(fields: [stayRequestId], references: [id], onDelete: SetNull)
+  senderId      String
+  sender        User     @relation("SentMessages", fields: [senderId], references: [id], onDelete: Cascade)
+  senderName    String
+  senderAvatar  String   @default("")
+  receiverId    String
+  receiver      User     @relation("ReceivedMessages", fields: [receiverId], references: [id], onDelete: Cascade)
+  content       String
+  isRead        Boolean  @default(false)
+  templateType  String?
+  createdAt     DateTime @default(now())
+}
+
+model Review {
+  id                         String   @id @default(cuid())
+  listingId                  String
+  listing                    Listing  @relation(fields: [listingId], references: [id], onDelete: Cascade)
+  stayRequestId              String?
+  stayRequest                StayRequest? @relation(fields: [stayRequestId], references: [id], onDelete: SetNull)
+  reviewerId                 String
+  reviewer                   User     @relation(fields: [reviewerId], references: [id], onDelete: Cascade)
+  reviewerName               String
+  reviewerAvatar             String   @default("")
+  reviewerChurch             String   @default("")
+  rating                     Int
+  cleanlinessRating          Int      @default(5)
+  fellowshipRating           Int      @default(5)
+  sabbathFriendlinessRating  Int      @default(5)
+  comment                    String   @default("")
+  createdAt                  DateTime @default(now())
+}
+
+model Church {
+  id                String   @id @default(cuid())
+  name              String
+  conference        String   @default("")
+  union             String   @default("")
+  division          String   @default("")
+  address           String   @default("")
+  city              String
+  country           String
+  postalCode        String   @default("")
+  phone             String   @default("")
+  email             String   @default("")
+  pastorName        String   @default("")
+  sabbathSchool     String   @default("")
+  divineService     String   @default("")
+  vespers           String?
+  midweekPrayer     String?
+  website           String?
+  verifiedStatus    Boolean  @default(true)
+  lat               Float    @default(0)
+  lng               Float    @default(0)
+  activeHostsCount  Int      @default(0)
+}
+
+model VerificationRequest {
+  id            String   @id @default(cuid())
+  userId        String
+  user          User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userName      String
+  userEmail     String
+  userPhone     String   @default("")
+  churchName    String
+  conference    String   @default("")
+  pastorName    String   @default("")
+  pastorEmail   String   @default("")
+  pastorPhone   String   @default("")
+  status        String   @default("PENDING")
+  documentType  String   @default("MEMBERSHIP_LETTER")
+  reviewedBy    String?
+  notes         String?
+  submittedAt   DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+}
+
+model Membership {
+  id               String   @id @default(cuid())
+  userId           String
+  user             User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userName         String
+  householdName    String?
+  coveredMembersJson String @default("[]")
+  plan             String   @default("FREE")
+  price            Float    @default(0)
+  currency         String   @default("USD")
+  startDate        String
+  expirationDate   String
+  paymentReference String   @default("")
+  paymentProvider  String   @default("free")
+  status           String   @default("FREE")
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+}
+
+model PaymentTransaction {
+  id               String   @id @default(cuid())
+  userId           String
+  user             User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userName         String
+  householdName    String?
+  plan             String
+  amount           Float
+  currency         String   @default("USD")
+  provider         String
+  status           String   @default("COMPLETED")
+  paymentReference String
+  transactionDate  String
+  receiptNumber    String
+  description      String   @default("")
+  createdAt        DateTime @default(now())
+}
+
+model FamilyProfile {
+  id                        String   @id @default(cuid())
+  userId                    String?  @unique
+  user                      User?    @relation(fields: [userId], references: [id], onDelete: SetNull)
+  familyName                String
+  country                   String
+  city                      String
+  localChurch               String   @default("")
+  conference                String   @default("")
+  parentsNames              String   @default("")
+  childrenAgesJson          String   @default("[]")
+  adultCount                Int      @default(2)
+  childrenCount             Int      @default(0)
+  languagesJson             String   @default("[]")
+  interestsJson             String   @default("[]")
+  culturalBackground        String   @default("")
+  familyStory               String   @default("")
+  hostingPreferences        String   @default("")
+  sabbathTraditions         String   @default("")
+  availableMonthsJson       String   @default("[]")
+  preferredDurations        String   @default("")
+  verificationTier          String   @default("UNVERIFIED")
+  familyPhotosJson          String   @default("[]")
+  avatar                    String   @default("")
+  lookingForExchangeRegionsJson String @default("[]")
+  rating                    Float    @default(5)
+  reviewCount               Int      @default(0)
+  createdAt                 DateTime @default(now())
+  updatedAt                 DateTime @updatedAt
+
+  outgoingExchangeRequests  FamilyExchangeRequest[] @relation("RequesterFamily")
+  incomingExchangeRequests  FamilyExchangeRequest[] @relation("TargetFamily")
+}
+
+model FamilyExchangeRequest {
+  id                   String   @id @default(cuid())
+  requesterFamilyId    String
+  requesterFamily      FamilyProfile @relation("RequesterFamily", fields: [requesterFamilyId], references: [id], onDelete: Cascade)
+  requesterFamilyName  String
+  requesterAvatar      String   @default("")
+  requesterCountry     String   @default("")
+  requesterChurch      String   @default("")
+  targetFamilyId       String
+  targetFamily         FamilyProfile @relation("TargetFamily", fields: [targetFamilyId], references: [id], onDelete: Cascade)
+  targetFamilyName     String
+  targetAvatar         String   @default("")
+  targetCountry        String   @default("")
+  targetChurch         String   @default("")
+  exchangeType         String
+  proposedMonth        String
+  preferredDuration    String   @default("")
+  introNote            String   @default("")
+  status               String   @default("PENDING")
+  createdAt            DateTime @default(now())
+  updatedAt            DateTime @updatedAt
+}
+
+model SafetyReport {
+  id               String   @id @default(cuid())
+  reporterId       String
+  reporter         User     @relation("ReporterReports", fields: [reporterId], references: [id], onDelete: Cascade)
+  reporterName     String
+  targetType       String?
+  targetId         String?
+  reportedUserId   String?
+  reportedUserName String?
+  listingId        String?
+  reason           String?
+  issueType        String?
+  details          String?
+  description      String?
+  status           String   @default("OPEN")
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+}
+
+model AuditLog {
+  id        String   @id @default(cuid())
+  actorId   String?
+  actor     User?    @relation(fields: [actorId], references: [id], onDelete: SetNull)
+  actorName String
+  actorRole String
+  action    String
+  details   String   @default("")
+  ipAddress String   @default("127.0.0.1")
+  createdAt DateTime @default(now())
+}
+
+model StayCategory {
+  id          String  @id @default(cuid())
+  name        String
+  icon        String  @default("Home")
+  description String  @default("")
+  enabled     Boolean @default(true)
+  sortOrder   Int     @default(0)
+}
+
+model Favorite {
+  id        String   @id @default(cuid())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  listingId String
+  listing   Listing  @relation(fields: [listingId], references: [id], onDelete: Cascade)
+  createdAt DateTime @default(now())
+
+  @@unique([userId, listingId])
+}
+
+model EmailNotificationLog {
+  id             String   @id @default(cuid())
+  type           String
+  recipientEmail String
+  recipientName  String
+  subject        String
+  bodyPreview    String
+  stayRequestId  String?
+  listingTitle   String   @default("")
+  createdAt      DateTime @default(now())
+}
+
+model PlatformConfig {
+  id    String @id @default("default")
+  key   String @unique
+  value String
+}

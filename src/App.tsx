@@ -105,7 +105,7 @@ const MainContent: React.FC = () => {
                     Showing {filteredListings.length} Adventist host homes worldwide
                   </span>
                   {filters.selectedCategories.length > 0 && (
-                    <span className="px-2.5 py-0.5 rounded-full bg-[#FF385C]/10 text-[#FF385C] font-bold text-[11px]">
+                    <span className="px-2.5 py-0.5 rounded-full bg-[#1B5E4A]/10 text-[#1B5E4A] font-bold text-[11px]">
                       Filtered by: {filters.selectedCategories.join(', ')}
                     </span>
                   )}

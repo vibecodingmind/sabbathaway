@@ -3,22 +3,21 @@ import {
   X, 
   User, 
   Building2, 
-  ShieldCheck, 
   Sparkles, 
   CreditCard, 
   Lock, 
   CheckCircle2, 
-  Globe, 
   Heart,
-  UserCheck,
-  AlertCircle
+  AlertCircle,
+  Mail
 } from 'lucide-react';
 import { useApp } from '../context/AppContext';
 import { SubscriptionPlan, PaymentProvider, UserRole } from '../types';
 import { PLAN_PRICING } from '../lib/membershipEngine';
-import { initialProfiles } from '../data/mockData';
+import { api, setAuthToken, ApiError } from '../lib/apiClient';
 
 export const AuthModal: React.FC = () => {
+  const app = useApp();
   const { 
     isAuthModalOpen, 
     closeAuthModal, 
@@ -27,11 +26,17 @@ export const AuthModal: React.FC = () => {
     setCurrentUser, 
     loginAsTestUser,
     registerUserWithSubscription 
-  } = useApp();
+  } = app;
+
+  const loginWithPassword = (app as { loginWithPassword?: (email: string, password: string) => Promise<{ success: boolean; message: string }> }).loginWithPassword;
 
   const [activeTab, setActiveTab] = useState<'LOGIN' | 'REGISTER'>(
     authModalMode === 'LOGIN' ? 'LOGIN' : 'REGISTER'
   );
+
+  // Sign-in credentials
+  const [loginEmail, setLoginEmail] = useState('');
+  const [loginPassword, setLoginPassword] = useState('');
 
   // Form state for registration
   const [role, setRole] = useState<UserRole>(
@@ -70,21 +75,59 @@ export const AuthModal: React.FC = () => {
 
   if (!isAuthModalOpen) return null;
 
-  const handleDemoLogin = (profileId: string) => {
-    const profile = initialProfiles.find(p => p.id === profileId) || initialProfiles[0];
-    setCurrentUser(profile);
+  const handleSocialLogin = () => {
+    loginAsTestUser('GUEST');
     closeAuthModal();
   };
 
-  const handleSocialLogin = (providerName: string) => {
-    // Quick demo login with social credential simulation
-    const demoUser = {
-      ...initialProfiles[0],
-      name: `Verified ${providerName} Member`,
-      email: `member@${providerName.toLowerCase()}.org`
-    };
-    setCurrentUser(demoUser);
-    closeAuthModal();
+  const handleLoginSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setErrorMsg(null);
+    setSuccessMsg(null);
+
+    if (!loginEmail.trim() || !loginPassword) {
+      setErrorMsg('Please enter your email and password.');
+      return;
+    }
+
+    setIsSubmitting(true);
+    try {
+      if (loginWithPassword) {
+        const result = await loginWithPassword(loginEmail.trim(), loginPassword);
+        if (result.success) {
+          closeAuthModal();
+        } else {
+          setErrorMsg(result.message);
+        }
+      } else {
+        const { token, user } = await api.login(loginEmail.trim(), loginPassword);
+        setAuthToken(token);
+        setCurrentUser({
+          id: user.id,
+          name: user.name,
+          email: user.email,
+          phone: user.phone || '',
+          role: user.role,
+          verificationTier: user.verificationTier || 'UNVERIFIED',
+          homeChurchName: user.homeChurchName || '',
+          homeChurchCity: user.homeChurchCity || '',
+          conferenceName: user.conferenceName || '',
+          pastorName: user.pastorName || '',
+          membershipYear: user.membershipYear || new Date().getFullYear(),
+          bio: user.bio || '',
+          avatarUrl: user.avatarUrl || 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=250&q=80',
+          languagePreference: user.languagePreference || 'en',
+        });
+        closeAuthModal();
+      }
+    } catch (err) {
+      const message = err instanceof ApiError
+        ? err.message
+        : (err as Error).message || 'Sign in failed. Please check your credentials.';
+      setErrorMsg(message);
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const handleRegisterSubmit = async (e: React.FormEvent) => {
@@ -130,9 +173,9 @@ export const AuthModal: React.FC = () => {
       <div className="relative w-full max-w-2xl bg-white dark:bg-slate-900 rounded-3xl shadow-2xl border border-slate-200 dark:border-slate-800 my-8 overflow-hidden text-slate-900 dark:text-white">
         
         {/* Header Bar */}
-        <div className="flex items-center justify-between px-6 py-5 border-b border-slate-100 dark:border-slate-800 bg-slate-50 dark:bg-slate-800/50">
+        <div className="flex items-center justify-between px-6 py-5 border-b border-slate-100 dark:border-slate-800 bg-[#EEF5F1] dark:bg-slate-800/50">
           <div className="flex items-center gap-2">
-            <div className="w-8 h-8 rounded-xl bg-[#FF385C] flex items-center justify-center text-white font-bold">
+            <div className="w-8 h-8 rounded-xl bg-[#1B5E4A] flex items-center justify-center text-white font-bold">
               <Heart className="w-4 h-4 fill-current" />
             </div>
             <div>
@@ -159,17 +202,17 @@ export const AuthModal: React.FC = () => {
             onClick={() => { setActiveTab('LOGIN'); setAuthModalMode('LOGIN'); }}
             className={`py-2.5 rounded-xl text-xs font-extrabold transition-all ${
               activeTab === 'LOGIN' 
-                ? 'bg-white dark:bg-slate-900 text-[#FF385C] shadow-sm' 
+                ? 'bg-white dark:bg-slate-900 text-[#1B5E4A] shadow-sm' 
                 : 'text-slate-600 dark:text-slate-400 hover:text-slate-900'
             }`}
           >
-            Sign In / Demo Login
+            Sign In
           </button>
           <button
             onClick={() => { setActiveTab('REGISTER'); }}
             className={`py-2.5 rounded-xl text-xs font-extrabold transition-all ${
               activeTab === 'REGISTER' 
-                ? 'bg-[#FF385C] text-white shadow-md' 
+                ? 'bg-[#1B5E4A] text-white shadow-md' 
                 : 'text-slate-600 dark:text-slate-400 hover:text-slate-900'
             }`}
           >
@@ -182,14 +225,70 @@ export const AuthModal: React.FC = () => {
           {/* TAB 1: LOGIN */}
           {activeTab === 'LOGIN' && (
             <div className="space-y-6">
+
+              {/* Email + Password Sign In */}
+              <form onSubmit={handleLoginSubmit} className="space-y-4">
+                <p className="text-xs font-bold text-slate-500 uppercase tracking-wider">Sign In with Email</p>
+
+                <div>
+                  <label className="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">Email Address</label>
+                  <div className="relative">
+                    <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" />
+                    <input
+                      type="email"
+                      required
+                      placeholder="you@example.org"
+                      value={loginEmail}
+                      onChange={e => setLoginEmail(e.target.value)}
+                      className="w-full pl-10 pr-3.5 py-2.5 rounded-xl border border-slate-300 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 font-medium text-sm"
+                    />
+                  </div>
+                </div>
+
+                <div>
+                  <label className="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">Password</label>
+                  <div className="relative">
+                    <Lock className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" />
+                    <input
+                      type="password"
+                      required
+                      placeholder="Enter your password"
+                      value={loginPassword}
+                      onChange={e => setLoginPassword(e.target.value)}
+                      className="w-full pl-10 pr-3.5 py-2.5 rounded-xl border border-slate-300 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 font-medium text-sm"
+                    />
+                  </div>
+                </div>
+
+                {errorMsg && activeTab === 'LOGIN' && (
+                  <div className="p-3 rounded-xl bg-red-50 dark:bg-red-950 text-red-600 text-xs font-bold border border-red-200 dark:border-red-900">
+                    {errorMsg}
+                  </div>
+                )}
+
+                <button
+                  type="submit"
+                  disabled={isSubmitting}
+                  className="w-full py-3.5 rounded-2xl bg-[#1B5E4A] hover:bg-[#134536] text-white font-black text-sm shadow-lg transition-all flex items-center justify-center gap-2 disabled:opacity-60"
+                >
+                  <Lock className="w-4 h-4" />
+                  {isSubmitting ? 'Signing in…' : 'Sign In'}
+                </button>
+
+                <p className="text-[11px] text-slate-500 text-center leading-relaxed">
+                  Demo accounts: <span className="font-semibold text-slate-700 dark:text-slate-300">guest@test.local</span> / <span className="font-semibold text-slate-700 dark:text-slate-300">host@test.local</span> / <span className="font-semibold text-slate-700 dark:text-slate-300">admin@test.local</span> — password <span className="font-mono font-bold text-[#1B5E4A]">password123</span>
+                </p>
+              </form>
               
-              {/* Social Login Options */}
-              <div className="space-y-3">
-                <p className="text-xs font-bold text-slate-500 uppercase tracking-wider">Social Login</p>
+              {/* Social Login Options (Demo) */}
+              <div className="space-y-3 pt-2 border-t border-slate-100 dark:border-slate-800">
+                <p className="text-xs font-bold text-slate-500 uppercase tracking-wider">Demo Social Sign-In</p>
+                <p className="text-[11px] text-slate-400 -mt-1">Social buttons sign in as a demo guest for local testing.</p>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
                   <button
-                    onClick={() => handleSocialLogin('Google')}
-                    className="flex items-center justify-center gap-2.5 px-4 py-3 rounded-2xl border border-slate-300 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-800 text-xs font-bold transition-all shadow-sm"
+                    type="button"
+                    onClick={handleSocialLogin}
+                    className="flex items-center justify-center gap-2.5 px-4 py-3 rounded-2xl border border-slate-200 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-800 text-xs font-bold transition-all shadow-sm"
                   >
                     <svg className="w-4 h-4" viewBox="0 0 24 24">
                       <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
@@ -201,8 +300,9 @@ export const AuthModal: React.FC = () => {
                   </button>
 
                   <button
-                    onClick={() => handleSocialLogin('Apple')}
-                    className="flex items-center justify-center gap-2.5 px-4 py-3 rounded-2xl bg-slate-900 text-white hover:bg-slate-800 text-xs font-bold transition-all shadow-sm"
+                    type="button"
+                    onClick={handleSocialLogin}
+                    className="flex items-center justify-center gap-2.5 px-4 py-3 rounded-2xl bg-slate-800 text-white hover:bg-slate-700 text-xs font-bold transition-all shadow-sm"
                   >
                     <svg className="w-4 h-4 fill-current" viewBox="0 0 24 24">
                       <path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.81-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M15.97 6.32c.67-.82 1.13-1.97.99-3.12-1 .04-2.19.67-2.88 1.47-.62.72-1.16 1.88-1.01 3.01 1.12.09 2.23-.54 2.9-1.36z"/>
@@ -212,57 +312,36 @@ export const AuthModal: React.FC = () => {
                 </div>
               </div>
 
-              {/* Demo Login Profiles */}
+              {/* Demo Role Buttons */}
               <div className="space-y-3 pt-2 border-t border-slate-100 dark:border-slate-800">
-                <p className="text-xs font-bold text-slate-500 uppercase tracking-wider">Instant Demo Profiles</p>
+                <p className="text-xs font-bold text-slate-500 uppercase tracking-wider">Quick Demo Access</p>
 
-                <div className="space-y-2">
+                <div className="grid grid-cols-3 gap-2">
                   <button
-                    onClick={() => handleDemoLogin('prof-1')}
-                    className="w-full p-3.5 rounded-2xl bg-slate-50 dark:bg-slate-800/80 hover:bg-rose-50 dark:hover:bg-rose-950/40 border border-slate-200 dark:border-slate-700 hover:border-rose-300 text-left flex items-center justify-between transition-all group"
+                    type="button"
+                    onClick={() => { loginAsTestUser('GUEST'); closeAuthModal(); }}
+                    className="p-3 rounded-2xl bg-slate-50 dark:bg-slate-800/80 hover:bg-[#EEF5F1] dark:hover:bg-[#1B5E4A]/20 border border-slate-200 dark:border-slate-700 hover:border-[#1B5E4A]/40 text-center transition-all"
                   >
-                    <div className="flex items-center gap-3">
-                      <img src={initialProfiles[0].avatarUrl} alt="Sarah" className="w-10 h-10 rounded-full object-cover" />
-                      <div>
-                        <p className="font-bold text-xs text-slate-900 dark:text-white group-hover:text-[#FF385C]">
-                          Sarah & Caleb Johnson (Guest Member)
-                        </p>
-                        <p className="text-[11px] text-slate-500">Pioneer Memorial SDA Church • Verified Member</p>
-                      </div>
-                    </div>
-                    <span className="px-3 py-1 rounded-full bg-[#FF385C] text-white text-[10px] font-bold">Login Guest</span>
+                    <User className="w-4 h-4 text-blue-500 mx-auto mb-1" />
+                    <p className="font-bold text-[10px] text-slate-900 dark:text-white">Guest</p>
                   </button>
 
                   <button
-                    onClick={() => handleDemoLogin('prof-2')}
-                    className="w-full p-3.5 rounded-2xl bg-slate-50 dark:bg-slate-800/80 hover:bg-rose-50 dark:hover:bg-rose-950/40 border border-slate-200 dark:border-slate-700 hover:border-rose-300 text-left flex items-center justify-between transition-all group"
+                    type="button"
+                    onClick={() => { loginAsTestUser('HOST'); closeAuthModal(); }}
+                    className="p-3 rounded-2xl bg-slate-50 dark:bg-slate-800/80 hover:bg-[#EEF5F1] dark:hover:bg-[#1B5E4A]/20 border border-slate-200 dark:border-slate-700 hover:border-[#1B5E4A]/40 text-center transition-all"
                   >
-                    <div className="flex items-center gap-3">
-                      <img src={initialProfiles[1].avatarUrl} alt="Marcus" className="w-10 h-10 rounded-full object-cover" />
-                      <div>
-                        <p className="font-bold text-xs text-slate-900 dark:text-white group-hover:text-[#FF385C]">
-                          Marcus & Ellen Vance (Host Family)
-                        </p>
-                        <p className="text-[11px] text-slate-500">Loma Linda University Church • Host Family</p>
-                      </div>
-                    </div>
-                    <span className="px-3 py-1 rounded-full bg-slate-900 text-white text-[10px] font-bold">Login Host</span>
+                    <Building2 className="w-4 h-4 text-emerald-500 mx-auto mb-1" />
+                    <p className="font-bold text-[10px] text-slate-900 dark:text-white">Host</p>
                   </button>
 
                   <button
+                    type="button"
                     onClick={() => { loginAsTestUser('ADMIN'); closeAuthModal(); }}
-                    className="w-full p-3.5 rounded-2xl bg-slate-50 dark:bg-slate-800/80 hover:bg-purple-50 dark:hover:bg-purple-950/40 border border-slate-200 dark:border-slate-700 hover:border-purple-300 text-left flex items-center justify-between transition-all group"
+                    className="p-3 rounded-2xl bg-slate-50 dark:bg-slate-800/80 hover:bg-[#EEF5F1] dark:hover:bg-[#1B5E4A]/20 border border-slate-200 dark:border-slate-700 hover:border-[#1B5E4A]/40 text-center transition-all"
                   >
-                    <div className="flex items-center gap-3">
-                      <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=crop&w=300&q=80" alt="Admin" className="w-10 h-10 rounded-full object-cover" />
-                      <div>
-                        <p className="font-bold text-xs text-slate-900 dark:text-white group-hover:text-purple-600">
-                          Platform Admin (Conference Operations)
-                        </p>
-                        <p className="text-[11px] text-slate-500">General Conference • Platform Administrator</p>
-                      </div>
-                    </div>
-                    <span className="px-3 py-1 rounded-full bg-purple-600 text-white text-[10px] font-bold">Login Admin</span>
+                    <Sparkles className="w-4 h-4 text-purple-500 mx-auto mb-1" />
+                    <p className="font-bold text-[10px] text-slate-900 dark:text-white">Admin</p>
                   </button>
                 </div>
               </div>
@@ -275,9 +354,9 @@ export const AuthModal: React.FC = () => {
             <form onSubmit={handleRegisterSubmit} className="space-y-6">
               
               {/* Mandatory Pay Notice Banner */}
-              <div className="p-4 rounded-2xl bg-rose-50 dark:bg-rose-950/60 border border-rose-200 dark:border-rose-800 flex items-start gap-3">
-                <AlertCircle className="w-5 h-5 text-[#FF385C] flex-shrink-0 mt-0.5" />
-                <div className="text-xs text-rose-900 dark:text-rose-200 space-y-1">
+              <div className="p-4 rounded-2xl bg-[#EEF5F1] dark:bg-[#1B5E4A]/15 border border-[#1B5E4A]/25 dark:border-[#1B5E4A]/40 flex items-start gap-3">
+                <AlertCircle className="w-5 h-5 text-[#1B5E4A] flex-shrink-0 mt-0.5" />
+                <div className="text-xs text-slate-800 dark:text-slate-200 space-y-1">
                   <p className="font-extrabold">Mandatory Subscription Registration Policy</p>
                   <p className="leading-relaxed">
                     To maintain safety, pastoral verification, and support our non-profit mission, all members must select and pay for a membership package upon registration. Unpaid registrations cannot be created.
@@ -296,11 +375,11 @@ export const AuthModal: React.FC = () => {
                     onClick={() => { setRole('GUEST'); setSelectedPlan('SABBATH_MEMBER'); }}
                     className={`p-3.5 rounded-2xl border text-left flex items-center gap-3 transition-all ${
                       role === 'GUEST'
-                        ? 'border-[#FF385C] bg-rose-50 dark:bg-rose-950/50 text-[#FF385C] font-extrabold shadow-sm'
+                        ? 'border-[#1B5E4A] bg-[#EEF5F1] dark:bg-[#1B5E4A]/20 text-[#1B5E4A] font-extrabold shadow-sm'
                         : 'border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800'
                     }`}
                   >
-                    <User className="w-5 h-5 text-[#FF385C]" />
+                    <User className="w-5 h-5 text-[#1B5E4A]" />
                     <div>
                       <p className="text-xs font-bold">Join as Guest</p>
                       <p className="text-[10px] text-slate-500 font-normal">Stay with Adventist hosts</p>
@@ -312,11 +391,11 @@ export const AuthModal: React.FC = () => {
                     onClick={() => { setRole('HOST'); setSelectedPlan('FAMILY_EXCHANGE'); }}
                     className={`p-3.5 rounded-2xl border text-left flex items-center gap-3 transition-all ${
                       role === 'HOST'
-                        ? 'border-[#FF385C] bg-rose-50 dark:bg-rose-950/50 text-[#FF385C] font-extrabold shadow-sm'
+                        ? 'border-[#1B5E4A] bg-[#EEF5F1] dark:bg-[#1B5E4A]/20 text-[#1B5E4A] font-extrabold shadow-sm'
                         : 'border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800'
                     }`}
                   >
-                    <Building2 className="w-5 h-5 text-[#FF385C]" />
+                    <Building2 className="w-5 h-5 text-[#1B5E4A]" />
                     <div>
                       <p className="text-xs font-bold">Join as Host</p>
                       <p className="text-[10px] text-slate-500 font-normal">Host Adventist travelers</p>
@@ -407,18 +486,18 @@ export const AuthModal: React.FC = () => {
                       onClick={() => setSelectedPlan(pkg.id)}
                       className={`p-3.5 rounded-2xl border text-left flex flex-col justify-between transition-all ${
                         selectedPlan === pkg.id
-                          ? 'border-[#FF385C] bg-rose-50 dark:bg-rose-950/60 ring-2 ring-[#FF385C] shadow-md'
+                          ? 'border-[#1B5E4A] bg-[#EEF5F1] dark:bg-[#1B5E4A]/20 ring-2 ring-[#1B5E4A] shadow-md'
                           : 'border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800/80'
                       }`}
                     >
                       <div>
                         <div className="flex justify-between items-center">
                           <p className="font-extrabold text-xs text-slate-900 dark:text-white">{pkg.name}</p>
-                          {selectedPlan === pkg.id && <CheckCircle2 className="w-4 h-4 text-[#FF385C]" />}
+                          {selectedPlan === pkg.id && <CheckCircle2 className="w-4 h-4 text-[#1B5E4A]" />}
                         </div>
                         <p className="text-[10px] text-slate-500 mt-1 leading-tight">{pkg.desc}</p>
                       </div>
-                      <p className="text-sm font-black text-[#FF385C] mt-3">{pkg.price}</p>
+                      <p className="text-sm font-black text-[#1B5E4A] mt-3">{pkg.price}</p>
                     </button>
                   ))}
                 </div>
@@ -435,7 +514,7 @@ export const AuthModal: React.FC = () => {
                     type="button"
                     onClick={() => setProvider('stripe')}
                     className={`py-2 px-3 rounded-xl border text-xs font-bold transition-all flex items-center justify-center gap-1.5 ${
-                      provider === 'stripe' ? 'bg-[#FF385C] text-white border-[#FF385C]' : 'bg-slate-100 dark:bg-slate-800'
+                      provider === 'stripe' ? 'bg-[#1B5E4A] text-white border-[#1B5E4A]' : 'bg-slate-100 dark:bg-slate-800'
                     }`}
                   >
                     <CreditCard className="w-3.5 h-3.5" /> Credit Card
@@ -445,7 +524,7 @@ export const AuthModal: React.FC = () => {
                     type="button"
                     onClick={() => setProvider('paypal')}
                     className={`py-2 px-3 rounded-xl border text-xs font-bold transition-all flex items-center justify-center gap-1.5 ${
-                      provider === 'paypal' ? 'bg-[#FF385C] text-white border-[#FF385C]' : 'bg-slate-100 dark:bg-slate-800'
+                      provider === 'paypal' ? 'bg-[#1B5E4A] text-white border-[#1B5E4A]' : 'bg-slate-100 dark:bg-slate-800'
                     }`}
                   >
                     PayPal
@@ -455,7 +534,7 @@ export const AuthModal: React.FC = () => {
                     type="button"
                     onClick={() => setProvider('pesapal')}
                     className={`py-2 px-3 rounded-xl border text-xs font-bold transition-all flex items-center justify-center gap-1.5 ${
-                      provider === 'pesapal' ? 'bg-[#FF385C] text-white border-[#FF385C]' : 'bg-slate-100 dark:bg-slate-800'
+                      provider === 'pesapal' ? 'bg-[#1B5E4A] text-white border-[#1B5E4A]' : 'bg-slate-100 dark:bg-slate-800'
                     }`}
                   >
                     Pesapal / Mobile
@@ -511,7 +590,7 @@ export const AuthModal: React.FC = () => {
               </div>
 
               {/* Messages */}
-              {errorMsg && (
+              {errorMsg && activeTab === 'REGISTER' && (
                 <div className="p-3 rounded-xl bg-red-50 dark:bg-red-950 text-red-600 text-xs font-bold border border-red-200 dark:border-red-900">
                   {errorMsg}
                 </div>
@@ -527,7 +606,7 @@ export const AuthModal: React.FC = () => {
               <button
                 type="submit"
                 disabled={isSubmitting}
-                className="w-full py-4 rounded-2xl bg-[#FF385C] hover:bg-[#E00B41] text-white font-black text-sm shadow-xl transition-all flex items-center justify-center gap-2"
+                className="w-full py-4 rounded-2xl bg-[#1B5E4A] hover:bg-[#134536] text-white font-black text-sm shadow-xl transition-all flex items-center justify-center gap-2 disabled:opacity-60"
               >
                 {isSubmitting ? (
                   <span>Processing Payment & Registering...</span>

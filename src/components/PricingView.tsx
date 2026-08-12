@@ -16,7 +16,7 @@ export const PricingView: React.FC = () => {
       
       {/* Page Title & Intro Header */}
       <div className="text-center space-y-4 max-w-3xl mx-auto">
-        <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-rose-50 dark:bg-rose-950/50 text-[#FF385C] border border-rose-200 dark:border-rose-900/50 text-xs font-extrabold uppercase tracking-wider">
+        <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-rose-50 dark:bg-rose-950/50 text-[#1B5E4A] border border-rose-200 dark:border-rose-900/50 text-xs font-extrabold uppercase tracking-wider">
           <Sparkles className="w-4 h-4" /> Annual Household Membership Plans
         </div>
 
@@ -69,13 +69,13 @@ export const PricingView: React.FC = () => {
               key={planKey}
               className={`rounded-3xl p-6 flex flex-col justify-between space-y-6 transition-all relative ${
                 isBestValue
-                  ? 'bg-gradient-to-b from-rose-50/60 to-white dark:from-rose-950/20 dark:to-slate-900 border-2 border-[#FF385C] shadow-xl shadow-rose-500/10'
+                  ? 'bg-gradient-to-b from-rose-50/60 to-white dark:from-rose-950/20 dark:to-slate-900 border-2 border-[#1B5E4A] shadow-xl shadow-rose-500/10'
                   : 'bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm hover:shadow-md'
               }`}
             >
               {isBestValue && (
                 <div className="absolute -top-3.5 right-6">
-                  <span className="px-3 py-1 rounded-full bg-[#FF385C] text-white text-[10px] font-black tracking-wider uppercase shadow-md flex items-center gap-1">
+                  <span className="px-3 py-1 rounded-full bg-[#1B5E4A] text-white text-[10px] font-black tracking-wider uppercase shadow-md flex items-center gap-1">
                     <Sparkles className="w-3 h-3" /> BEST VALUE
                   </span>
                 </div>
@@ -119,7 +119,7 @@ export const PricingView: React.FC = () => {
                   <ul className="space-y-2 text-xs text-slate-700 dark:text-slate-300">
                     {plan.features.map((feature, i) => (
                       <li key={i} className="flex items-start gap-2">
-                        <Check className={`w-3.5 h-3.5 flex-shrink-0 mt-0.5 ${isBestValue ? 'text-[#FF385C]' : 'text-emerald-500'}`} />
+                        <Check className={`w-3.5 h-3.5 flex-shrink-0 mt-0.5 ${isBestValue ? 'text-[#1B5E4A]' : 'text-emerald-500'}`} />
                         <span className="leading-snug">{feature}</span>
                       </li>
                     ))}
@@ -164,7 +164,7 @@ export const PricingView: React.FC = () => {
                     onClick={() => setCheckoutPlan(planKey)}
                     className={`w-full py-3 rounded-2xl font-bold text-xs transition-all shadow-md flex items-center justify-center gap-2 ${
                       isBestValue
-                        ? 'bg-[#FF385C] text-white hover:bg-[#E03150] shadow-rose-500/20'
+                        ? 'bg-[#1B5E4A] text-white hover:bg-[#E03150] shadow-rose-500/20'
                         : 'bg-slate-900 dark:bg-white text-white dark:text-slate-900 hover:bg-slate-800'
                     }`}
                   >
@@ -182,7 +182,7 @@ export const PricingView: React.FC = () => {
       {/* Frequently Asked Questions */}
       <div className="p-8 rounded-3xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 space-y-6">
         <div className="flex items-center gap-2">
-          <HelpCircle className="w-5 h-5 text-[#FF385C]" />
+          <HelpCircle className="w-5 h-5 text-[#1B5E4A]" />
           <h2 className="text-xl font-extrabold text-slate-900 dark:text-white">Membership FAQ</h2>
         </div>
 

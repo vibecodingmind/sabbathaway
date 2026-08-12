@@ -88,11 +88,11 @@ export const FamilyExchangeView: React.FC = () => {
       
       {/* Hero Banner Header */}
       <div className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-slate-950 via-slate-900 to-rose-950 p-8 sm:p-12 text-white border border-slate-800 shadow-2xl">
-        <div className="absolute top-0 right-0 -mt-12 -mr-12 w-96 h-96 bg-[#FF385C]/20 rounded-full blur-3xl pointer-events-none" />
+        <div className="absolute top-0 right-0 -mt-12 -mr-12 w-96 h-96 bg-[#1B5E4A]/20 rounded-full blur-3xl pointer-events-none" />
         <div className="relative z-10 max-w-4xl space-y-5">
           
           <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-rose-500/20 text-rose-200 text-xs font-extrabold border border-rose-500/30">
-            <Globe2 className="w-4 h-4 text-[#FF385C]" />
+            <Globe2 className="w-4 h-4 text-[#1B5E4A]" />
             <span>GLOBAL ADVENTIST FAMILY EXCHANGE</span>
           </div>
 
@@ -128,7 +128,7 @@ export const FamilyExchangeView: React.FC = () => {
           <div className="pt-2 flex flex-wrap items-center gap-4">
             <button
               onClick={() => setIsRegisterModalOpen(true)}
-              className="inline-flex items-center gap-2 px-6 py-3.5 rounded-2xl bg-[#FF385C] hover:bg-[#E00B41] text-white font-extrabold text-xs shadow-xl transition-all"
+              className="inline-flex items-center gap-2 px-6 py-3.5 rounded-2xl bg-[#1B5E4A] hover:bg-[#E00B41] text-white font-extrabold text-xs shadow-xl transition-all"
             >
               <Plus className="w-4 h-4" />
               <span>Register My Family Account</span>
@@ -160,7 +160,7 @@ export const FamilyExchangeView: React.FC = () => {
                   : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
               }`}
             >
-              <Globe2 className="w-4 h-4 text-[#FF385C]" />
+              <Globe2 className="w-4 h-4 text-[#1B5E4A]" />
               <span>All Family Profiles ({familyProfiles.length})</span>
             </button>
 
@@ -187,7 +187,7 @@ export const FamilyExchangeView: React.FC = () => {
               <Heart className="w-4 h-4 text-rose-500" />
               <span>Exchange Requests</span>
               {familyExchangeRequests.length > 0 && (
-                <span className="w-5 h-5 rounded-full bg-[#FF385C] text-white text-[10px] font-extrabold flex items-center justify-center">
+                <span className="w-5 h-5 rounded-full bg-[#1B5E4A] text-white text-[10px] font-extrabold flex items-center justify-center">
                   {familyExchangeRequests.length}
                 </span>
               )}
@@ -202,7 +202,7 @@ export const FamilyExchangeView: React.FC = () => {
               placeholder="Search by family, church, country..."
               value={searchQuery}
               onChange={e => setSearchQuery(e.target.value)}
-              className="w-full pl-10 pr-4 py-2.5 rounded-2xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-xs font-bold text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-[#FF385C]"
+              className="w-full pl-10 pr-4 py-2.5 rounded-2xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-xs font-bold text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-[#1B5E4A]"
             />
           </div>
         </div>
@@ -211,7 +211,7 @@ export const FamilyExchangeView: React.FC = () => {
         {activeSubTab !== 'MY_EXCHANGES' && (
           <div className="flex flex-wrap items-center gap-3 pt-2 border-t border-slate-100 dark:border-slate-800 text-xs">
             <div className="flex items-center gap-1.5 font-extrabold text-slate-700 dark:text-slate-300 mr-1">
-              <Filter className="w-3.5 h-3.5 text-[#FF385C]" /> Filter By:
+              <Filter className="w-3.5 h-3.5 text-[#1B5E4A]" /> Filter By:
             </div>
 
             {/* Country */}
@@ -250,7 +250,7 @@ export const FamilyExchangeView: React.FC = () => {
             {(selectedCountry !== 'ALL' || selectedLanguage !== 'ALL' || selectedMonth !== 'ALL' || searchQuery) && (
               <button
                 onClick={resetFilters}
-                className="flex items-center gap-1 px-3 py-2 text-xs font-bold text-[#FF385C] hover:bg-rose-50 dark:hover:bg-rose-950/40 rounded-xl transition-colors ml-auto"
+                className="flex items-center gap-1 px-3 py-2 text-xs font-bold text-[#1B5E4A] hover:bg-rose-50 dark:hover:bg-rose-950/40 rounded-xl transition-colors ml-auto"
               >
                 <RotateCcw className="w-3.5 h-3.5" />
                 <span>Reset Filters</span>
@@ -271,7 +271,7 @@ export const FamilyExchangeView: React.FC = () => {
               <p className="text-xs text-slate-500">Try broadening your country, language or search filters.</p>
               <button
                 onClick={resetFilters}
-                className="px-4 py-2 rounded-xl bg-[#FF385C] text-white font-bold text-xs"
+                className="px-4 py-2 rounded-xl bg-[#1B5E4A] text-white font-bold text-xs"
               >
                 Reset All Filters
               </button>
@@ -295,7 +295,7 @@ export const FamilyExchangeView: React.FC = () => {
 
                       {/* Verified Badge */}
                       <div className="absolute top-3 left-3 z-20 flex items-center gap-1.5 px-3 py-1 rounded-full bg-slate-950/80 backdrop-blur-md text-white text-[10px] font-extrabold shadow-md border border-white/10">
-                        <ShieldCheck className="w-3.5 h-3.5 text-[#FF385C]" />
+                        <ShieldCheck className="w-3.5 h-3.5 text-[#1B5E4A]" />
                         <span>Verified</span>
                       </div>
 
@@ -309,7 +309,7 @@ export const FamilyExchangeView: React.FC = () => {
                       <div className="absolute bottom-0 inset-x-0 z-20 p-4 bg-gradient-to-t from-slate-950/90 via-slate-950/40 to-transparent text-white">
                         <h3 className="font-black text-lg font-display truncate">{family.familyName}</h3>
                         <p className="text-xs text-slate-300 font-semibold flex items-center gap-1">
-                          <Globe2 className="w-3.5 h-3.5 text-[#FF385C]" />
+                          <Globe2 className="w-3.5 h-3.5 text-[#1B5E4A]" />
                           {family.city}, {family.country}
                         </p>
                       </div>
@@ -322,7 +322,7 @@ export const FamilyExchangeView: React.FC = () => {
                       <div className="space-y-1">
                         <div className="flex items-center justify-between text-slate-700 dark:text-slate-300 font-bold">
                           <span className="flex items-center gap-1">
-                            <Users className="w-3.5 h-3.5 text-[#FF385C]" />
+                            <Users className="w-3.5 h-3.5 text-[#1B5E4A]" />
                             {family.parentsNames}
                           </span>
                           <span className="px-2 py-0.5 rounded bg-slate-100 dark:bg-slate-800 text-[10px] font-extrabold text-slate-600 dark:text-slate-400">
@@ -353,8 +353,8 @@ export const FamilyExchangeView: React.FC = () => {
                           </span>
                         </div>
                         <div className="flex items-center justify-between text-slate-500">
-                          <span className="flex items-center gap-1 font-semibold text-[#FF385C]">
-                            <Calendar className="w-3.5 h-3.5 text-[#FF385C]" />
+                          <span className="flex items-center gap-1 font-semibold text-[#1B5E4A]">
+                            <Calendar className="w-3.5 h-3.5 text-[#1B5E4A]" />
                             Avail: {family.availableMonths.join(', ')}
                           </span>
                         </div>
@@ -373,7 +373,7 @@ export const FamilyExchangeView: React.FC = () => {
                     </button>
                     <button
                       onClick={() => setRequestTargetFamily(family)}
-                      className="flex-1 py-2.5 rounded-xl bg-[#FF385C] hover:bg-[#E00B41] text-white font-extrabold text-xs shadow-md transition-all flex items-center justify-center gap-1.5"
+                      className="flex-1 py-2.5 rounded-xl bg-[#1B5E4A] hover:bg-[#E00B41] text-white font-extrabold text-xs shadow-md transition-all flex items-center justify-center gap-1.5"
                     >
                       <Send className="w-3.5 h-3.5" />
                       <span>Request</span>
@@ -428,14 +428,14 @@ export const FamilyExchangeView: React.FC = () => {
                     </div>
 
                     <div className="absolute top-3 right-3 z-20 flex items-center gap-1.5 px-3 py-1 rounded-full bg-slate-950/80 backdrop-blur-md text-white text-[10px] font-extrabold border border-white/10">
-                      <ShieldCheck className="w-3.5 h-3.5 text-[#FF385C]" />
+                      <ShieldCheck className="w-3.5 h-3.5 text-[#1B5E4A]" />
                       <span>Verified</span>
                     </div>
 
                     <div className="absolute bottom-0 inset-x-0 z-20 p-4 bg-gradient-to-t from-slate-950/90 via-slate-950/40 to-transparent text-white">
                       <h3 className="font-black text-lg font-display truncate">{family.familyName}</h3>
                       <p className="text-xs text-slate-300 font-semibold flex items-center gap-1">
-                        <Globe2 className="w-3.5 h-3.5 text-[#FF385C]" />
+                        <Globe2 className="w-3.5 h-3.5 text-[#1B5E4A]" />
                         {family.city}, {family.country}
                       </p>
                     </div>
@@ -445,7 +445,7 @@ export const FamilyExchangeView: React.FC = () => {
                   <div className="p-5 space-y-3.5 text-xs">
                     <div className="flex items-center justify-between text-slate-700 dark:text-slate-300 font-bold">
                       <span className="flex items-center gap-1">
-                        <Users className="w-3.5 h-3.5 text-[#FF385C]" /> {family.parentsNames}
+                        <Users className="w-3.5 h-3.5 text-[#1B5E4A]" /> {family.parentsNames}
                       </span>
                       <span className="px-2 py-0.5 rounded bg-slate-100 dark:bg-slate-800 text-[10px] font-extrabold text-slate-600 dark:text-slate-400">
                         Kids: {family.childrenAges.join(', ')}
@@ -463,7 +463,7 @@ export const FamilyExchangeView: React.FC = () => {
 
                     <div className="flex items-center justify-between text-[11px] pt-1">
                       <span className="text-slate-500 font-medium">Langs: <strong>{family.languages.join(' · ')}</strong></span>
-                      <span className="text-[#FF385C] font-extrabold">Avail: {family.availableMonths.slice(0, 2).join(', ')}</span>
+                      <span className="text-[#1B5E4A] font-extrabold">Avail: {family.availableMonths.slice(0, 2).join(', ')}</span>
                     </div>
                   </div>
                 </div>
@@ -478,7 +478,7 @@ export const FamilyExchangeView: React.FC = () => {
                   </button>
                   <button
                     onClick={() => setRequestTargetFamily(family)}
-                    className="flex-1 py-2.5 rounded-xl bg-[#FF385C] hover:bg-[#E00B41] text-white font-extrabold text-xs shadow-md transition-all flex items-center justify-center gap-1.5"
+                    className="flex-1 py-2.5 rounded-xl bg-[#1B5E4A] hover:bg-[#E00B41] text-white font-extrabold text-xs shadow-md transition-all flex items-center justify-center gap-1.5"
                   >
                     <Send className="w-3.5 h-3.5" />
                     <span>Send Request</span>
@@ -517,7 +517,7 @@ export const FamilyExchangeView: React.FC = () => {
               >
                 <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-3 border-b border-slate-100 dark:border-slate-800">
                   <div className="flex items-center gap-3">
-                    <img src={req.requesterAvatar} alt="" className="w-12 h-12 rounded-full object-cover ring-2 ring-[#FF385C]" />
+                    <img src={req.requesterAvatar} alt="" className="w-12 h-12 rounded-full object-cover ring-2 ring-[#1B5E4A]" />
                     <div>
                       <div className="font-extrabold text-base text-slate-900 dark:text-white">
                         {req.requesterFamilyName} → {req.targetFamilyName}
@@ -529,7 +529,7 @@ export const FamilyExchangeView: React.FC = () => {
                   </div>
 
                   <div className="flex items-center gap-2">
-                    <span className="px-3 py-1 rounded-full bg-rose-100 dark:bg-rose-950/80 text-[#FF385C] font-extrabold text-[10px]">
+                    <span className="px-3 py-1 rounded-full bg-rose-100 dark:bg-rose-950/80 text-[#1B5E4A] font-extrabold text-[10px]">
                       {req.exchangeType.replace('_', ' ')}
                     </span>
                     <span className={`px-3 py-1 rounded-full text-[10px] font-extrabold ${

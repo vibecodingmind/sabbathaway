@@ -119,6 +119,7 @@ const INITIAL_SAFETY_REPORTS: SafetyReport[] = [
 
 interface BootstrapPayload {
   listings?: Listing[];
+  churches?: SdaChurch[];
   users?: UserProfile[];
   stayRequests?: StayRequest[];
   messages?: Message[];
@@ -230,7 +231,13 @@ interface AppContextType {
   openUpgradePrompt: (target: 'STAY_REQUEST' | 'FAMILY_EXCHANGE' | 'HOSTING' | 'MESSAGING' | 'GENERAL') => void;
   closeUpgradePrompt: () => void;
 
+  isPaymentCheckoutOpen: boolean;
+  setIsPaymentCheckoutOpen: (open: boolean) => void;
+  checkoutTargetPlan: SubscriptionPlan;
+  setCheckoutTargetPlan: (plan: SubscriptionPlan) => void;
+
   listings: Listing[];
+  churches: SdaChurch[];
   stayRequests: StayRequest[];
   messages: Message[];
   reviews: Review[];
@@ -305,7 +312,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
 
   const [stayCategories, setStayCategories] = useState<StayCategory[]>(initialStayCategories);
   const [listings, setListings] = useState<Listing[]>(initialListings);
-  const [churches] = useState<SdaChurch[]>(initialChurches);
+  const [churches, setChurches] = useState<SdaChurch[]>(initialChurches);
   const [stayRequests, setStayRequests] = useState<StayRequest[]>(initialStayRequests);
   const [messages, setMessages] = useState<Message[]>(initialMessages);
   const [memberships, setMemberships] = useState<UserMembership[]>(initialMemberships);
@@ -323,6 +330,8 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
   const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
   const [authModalMode, setAuthModalMode] = useState<AuthModalMode>('LOGIN');
   const [isUpgradePromptOpen, setIsUpgradePromptOpen] = useState(false);
+  const [isPaymentCheckoutOpen, setIsPaymentCheckoutOpen] = useState(false);
+  const [checkoutTargetPlan, setCheckoutTargetPlan] = useState<SubscriptionPlan>('SABBATH_MEMBER');
   const [upgradePromptTarget, setUpgradePromptTarget] = useState<
     'STAY_REQUEST' | 'FAMILY_EXCHANGE' | 'HOSTING' | 'MESSAGING' | 'GENERAL'
   >('GENERAL');
@@ -334,6 +343,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
 
   const applyBootstrapData = useCallback((data: BootstrapPayload) => {
     if (data.listings) setListings(data.listings);
+    if (data.churches) setChurches(data.churches);
     if (data.users) setUsers(data.users);
     if (data.stayRequests) setStayRequests(data.stayRequests);
     if (data.messages) setMessages(data.messages);
@@ -1184,15 +1194,17 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
       api
         .toggleFavorite(listingId)
         .then((result) => {
-          if (result.favorites) {
+          if (Array.isArray(result.favorites)) {
             setFavorites(result.favorites);
-          } else {
-            setFavorites((prev) =>
-              result.favorited
-                ? [...prev, result.listingId]
-                : prev.filter((id) => id !== result.listingId)
-            );
+            return;
           }
+          setFavorites((prev) =>
+            result.favorited
+              ? prev.includes(listingId)
+                ? prev
+                : [...prev, listingId]
+              : prev.filter((id) => id !== listingId)
+          );
         })
         .catch((err) => console.error('toggleFavorite failed:', err));
       return;
@@ -1603,7 +1615,12 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
         upgradePromptTarget,
         openUpgradePrompt,
         closeUpgradePrompt,
+        isPaymentCheckoutOpen,
+        setIsPaymentCheckoutOpen,
+        checkoutTargetPlan,
+        setCheckoutTargetPlan,
         listings,
+        churches,
         stayRequests,
         messages,
         reviews,

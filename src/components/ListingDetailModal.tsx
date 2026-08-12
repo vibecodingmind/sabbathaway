@@ -190,7 +190,7 @@ export const ListingDetailModal: React.FC<ListingDetailModalProps> = ({
             <div className="flex flex-wrap items-center justify-between gap-3 text-xs font-bold text-slate-600 dark:text-slate-300 pt-1">
               <div className="flex flex-wrap items-center gap-2.5 sm:gap-3">
                 <div className="flex items-center gap-1 text-slate-800 dark:text-slate-200">
-                  <MapPin className="w-4 h-4 text-[#FF385C]" />
+                  <MapPin className="w-4 h-4 text-[#1B5E4A]" />
                   <span className="text-sm font-semibold">{listing.city}, {listing.stateProvince ? `${listing.stateProvince}, ` : ''}{listing.country}</span>
                 </div>
                 <span>•</span>
@@ -201,7 +201,7 @@ export const ListingDetailModal: React.FC<ListingDetailModalProps> = ({
                 </div>
                 <span>•</span>
                 <span className="px-2.5 py-1 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-700 text-xs font-bold flex items-center gap-1">
-                  <Church className="w-3.5 h-3.5 text-[#FF385C]" /> Host Worshipped Church: {listing.hostChurchName}
+                  <Church className="w-3.5 h-3.5 text-[#1B5E4A]" /> Host Worshipped Church: {listing.hostChurchName}
                 </span>
               </div>
 
@@ -218,7 +218,7 @@ export const ListingDetailModal: React.FC<ListingDetailModalProps> = ({
                   onClick={() => toggleFavorite(listing.id)}
                   className="flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl bg-rose-50 hover:bg-rose-100 dark:bg-rose-950/50 dark:hover:bg-rose-900/50 text-xs font-extrabold text-slate-800 dark:text-slate-200 transition-colors border border-rose-200 dark:border-rose-800/60 shadow-sm"
                 >
-                  <Heart className={`w-3.5 h-3.5 ${isFav ? 'text-[#FF385C] fill-[#FF385C]' : 'text-slate-500'}`} />
+                  <Heart className={`w-3.5 h-3.5 ${isFav ? 'text-[#1B5E4A] fill-[#1B5E4A]' : 'text-slate-500'}`} />
                   <span>{isFav ? 'Saved' : 'Save'}</span>
                 </button>
               </div>
@@ -253,7 +253,7 @@ export const ListingDetailModal: React.FC<ListingDetailModalProps> = ({
               onClick={() => setShowAllPhotosModal(true)}
               className="absolute bottom-4 right-4 px-4 py-2.5 rounded-2xl bg-white/95 dark:bg-slate-900/95 text-slate-900 dark:text-white text-xs font-bold border border-slate-300 dark:border-slate-700 shadow-xl flex items-center gap-2 hover:bg-white hover:scale-105 transition-all"
             >
-              <Grid className="w-4 h-4 text-[#FF385C]" />
+              <Grid className="w-4 h-4 text-[#1B5E4A]" />
               <span>Show all {listing.images.length} photos</span>
             </button>
           </div>
@@ -390,9 +390,9 @@ export const ListingDetailModal: React.FC<ListingDetailModalProps> = ({
                     <img 
                       src={listing.hostAvatar} 
                       alt={listing.hostName} 
-                      className="w-16 h-16 sm:w-20 sm:h-20 rounded-full object-cover ring-4 ring-[#FF385C] shadow-lg"
+                      className="w-16 h-16 sm:w-20 sm:h-20 rounded-full object-cover ring-4 ring-[#1B5E4A] shadow-lg"
                     />
-                    <div className="absolute -bottom-1 -right-1 p-1 rounded-full bg-[#FF385C] text-white" title="Verified Host">
+                    <div className="absolute -bottom-1 -right-1 p-1 rounded-full bg-[#1B5E4A] text-white" title="Verified Host">
                       <ShieldCheck className="w-4 h-4" />
                     </div>
                   </div>
@@ -456,7 +456,7 @@ export const ListingDetailModal: React.FC<ListingDetailModalProps> = ({
                   {/* Property Details Pills Grid */}
                   <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 text-xs font-bold">
                     <div className="p-4 rounded-2xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 flex items-center gap-3">
-                      <Users className="w-5 h-5 text-[#FF385C]" />
+                      <Users className="w-5 h-5 text-[#1B5E4A]" />
                       <div>
                         <span className="text-[10px] text-slate-400 uppercase font-extrabold block">CAPACITY</span>
                         <span>Up to {listing.maxGuests} Guests</span>
@@ -549,12 +549,12 @@ export const ListingDetailModal: React.FC<ListingDetailModalProps> = ({
                       <Sun className="w-5 h-5 text-amber-500" />
                       <span>Sabbath Schedule & Fellowship Itinerary</span>
                     </h3>
-                    <span className="text-xs font-bold text-[#FF385C]">Friday Sunset – Sunday Morning</span>
+                    <span className="text-xs font-bold text-[#1B5E4A]">Friday Sunset – Sunday Morning</span>
                   </div>
 
                   <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 text-xs">
                     <div className="p-4 rounded-2xl bg-rose-50/50 dark:bg-slate-800/80 border border-rose-200 dark:border-slate-700 space-y-2">
-                      <div className="flex items-center gap-2 text-[#FF385C] font-extrabold text-xs">
+                      <div className="flex items-center gap-2 text-[#1B5E4A] font-extrabold text-xs">
                         <Clock className="w-4 h-4" />
                         <span>FRIDAY EVENING</span>
                       </div>
@@ -602,7 +602,7 @@ export const ListingDetailModal: React.FC<ListingDetailModalProps> = ({
                     
                     {listing.languagesSpoken && (
                       <div className="pt-3 border-t border-slate-200 dark:border-slate-700 flex items-center gap-2 text-slate-600 dark:text-slate-400 font-bold">
-                        <Globe2 className="w-4 h-4 text-[#FF385C]" />
+                        <Globe2 className="w-4 h-4 text-[#1B5E4A]" />
                         <span>Spoken Languages: {listing.languagesSpoken.join(', ')}</span>
                       </div>
                     )}
@@ -643,7 +643,7 @@ export const ListingDetailModal: React.FC<ListingDetailModalProps> = ({
                       <span className="text-slate-700 dark:text-slate-300">Sabbath School: <strong>9:30 AM</strong> · Divine Worship: <strong>11:00 AM</strong></span>
                       <button
                         onClick={() => {
-                          setActiveTab('CHURCHES');
+                          setActiveTab('MAP');
                           onClose();
                         }}
                         className="text-emerald-700 dark:text-emerald-400 font-extrabold hover:underline"
@@ -657,7 +657,7 @@ export const ListingDetailModal: React.FC<ListingDetailModalProps> = ({
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs">
                     <div className="p-4 rounded-2xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700 space-y-2">
                       <div className="flex items-center gap-2 font-bold text-slate-900 dark:text-white">
-                        <Car className="w-4 h-4 text-[#FF385C]" />
+                        <Car className="w-4 h-4 text-[#1B5E4A]" />
                         <span>Transportation & Pickup</span>
                       </div>
                       <p className="text-slate-600 dark:text-slate-300 font-medium leading-relaxed">
@@ -673,7 +673,7 @@ export const ListingDetailModal: React.FC<ListingDetailModalProps> = ({
                       <ul className="space-y-1 text-slate-600 dark:text-slate-300 font-medium">
                         {nearbyAttractions.map((attr, idx) => (
                           <li key={idx} className="flex items-center gap-1.5">
-                            <span className="text-[#FF385C]">•</span> {attr}
+                            <span className="text-[#1B5E4A]">•</span> {attr}
                           </li>
                         ))}
                       </ul>
@@ -688,7 +688,7 @@ export const ListingDetailModal: React.FC<ListingDetailModalProps> = ({
                   
                   {/* Header Rating Hero Box */}
                   <div className="p-6 rounded-3xl bg-slate-900 text-white space-y-6 shadow-2xl relative overflow-hidden">
-                    <div className="absolute top-0 right-0 -mt-10 -mr-10 w-64 h-64 bg-[#FF385C]/20 rounded-full blur-2xl pointer-events-none" />
+                    <div className="absolute top-0 right-0 -mt-10 -mr-10 w-64 h-64 bg-[#1B5E4A]/20 rounded-full blur-2xl pointer-events-none" />
 
                     <div className="relative z-10 flex flex-col sm:flex-row sm:items-center justify-between gap-6 border-b border-slate-800 pb-6">
                       <div className="flex items-center gap-5">
@@ -716,7 +716,7 @@ export const ListingDetailModal: React.FC<ListingDetailModalProps> = ({
 
                       <button
                         onClick={() => setIsAddingReview(!isAddingReview)}
-                        className="px-5 py-2.5 rounded-2xl bg-[#FF385C] hover:bg-[#E00B41] text-white font-bold text-xs shadow-lg transition-all flex items-center justify-center gap-2"
+                        className="px-5 py-2.5 rounded-2xl bg-[#1B5E4A] hover:bg-[#E00B41] text-white font-bold text-xs shadow-lg transition-all flex items-center justify-center gap-2"
                       >
                         <Sparkles className="w-4 h-4" />
                         <span>{isAddingReview ? 'Cancel Review' : 'Write a Testimony'}</span>
@@ -731,7 +731,7 @@ export const ListingDetailModal: React.FC<ListingDetailModalProps> = ({
                           <span>5.0 / 5.0</span>
                         </div>
                         <div className="w-full bg-slate-800 rounded-full h-2">
-                          <div className="bg-[#FF385C] h-2 rounded-full w-[100%]" />
+                          <div className="bg-[#1B5E4A] h-2 rounded-full w-[100%]" />
                         </div>
                       </div>
 
@@ -761,7 +761,7 @@ export const ListingDetailModal: React.FC<ListingDetailModalProps> = ({
                   {isAddingReview && (
                     <form onSubmit={handleReviewSubmit} className="p-6 rounded-3xl bg-rose-50/60 dark:bg-slate-800/80 border border-rose-200 dark:border-slate-700 space-y-4 text-xs animate-in fade-in zoom-in-95">
                       <h4 className="text-sm font-bold text-slate-900 dark:text-white flex items-center gap-2">
-                        <Star className="w-4 h-4 text-[#FF385C] fill-[#FF385C]" />
+                        <Star className="w-4 h-4 text-[#1B5E4A] fill-[#1B5E4A]" />
                         Write a Fellowship Review & Testimony
                       </h4>
 
@@ -780,7 +780,7 @@ export const ListingDetailModal: React.FC<ListingDetailModalProps> = ({
                                   className="focus:outline-none transition-transform hover:scale-110"
                                 >
                                   <Star 
-                                    className={`w-5 h-5 ${star <= newRating ? 'fill-[#FF385C] text-[#FF385C]' : 'fill-slate-200 text-slate-200 dark:fill-slate-700 dark:text-slate-700'}`} 
+                                    className={`w-5 h-5 ${star <= newRating ? 'fill-[#1B5E4A] text-[#1B5E4A]' : 'fill-slate-200 text-slate-200 dark:fill-slate-700 dark:text-slate-700'}`} 
                                   />
                                 </button>
                               ))}
@@ -886,7 +886,7 @@ export const ListingDetailModal: React.FC<ListingDetailModalProps> = ({
                         </button>
                         <button
                           type="submit"
-                          className="px-5 py-2 rounded-xl bg-[#FF385C] hover:bg-[#E00B41] text-white font-bold shadow-md"
+                          className="px-5 py-2 rounded-xl bg-[#1B5E4A] hover:bg-[#E00B41] text-white font-bold shadow-md"
                         >
                           Post Testimony
                         </button>
@@ -1012,7 +1012,7 @@ export const ListingDetailModal: React.FC<ListingDetailModalProps> = ({
 
                 {/* Sabbath Weekend Note */}
                 <div className="p-3.5 rounded-2xl bg-slate-50 dark:bg-slate-900/60 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-300 space-y-1 text-xs">
-                  <div className="font-extrabold flex items-center gap-1.5 text-[#FF385C]">
+                  <div className="font-extrabold flex items-center gap-1.5 text-[#1B5E4A]">
                     <Sun className="w-4 h-4" /> Sabbath Weekend Stay
                   </div>
                   <p className="text-[11px] leading-snug text-slate-500 dark:text-slate-400 font-medium">
@@ -1023,7 +1023,7 @@ export const ListingDetailModal: React.FC<ListingDetailModalProps> = ({
                 {/* Booking Picker Box */}
                 <div className="rounded-2xl border border-slate-300 dark:border-slate-700 divide-y divide-slate-300 dark:divide-slate-700 text-xs overflow-hidden">
                   <div className="p-3.5 bg-slate-50 dark:bg-slate-800/80">
-                    <label className="block text-[9px] font-extrabold uppercase text-[#FF385C] mb-1">
+                    <label className="block text-[9px] font-extrabold uppercase text-[#1B5E4A] mb-1">
                       SELECT SABBATH WEEKEND
                     </label>
                     <select className="w-full bg-transparent font-bold cursor-pointer text-xs text-slate-900 dark:text-white focus:outline-none">
@@ -1060,7 +1060,7 @@ export const ListingDetailModal: React.FC<ListingDetailModalProps> = ({
                 <button
                   id="btn-trigger-stay-request"
                   onClick={() => onRequestStay(listing)}
-                  className="w-full py-4 rounded-2xl bg-gradient-to-r from-[#FF385C] to-[#E00B41] hover:opacity-95 text-white font-extrabold text-sm shadow-xl transition-all flex items-center justify-center gap-2"
+                  className="w-full py-4 rounded-2xl bg-gradient-to-r from-[#1B5E4A] to-[#E00B41] hover:opacity-95 text-white font-extrabold text-sm shadow-xl transition-all flex items-center justify-center gap-2"
                 >
                   <Send className="w-4 h-4" />
                   <span>Request Stay</span>
@@ -1075,7 +1075,7 @@ export const ListingDetailModal: React.FC<ListingDetailModalProps> = ({
                   }}
                   className="w-full py-3 rounded-2xl bg-slate-100 dark:bg-slate-700 text-slate-800 dark:text-slate-200 font-bold text-xs hover:bg-slate-200 transition-colors flex items-center justify-center gap-2"
                 >
-                  <MessageSquare className="w-4 h-4 text-[#FF385C]" />
+                  <MessageSquare className="w-4 h-4 text-[#1B5E4A]" />
                   <span>Message Host First</span>
                 </button>
 
@@ -1134,7 +1134,7 @@ export const ListingDetailModal: React.FC<ListingDetailModalProps> = ({
                 alt="" 
                 onClick={() => setActivePhotoIndex(idx)}
                 className={`w-16 h-16 sm:w-20 sm:h-20 rounded-xl object-cover cursor-pointer transition-all border-2 ${
-                  activePhotoIndex === idx ? 'border-[#FF385C] scale-105 ring-2 ring-[#FF385C]' : 'border-transparent opacity-60 hover:opacity-100'
+                  activePhotoIndex === idx ? 'border-[#1B5E4A] scale-105 ring-2 ring-[#1B5E4A]' : 'border-transparent opacity-60 hover:opacity-100'
                 }`}
               />
             ))}

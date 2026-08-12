@@ -86,7 +86,7 @@ export const Footer: React.FC = () => {
           {/* AdventistStay Mission */}
           <div className="space-y-3">
             <h4 className="font-bold text-slate-900 dark:text-white flex items-center gap-1.5">
-              <span className="text-[#FF385C]">AdventistStay</span>
+              <span className="text-[#1B5E4A] font-display">AdventistStay</span>
             </h4>
             <p className="text-slate-500 leading-relaxed text-[11px]">
               A non-commercial Christian hospitality network connecting Seventh-day Adventist members worldwide for church events, mission trips, education, and fellowship.

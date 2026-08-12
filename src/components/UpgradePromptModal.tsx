@@ -76,7 +76,7 @@ export const UpgradePromptModal: React.FC = () => {
             
             {/* Disclaimer Banner */}
             <div className="p-3.5 rounded-2xl bg-rose-50/80 dark:bg-rose-950/40 border border-rose-200/80 dark:border-rose-900/50 flex items-start gap-3">
-              <HeartHandshake className="w-5 h-5 text-[#FF385C] flex-shrink-0 mt-0.5" />
+              <HeartHandshake className="w-5 h-5 text-[#1B5E4A] flex-shrink-0 mt-0.5" />
               <p className="text-xs text-slate-700 dark:text-slate-300 leading-snug">
                 {PLATFORM_MEMBERSHIP_DISCLAIMER}
               </p>
@@ -117,9 +117,9 @@ export const UpgradePromptModal: React.FC = () => {
               </div>
 
               {/* Option 2 - Global Family Best Value */}
-              <div className="p-5 rounded-2xl border-2 border-[#FF385C] bg-gradient-to-b from-rose-50/40 to-white dark:from-rose-950/20 dark:to-slate-900 flex flex-col justify-between space-y-4 shadow-lg shadow-rose-500/10 relative">
+              <div className="p-5 rounded-2xl border-2 border-[#1B5E4A] bg-gradient-to-b from-rose-50/40 to-white dark:from-rose-950/20 dark:to-slate-900 flex flex-col justify-between space-y-4 shadow-lg shadow-rose-500/10 relative">
                 <div className="absolute -top-3 right-4">
-                  <span className="px-3 py-1 rounded-full bg-[#FF385C] text-white text-[10px] font-black tracking-wider uppercase shadow-md flex items-center gap-1">
+                  <span className="px-3 py-1 rounded-full bg-[#1B5E4A] text-white text-[10px] font-black tracking-wider uppercase shadow-md flex items-center gap-1">
                     <Sparkles className="w-3 h-3" /> BEST VALUE
                   </span>
                 </div>
@@ -131,14 +131,14 @@ export const UpgradePromptModal: React.FC = () => {
                   </div>
 
                   <div className="flex items-baseline gap-1">
-                    <span className="text-3xl font-black text-[#FF385C]">${plan2.price}</span>
+                    <span className="text-3xl font-black text-[#1B5E4A]">${plan2.price}</span>
                     <span className="text-xs text-slate-500 font-medium">USD / year</span>
                   </div>
 
                   <ul className="space-y-2 text-xs text-slate-700 dark:text-slate-200 font-medium">
                     {plan2.features.slice(0, 5).map((feat, i) => (
                       <li key={i} className="flex items-center gap-2">
-                        <Check className="w-3.5 h-3.5 text-[#FF385C] flex-shrink-0" />
+                        <Check className="w-3.5 h-3.5 text-[#1B5E4A] flex-shrink-0" />
                         <span>{feat}</span>
                       </li>
                     ))}
@@ -147,7 +147,7 @@ export const UpgradePromptModal: React.FC = () => {
 
                 <button
                   onClick={() => handleSelectPlan(option2)}
-                  className="w-full py-2.5 rounded-xl bg-[#FF385C] text-white font-bold text-xs hover:bg-[#E03150] transition-colors shadow-md shadow-rose-500/20"
+                  className="w-full py-2.5 rounded-xl bg-[#1B5E4A] text-white font-bold text-xs hover:bg-[#E03150] transition-colors shadow-md shadow-rose-500/20"
                 >
                   Activate {plan2.name} (${plan2.price}/yr)
                 </button>
@@ -159,7 +159,7 @@ export const UpgradePromptModal: React.FC = () => {
             <div className="pt-2 flex items-center justify-between border-t border-slate-200 dark:border-slate-800 text-xs">
               <button
                 onClick={handleViewAllPlans}
-                className="text-[#FF385C] font-bold hover:underline flex items-center gap-1"
+                className="text-[#1B5E4A] font-bold hover:underline flex items-center gap-1"
               >
                 View all pricing plans <ArrowRight className="w-3.5 h-3.5" />
               </button>

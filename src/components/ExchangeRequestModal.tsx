@@ -114,9 +114,9 @@ export const ExchangeRequestModal: React.FC<ExchangeRequestModalProps> = ({ targ
             
             {/* Target Family Summary Card */}
             <div className="p-4 rounded-2xl bg-rose-50/60 dark:bg-slate-800/60 border border-rose-200 dark:border-slate-700 flex items-center gap-4 text-xs">
-              <img src={targetFamily.avatar} alt="" className="w-12 h-12 rounded-full object-cover ring-2 ring-[#FF385C]" />
+              <img src={targetFamily.avatar} alt="" className="w-12 h-12 rounded-full object-cover ring-2 ring-[#1B5E4A]" />
               <div>
-                <span className="text-[10px] font-extrabold uppercase text-[#FF385C] block">HOST FAMILY DESTINATION</span>
+                <span className="text-[10px] font-extrabold uppercase text-[#1B5E4A] block">HOST FAMILY DESTINATION</span>
                 <p className="font-extrabold text-slate-900 dark:text-white text-sm">{targetFamily.familyName}</p>
                 <p className="text-slate-600 dark:text-slate-400 font-medium">
                   {targetFamily.city}, {targetFamily.country} · {targetFamily.localChurch}
@@ -127,7 +127,7 @@ export const ExchangeRequestModal: React.FC<ExchangeRequestModalProps> = ({ targ
             {/* Exchange Type Selector */}
             <div className="space-y-2">
               <label className="font-bold text-xs text-slate-800 dark:text-slate-200 flex items-center gap-1.5">
-                <Sparkles className="w-4 h-4 text-[#FF385C]" /> Select Exchange Focus
+                <Sparkles className="w-4 h-4 text-[#1B5E4A]" /> Select Exchange Focus
               </label>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs">
                 {[
@@ -144,11 +144,11 @@ export const ExchangeRequestModal: React.FC<ExchangeRequestModalProps> = ({ targ
                       onClick={() => setExchangeType(type.id as ExchangeType)}
                       className={`p-3 rounded-2xl border text-left transition-all ${
                         isSelected
-                          ? 'border-[#FF385C] bg-rose-50 dark:bg-rose-950/60 text-slate-900 dark:text-white ring-2 ring-[#FF385C]/20'
+                          ? 'border-[#1B5E4A] bg-rose-50 dark:bg-rose-950/60 text-slate-900 dark:text-white ring-2 ring-[#1B5E4A]/20'
                           : 'border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-800/40 hover:border-slate-300'
                       }`}
                     >
-                      <div className="font-bold text-xs text-[#FF385C]">{type.label}</div>
+                      <div className="font-bold text-xs text-[#1B5E4A]">{type.label}</div>
                       <div className="text-[10px] text-slate-500 font-normal leading-tight mt-0.5">{type.desc}</div>
                     </button>
                   );
@@ -160,7 +160,7 @@ export const ExchangeRequestModal: React.FC<ExchangeRequestModalProps> = ({ targ
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs">
               <div className="space-y-1.5">
                 <label className="font-bold text-slate-800 dark:text-slate-200 flex items-center gap-1.5">
-                  <Calendar className="w-4 h-4 text-[#FF385C]" /> Proposed Travel Month
+                  <Calendar className="w-4 h-4 text-[#1B5E4A]" /> Proposed Travel Month
                 </label>
                 <select
                   value={proposedMonth}
@@ -177,7 +177,7 @@ export const ExchangeRequestModal: React.FC<ExchangeRequestModalProps> = ({ targ
 
               <div className="space-y-1.5">
                 <label className="font-bold text-slate-800 dark:text-slate-200 flex items-center gap-1.5">
-                  <Compass className="w-4 h-4 text-[#FF385C]" /> Preferred Duration
+                  <Compass className="w-4 h-4 text-[#1B5E4A]" /> Preferred Duration
                 </label>
                 <select
                   value={preferredDuration}
@@ -194,7 +194,7 @@ export const ExchangeRequestModal: React.FC<ExchangeRequestModalProps> = ({ targ
             {/* Introductory Message */}
             <div className="space-y-1.5 text-xs">
               <label className="font-bold text-slate-800 dark:text-slate-200 flex items-center gap-1.5">
-                <Heart className="w-4 h-4 text-[#FF385C]" /> Family Introduction & Exchange Proposal
+                <Heart className="w-4 h-4 text-[#1B5E4A]" /> Family Introduction & Exchange Proposal
               </label>
               <textarea
                 required
@@ -202,7 +202,7 @@ export const ExchangeRequestModal: React.FC<ExchangeRequestModalProps> = ({ targ
                 value={introNote}
                 onChange={e => setIntroNote(e.target.value)}
                 placeholder="Introduce your family, share your home church background, and describe your hopes for this Christian fellowship & cultural exchange..."
-                className="w-full p-3.5 rounded-2xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-xs font-medium text-slate-900 dark:text-white placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-[#FF385C]/30"
+                className="w-full p-3.5 rounded-2xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-xs font-medium text-slate-900 dark:text-white placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-[#1B5E4A]/30"
               />
             </div>
 
@@ -215,7 +215,7 @@ export const ExchangeRequestModal: React.FC<ExchangeRequestModalProps> = ({ targ
                   required
                   checked={pledgeAccepted}
                   onChange={e => setPledgeAccepted(e.target.checked)}
-                  className="mt-1 w-4 h-4 rounded border-amber-400 text-[#FF385C] focus:ring-[#FF385C] cursor-pointer"
+                  className="mt-1 w-4 h-4 rounded border-amber-400 text-[#1B5E4A] focus:ring-[#1B5E4A] cursor-pointer"
                 />
                 <label htmlFor="pledge-checkbox" className="text-[11px] text-amber-950 dark:text-amber-200 font-medium cursor-pointer leading-relaxed">
                   <strong>Christian Fellowship Pledge:</strong> I confirm this exchange is strictly for Christian fellowship, Sabbath experiences, and cultural relationship building. It is non-commercial with mutual hospitality in mind.
@@ -235,7 +235,7 @@ export const ExchangeRequestModal: React.FC<ExchangeRequestModalProps> = ({ targ
               <button
                 type="submit"
                 disabled={!pledgeAccepted || !introNote.trim()}
-                className="inline-flex items-center gap-2 px-6 py-2.5 rounded-xl bg-[#FF385C] hover:bg-[#E00B41] disabled:opacity-50 text-white font-bold text-xs shadow-lg transition-all"
+                className="inline-flex items-center gap-2 px-6 py-2.5 rounded-xl bg-[#1B5E4A] hover:bg-[#E00B41] disabled:opacity-50 text-white font-bold text-xs shadow-lg transition-all"
               >
                 <Send className="w-4 h-4" />
                 <span>Submit Exchange Request</span>

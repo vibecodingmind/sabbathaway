@@ -100,7 +100,7 @@ export const RegisterFamilyModal: React.FC<RegisterFamilyModalProps> = ({ onClos
         {/* Header */}
         <div className="p-6 bg-slate-900 text-white flex items-center justify-between border-b border-slate-800">
           <div className="flex items-center gap-3">
-            <div className="p-2.5 rounded-2xl bg-[#FF385C]/20 border border-[#FF385C]/30 text-[#FF385C]">
+            <div className="p-2.5 rounded-2xl bg-[#1B5E4A]/20 border border-[#1B5E4A]/30 text-[#1B5E4A]">
               <Users className="w-6 h-6" />
             </div>
             <div>
@@ -136,7 +136,7 @@ export const RegisterFamilyModal: React.FC<RegisterFamilyModalProps> = ({ onClos
             {/* Basic Family Identity */}
             <div className="space-y-4 pb-4 border-b border-slate-200 dark:border-slate-800">
               <h3 className="text-sm font-bold text-slate-900 dark:text-white flex items-center gap-2">
-                <Users className="w-4 h-4 text-[#FF385C]" /> Household Identity
+                <Users className="w-4 h-4 text-[#1B5E4A]" /> Household Identity
               </h3>
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -313,7 +313,7 @@ export const RegisterFamilyModal: React.FC<RegisterFamilyModalProps> = ({ onClos
                       onClick={() => toggleMonth(m)}
                       className={`px-3 py-1.5 rounded-lg border transition-all ${
                         active 
-                          ? 'bg-[#FF385C] border-[#FF385C] text-white font-bold' 
+                          ? 'bg-[#1B5E4A] border-[#1B5E4A] text-white font-bold' 
                           : 'bg-slate-50 dark:bg-slate-800 border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-400'
                       }`}
                     >
@@ -335,7 +335,7 @@ export const RegisterFamilyModal: React.FC<RegisterFamilyModalProps> = ({ onClos
               </button>
               <button
                 type="submit"
-                className="px-6 py-2.5 rounded-xl bg-[#FF385C] hover:bg-[#E00B41] text-white font-bold shadow-lg transition-all"
+                className="px-6 py-2.5 rounded-xl bg-[#1B5E4A] hover:bg-[#E00B41] text-white font-bold shadow-lg transition-all"
               >
                 Create Family Profile
               </button>

@@ -81,7 +81,7 @@ export const InteractiveMap: React.FC = () => {
               onClick={() => setMapEngineMode('VECTOR')}
               className="px-3.5 py-1.5 rounded-xl bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 font-extrabold text-xs flex items-center gap-1.5 hover:bg-slate-200 transition-colors"
             >
-              <Globe className="w-3.5 h-3.5 text-[#FF385C]" />
+              <Globe className="w-3.5 h-3.5 text-[#1B5E4A]" />
               <span>Switch to Graphic World Map</span>
             </button>
           </div>
@@ -103,7 +103,7 @@ export const InteractiveMap: React.FC = () => {
           {/* Header count */}
           <div className="flex items-center justify-between pb-4">
             <h3 className="text-base font-extrabold text-slate-900 dark:text-white font-display flex items-center gap-2">
-              <Home className="w-4 h-4 text-[#FF385C]" />
+              <Home className="w-4 h-4 text-[#1B5E4A]" />
               <span>Sabbath Stays on Map ({displayListings.length})</span>
             </h3>
           </div>
@@ -118,7 +118,7 @@ export const InteractiveMap: React.FC = () => {
               </p>
               <button
                 onClick={clearAllFilters}
-                className="px-4 py-2 rounded-xl bg-[#FF385C] text-white font-extrabold text-xs shadow-md"
+                className="px-4 py-2 rounded-xl bg-[#1B5E4A] text-white font-extrabold text-xs shadow-md"
               >
                 Clear Location Filters
               </button>
@@ -130,7 +130,7 @@ export const InteractiveMap: React.FC = () => {
                   key={list.id} 
                   onMouseEnter={() => setActivePin({ type: 'HOST', data: list })}
                   className={`transition-all rounded-2xl p-1.5 ${
-                    activePin?.data.id === list.id ? 'bg-rose-50/80 dark:bg-rose-950/40 ring-2 ring-[#FF385C]' : ''
+                    activePin?.data.id === list.id ? 'bg-rose-50/80 dark:bg-rose-950/40 ring-2 ring-[#1B5E4A]' : ''
                   }`}
                 >
                   <ListingCard
@@ -157,7 +157,7 @@ export const InteractiveMap: React.FC = () => {
                   <Compass className="w-4 h-4" /> Global Stays Map
                 </span>
                 {filters.destination && (
-                  <span className="px-2.5 py-0.5 rounded-full bg-[#FF385C] text-white font-extrabold text-[10px] truncate max-w-[120px]">
+                  <span className="px-2.5 py-0.5 rounded-full bg-[#1B5E4A] text-white font-extrabold text-[10px] truncate max-w-[120px]">
                     📍 {filters.destination}
                   </span>
                 )}
@@ -170,7 +170,7 @@ export const InteractiveMap: React.FC = () => {
                     type="checkbox" 
                     checked={showHosts} 
                     onChange={e => setShowHosts(e.target.checked)} 
-                    className="rounded text-[#FF385C] focus:ring-[#FF385C]"
+                    className="rounded text-[#1B5E4A] focus:ring-[#1B5E4A]"
                   />
                   <span className="text-rose-400 flex items-center gap-1">
                     <Home className="w-3.5 h-3.5" /> Hosts ({displayListings.length})
@@ -232,8 +232,8 @@ export const InteractiveMap: React.FC = () => {
                     }`}
                   >
                     <div className="relative flex items-center justify-center">
-                      <span className="absolute w-8 h-8 rounded-full bg-[#FF385C]/40 animate-ping" />
-                      <div className="w-9 h-9 rounded-full bg-gradient-to-br from-[#FF385C] to-rose-700 text-white flex items-center justify-center shadow-xl border-2 border-white dark:border-slate-900">
+                      <span className="absolute w-8 h-8 rounded-full bg-[#1B5E4A]/40 animate-ping" />
+                      <div className="w-9 h-9 rounded-full bg-gradient-to-br from-[#1B5E4A] to-rose-700 text-white flex items-center justify-center shadow-xl border-2 border-white dark:border-slate-900">
                         <Home className="w-4 h-4" />
                       </div>
                       <div className="opacity-0 group-hover:opacity-100 transition-opacity absolute bottom-full mb-2 bg-slate-900 text-white text-[11px] font-bold px-2.5 py-1 rounded-lg whitespace-nowrap shadow-lg pointer-events-none">
@@ -275,14 +275,14 @@ export const InteractiveMap: React.FC = () => {
               {displayListings.length === 0 && (
                 <div className="absolute inset-0 flex items-center justify-center p-6 text-center z-20 bg-slate-950/60 backdrop-blur-sm">
                   <div className="max-w-md bg-slate-900 border border-slate-800 p-6 rounded-3xl space-y-3 shadow-2xl text-white">
-                    <MapPin className="w-10 h-10 text-[#FF385C] mx-auto" />
+                    <MapPin className="w-10 h-10 text-[#1B5E4A] mx-auto" />
                     <h3 className="font-extrabold text-base">No pins to render for "{filters.destination || searchQuery}"</h3>
                     <p className="text-xs text-slate-400">
                       We didn't find host families matching this exact search query on the map.
                     </p>
                     <button
                       onClick={clearAllFilters}
-                      className="px-5 py-2.5 rounded-xl bg-[#FF385C] hover:bg-[#E00B41] text-white font-extrabold text-xs shadow-lg transition-all"
+                      className="px-5 py-2.5 rounded-xl bg-[#1B5E4A] hover:bg-[#E00B41] text-white font-extrabold text-xs shadow-lg transition-all"
                     >
                       Reset Search & Show All Pins
                     </button>
@@ -306,7 +306,7 @@ export const InteractiveMap: React.FC = () => {
                       return (
                         <div className="space-y-2.5 text-xs">
                           <div className="flex items-center gap-2">
-                            <span className="px-2 py-0.5 rounded text-[10px] font-extrabold bg-rose-100 text-[#FF385C] dark:bg-rose-950">
+                            <span className="px-2 py-0.5 rounded text-[10px] font-extrabold bg-rose-100 text-[#1B5E4A] dark:bg-rose-950">
                               {item.propertyType}
                             </span>
                             <span className="text-slate-500 font-bold">{item.city}, {item.country}</span>
@@ -320,7 +320,7 @@ export const InteractiveMap: React.FC = () => {
                             <span className="text-emerald-600 font-extrabold">100% Free Stay</span>
                             <button
                               onClick={() => setSelectedListing(item)}
-                              className="font-extrabold text-[#FF385C] hover:underline flex items-center gap-1"
+                              className="font-extrabold text-[#1B5E4A] hover:underline flex items-center gap-1"
                             >
                               View Details <ChevronRight className="w-3.5 h-3.5" />
                             </button>

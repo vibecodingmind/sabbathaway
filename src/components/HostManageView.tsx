@@ -63,7 +63,14 @@ export const HostManageView: React.FC = () => {
     addListing({
       title,
       description,
-      propertyType: 'Private Room',
+      familyName: `${currentUser.name} Family`,
+      familyStory: 'We welcome Sabbath keepers into our home for fellowship and rest.',
+      familyInterests: ['Fellowship', 'Church', 'Nature'],
+      sabbathActivities: ['Friday vespers', 'Sabbath School', 'Potluck lunch'],
+      languagesSpoken: ['English'],
+      hostingPreferences: 'Friday arrival preferred for Sabbath weekend stays.',
+      verificationLevel: currentUser.familyVerificationLevel || 2,
+      propertyType: 'Private Family Suite',
       city,
       stateProvince: 'Region',
       country,
@@ -78,6 +85,14 @@ export const HostManageView: React.FC = () => {
       bathrooms: 1,
       images: ['https://images.unsplash.com/photo-1590490360182-c33d57733427?auto=format&fit=crop&w=800&q=80'],
       amenities: ['Wi-Fi', 'Private Bath', 'Breakfast'],
+      experienceTypes: ['SABBATH_FAMILY_EXPERIENCE'],
+      hospitalityPerks: {
+        fridayDinner: true,
+        sabbathChurchRide: true,
+        sabbathLunch: true,
+        sunsetVespers: true,
+        airportPickup: false
+      },
       sabbathFeatures: {
         vegetarianMealsProvided: true,
         sunsetSabbathFellowship: true,
@@ -96,10 +111,10 @@ export const HostManageView: React.FC = () => {
     <div id="host-manage-view" className="space-y-8">
       
       {/* Top Banner */}
-      <div className="bg-gradient-to-r from-rose-950 via-slate-900 to-slate-950 text-white rounded-3xl p-8 shadow-xl flex flex-col md:flex-row items-start md:items-center justify-between gap-6 border border-rose-900/30">
+      <div className="bg-gradient-to-r from-[#134536] via-slate-900 to-slate-950 text-white rounded-3xl p-8 shadow-xl flex flex-col md:flex-row items-start md:items-center justify-between gap-6 border border-[#1B5E4A]/30">
         <div>
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#FF385C]/20 text-rose-300 text-xs font-bold border border-[#FF385C]/30 mb-2">
-            <Building2 className="w-3.5 h-3.5 text-[#FF385C]" />
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#1B5E4A]/20 text-amber-200 text-xs font-bold border border-[#1B5E4A]/30 mb-2">
+            <Building2 className="w-3.5 h-3.5 text-[#1B5E4A]" />
             Host Family Hospitality Portal
           </div>
           <h1 className="text-2xl font-bold font-display">Manage Sabbath Family Hospitality</h1>
@@ -111,7 +126,7 @@ export const HostManageView: React.FC = () => {
         <button
           id="btn-open-create-listing"
           onClick={handleOpenAddListing}
-          className="inline-flex items-center gap-2 px-5 py-3 rounded-2xl bg-[#FF385C] hover:bg-[#E00B41] text-white font-bold text-xs shadow-lg transition-all"
+          className="inline-flex items-center gap-2 px-5 py-3 rounded-2xl bg-[#1B5E4A] hover:bg-[#E00B41] text-white font-bold text-xs shadow-lg transition-all"
         >
           <Plus className="w-4 h-4" />
           <span>Publish Host Family Profile</span>
@@ -300,7 +315,7 @@ export const HostManageView: React.FC = () => {
                         onClick={() => toggleCategory(cat.name)}
                         className={`p-2 rounded-lg border text-left text-[11px] font-bold flex items-center justify-between transition-all ${
                           isChecked 
-                            ? 'bg-[#FF385C] text-white border-[#FF385C]' 
+                            ? 'bg-[#1B5E4A] text-white border-[#1B5E4A]' 
                             : 'bg-slate-50 dark:bg-slate-800 border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-300'
                         }`}
                       >

@@ -108,7 +108,7 @@ export const StayRequestModal: React.FC<StayRequestModalProps> = ({ listing, onC
         {/* Header */}
         <div className="flex items-center justify-between px-6 py-4 bg-rose-50 dark:bg-rose-950/40 border-b border-rose-200 dark:border-rose-900">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-xl bg-[#FF385C] text-white flex items-center justify-center font-bold shadow-md">
+            <div className="w-10 h-10 rounded-xl bg-[#1B5E4A] text-white flex items-center justify-center font-bold shadow-md">
               <Calendar className="w-5 h-5" />
             </div>
             <div>
@@ -135,7 +135,7 @@ export const StayRequestModal: React.FC<StayRequestModalProps> = ({ listing, onC
           <img 
             src={listing.hostAvatar} 
             alt="" 
-            className="w-14 h-14 rounded-full object-cover ring-2 ring-[#FF385C] flex-shrink-0"
+            className="w-14 h-14 rounded-full object-cover ring-2 ring-[#1B5E4A] flex-shrink-0"
           />
           <div>
             <h4 className="text-sm font-bold text-slate-900 dark:text-white">
@@ -144,8 +144,8 @@ export const StayRequestModal: React.FC<StayRequestModalProps> = ({ listing, onC
             <p className="text-xs text-slate-500">
               Host Family at {listing.hostChurchName} ({listing.city}, {listing.country})
             </p>
-            <div className="inline-flex items-center gap-1 mt-1 px-2 py-0.5 rounded text-[10px] font-extrabold bg-rose-100 text-[#FF385C] dark:bg-rose-950 dark:text-rose-300">
-              <ShieldCheck className="w-3.5 h-3.5 text-[#FF385C]" />
+            <div className="inline-flex items-center gap-1 mt-1 px-2 py-0.5 rounded text-[10px] font-extrabold bg-rose-100 text-[#1B5E4A] dark:bg-rose-950 dark:text-rose-300">
+              <ShieldCheck className="w-3.5 h-3.5 text-[#1B5E4A]" />
               Level 4 Verified Adventist Family
             </div>
           </div>
@@ -157,7 +157,7 @@ export const StayRequestModal: React.FC<StayRequestModalProps> = ({ listing, onC
           {/* Guest Category Selector */}
           <div className="space-y-1">
             <label className="font-bold text-slate-700 dark:text-slate-300 flex items-center gap-1.5">
-              <Compass className="w-3.5 h-3.5 text-[#FF385C]" /> Select Guest Category
+              <Compass className="w-3.5 h-3.5 text-[#1B5E4A]" /> Select Guest Category
             </label>
             <div className="grid grid-cols-2 gap-3">
               <button
@@ -165,7 +165,7 @@ export const StayRequestModal: React.FC<StayRequestModalProps> = ({ listing, onC
                 onClick={() => setGuestCategory('ADVENTIST_GUEST')}
                 className={`p-3 rounded-xl border text-left transition-all ${
                   guestCategory === 'ADVENTIST_GUEST'
-                    ? 'border-[#FF385C] bg-rose-50/60 dark:bg-rose-950/40 text-slate-900 dark:text-white font-bold'
+                    ? 'border-[#1B5E4A] bg-rose-50/60 dark:bg-rose-950/40 text-slate-900 dark:text-white font-bold'
                     : 'border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-400'
                 }`}
               >
@@ -178,7 +178,7 @@ export const StayRequestModal: React.FC<StayRequestModalProps> = ({ listing, onC
                 onClick={() => setGuestCategory('SABBATH_EXPLORER')}
                 className={`p-3 rounded-xl border text-left transition-all ${
                   guestCategory === 'SABBATH_EXPLORER'
-                    ? 'border-[#FF385C] bg-rose-50/60 dark:bg-rose-950/40 text-slate-900 dark:text-white font-bold'
+                    ? 'border-[#1B5E4A] bg-rose-50/60 dark:bg-rose-950/40 text-slate-900 dark:text-white font-bold'
                     : 'border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-400'
                 }`}
               >
@@ -190,7 +190,7 @@ export const StayRequestModal: React.FC<StayRequestModalProps> = ({ listing, onC
 
           {/* Mandatory Sabbath Stay Rule Banner */}
           <div className="p-3.5 rounded-2xl bg-rose-50 dark:bg-rose-950/40 border border-rose-200 dark:border-rose-900 flex items-start gap-3 text-xs">
-            <CheckCircle2 className="w-5 h-5 text-[#FF385C] flex-shrink-0 mt-0.5" />
+            <CheckCircle2 className="w-5 h-5 text-[#1B5E4A] flex-shrink-0 mt-0.5" />
             <div>
               <p className="font-extrabold text-slate-900 dark:text-white">
                 Sabbath Weekend Stay Policy
@@ -205,7 +205,7 @@ export const StayRequestModal: React.FC<StayRequestModalProps> = ({ listing, onC
           <div className="space-y-2">
             <label className="font-bold text-slate-700 dark:text-slate-300 flex items-center justify-between">
               <span className="flex items-center gap-1.5">
-                <Calendar className="w-3.5 h-3.5 text-[#FF385C]" /> Select Travel Dates (Interactive Calendar Picker)
+                <Calendar className="w-3.5 h-3.5 text-[#1B5E4A]" /> Select Travel Dates (Interactive Calendar Picker)
               </span>
               <span className="text-[10px] text-emerald-600 dark:text-emerald-400 font-extrabold">
                 Sabbath Weekend Friendly
@@ -226,7 +226,7 @@ export const StayRequestModal: React.FC<StayRequestModalProps> = ({ listing, onC
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div className="space-y-1">
               <label className="font-bold text-slate-700 dark:text-slate-300 flex items-center gap-1">
-                <Users className="w-3.5 h-3.5 text-[#FF385C]" /> Number of Guests
+                <Users className="w-3.5 h-3.5 text-[#1B5E4A]" /> Number of Guests
               </label>
               <select
                 id="request-guest-count"
@@ -244,7 +244,7 @@ export const StayRequestModal: React.FC<StayRequestModalProps> = ({ listing, onC
 
             <div className="space-y-1">
               <label className="font-bold text-slate-700 dark:text-slate-300 flex items-center gap-1">
-                <Sparkles className="w-3.5 h-3.5 text-[#FF385C]" /> Primary Experience
+                <Sparkles className="w-3.5 h-3.5 text-[#1B5E4A]" /> Primary Experience
               </label>
               <select
                 id="request-purpose"
@@ -264,7 +264,7 @@ export const StayRequestModal: React.FC<StayRequestModalProps> = ({ listing, onC
           {/* Intro Message */}
           <div className="space-y-1">
             <label className="font-bold text-slate-700 dark:text-slate-300 flex items-center gap-1">
-              <MessageSquare className="w-3.5 h-3.5 text-[#FF385C]" /> Introduce Yourself to the Host Family
+              <MessageSquare className="w-3.5 h-3.5 text-[#1B5E4A]" /> Introduce Yourself to the Host Family
             </label>
             <textarea
               id="request-intro-message"
@@ -273,7 +273,7 @@ export const StayRequestModal: React.FC<StayRequestModalProps> = ({ listing, onC
               value={purposeNote}
               onChange={e => setPurposeNote(e.target.value)}
               placeholder="Tell the host family about yourself, your background, and what you look forward to during Sabbath fellowship..."
-              className="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 font-medium text-xs focus:outline-none focus:ring-2 focus:ring-[#FF385C]"
+              className="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 font-medium text-xs focus:outline-none focus:ring-2 focus:ring-[#1B5E4A]"
             />
           </div>
 
@@ -285,7 +285,7 @@ export const StayRequestModal: React.FC<StayRequestModalProps> = ({ listing, onC
                 type="checkbox"
                 checked={pledgeAccepted}
                 onChange={e => setPledgeAccepted(e.target.checked)}
-                className="mt-0.5 rounded text-[#FF385C] focus:ring-[#FF385C] w-4 h-4 cursor-pointer"
+                className="mt-0.5 rounded text-[#1B5E4A] focus:ring-[#1B5E4A] w-4 h-4 cursor-pointer"
               />
               <span className="text-[11px] font-medium text-slate-800 dark:text-slate-200 leading-snug">
                 <strong>Christian Hospitality Pledge:</strong> I confirm I am seeking authentic Sabbath family hospitality. I agree to respect the host family's home guidelines, observe Adventist standards of Sabbath decorum, and understand that hospitality is provided in the spirit of Christian fellowship with zero commercial rental fees.
@@ -308,7 +308,7 @@ export const StayRequestModal: React.FC<StayRequestModalProps> = ({ listing, onC
               id="submit-stay-request-btn"
               type="submit"
               disabled={!pledgeAccepted}
-              className="inline-flex items-center gap-2 px-6 py-2.5 rounded-xl bg-[#FF385C] hover:bg-[#E00B41] text-white font-bold shadow-lg disabled:opacity-50 transition-all"
+              className="inline-flex items-center gap-2 px-6 py-2.5 rounded-xl bg-[#1B5E4A] hover:bg-[#E00B41] text-white font-bold shadow-lg disabled:opacity-50 transition-all"
             >
               <HeartHandshake className="w-4 h-4" />
               <span>Request Sabbath Hospitality</span>

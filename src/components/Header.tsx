@@ -81,11 +81,11 @@ export const Header: React.FC = () => {
             className="flex items-center gap-2.5 cursor-pointer group shrink-0" 
             onClick={() => setActiveTab('EXPLORE')}
           >
-            <div className="w-10 h-10 rounded-xl bg-[#FF385C] flex items-center justify-center text-white shadow-sm group-hover:scale-105 transition-transform">
+            <div className="w-11 h-11 rounded-xl bg-[#1B5E4A] flex items-center justify-center text-white shadow-md shadow-[#1B5E4A]/25 group-hover:scale-105 transition-transform">
               <Home className="w-5 h-5" />
             </div>
-            <span className="text-xl font-extrabold tracking-tight text-[#FF385C] font-display">
-              Adventist<span className="text-slate-900 dark:text-white">Stay</span>
+            <span className="text-2xl font-black tracking-tight font-display leading-none">
+              <span className="text-[#1B5E4A]">Adventist</span><span className="text-slate-900 dark:text-white">Stay</span>
             </span>
           </div>
 
@@ -97,7 +97,7 @@ export const Header: React.FC = () => {
             >
               {/* 1. Destination / Where */}
               <div className="flex-[1.2] flex items-center gap-2 min-w-0 pr-3 border-r border-slate-200 dark:border-slate-700">
-                <MapPin className="w-4 h-4 text-[#FF385C] shrink-0" />
+                <MapPin className="w-4 h-4 text-[#1B5E4A] shrink-0" />
                 <input
                   type="text"
                   placeholder="Where to? (City, State, Country)"
@@ -161,7 +161,7 @@ export const Header: React.FC = () => {
               {/* Search Button */}
               <button
                 type="submit"
-                className="p-2.5 rounded-full bg-[#FF385C] hover:bg-[#E00B41] text-white shadow-md hover:scale-105 transition-all shrink-0 ml-1 flex items-center gap-1.5 px-4"
+                className="p-2.5 rounded-full bg-[#1B5E4A] hover:bg-[#134536] text-white shadow-md hover:scale-105 transition-all shrink-0 ml-1 flex items-center gap-1.5 px-4"
                 title="Search Stays"
               >
                 <Search className="w-4 h-4" />
@@ -179,11 +179,11 @@ export const Header: React.FC = () => {
               onClick={() => setActiveTab('FAMILY_EXCHANGE')}
               className={`hidden sm:flex items-center gap-1.5 px-3.5 py-2 rounded-full text-xs font-bold transition-all ${
                 activeTab === 'FAMILY_EXCHANGE'
-                  ? 'bg-rose-50 dark:bg-rose-950/80 text-[#FF385C] border border-rose-200 dark:border-rose-900 shadow-sm'
+                  ? 'bg-[#EEF5F1] dark:bg-[#1B5E4A]/20 text-[#1B5E4A] border border-[#1B5E4A]/30 dark:border-[#1B5E4A]/50 shadow-sm'
                   : 'hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-800 dark:text-slate-200'
               }`}
             >
-              <Users className="w-4 h-4 text-[#FF385C]" />
+              <Users className="w-4 h-4 text-[#1B5E4A]" />
               <span>Family Exchange</span>
             </button>
 
@@ -201,7 +201,7 @@ export const Header: React.FC = () => {
             <button
               id="nav-packages"
               onClick={() => setActiveTab('PRICING')}
-              className="hidden sm:flex items-center gap-1.5 px-4 py-2 rounded-full bg-rose-50 dark:bg-rose-950/40 border border-rose-200 dark:border-rose-900 text-xs font-extrabold text-[#FF385C] hover:bg-rose-100 transition-colors"
+              className="hidden sm:flex items-center gap-1.5 px-4 py-2 rounded-full bg-[#EEF5F1] dark:bg-[#1B5E4A]/15 border border-[#1B5E4A]/25 dark:border-[#1B5E4A]/40 text-xs font-extrabold text-[#1B5E4A] hover:bg-[#EEF5F1]/80 transition-colors"
             >
               <Sparkles className="w-3.5 h-3.5" />
               Packages
@@ -231,17 +231,17 @@ export const Header: React.FC = () => {
               <button
                 id="btn-user-avatar-only"
                 onClick={() => setIsUserMenuOpen(!isUserMenuOpen)}
-                className="relative p-0.5 rounded-full hover:ring-4 hover:ring-rose-100 dark:hover:ring-rose-950/60 transition-all focus:outline-none shrink-0"
+                className="relative p-0.5 rounded-full hover:ring-4 hover:ring-[#EEF5F1] dark:hover:ring-[#1B5E4A]/30 transition-all focus:outline-none shrink-0"
                 title="Account Menu"
               >
                 {isLoggedIn ? (
                   <img 
                     src={currentUser.avatarUrl} 
                     alt={currentUser.name} 
-                    className="w-9 h-9 sm:w-10 sm:h-10 rounded-full object-cover ring-2 ring-[#FF385C] shadow-sm hover:scale-105 transition-transform"
+                    className="w-9 h-9 sm:w-10 sm:h-10 rounded-full object-cover ring-2 ring-[#1B5E4A] shadow-sm hover:scale-105 transition-transform"
                   />
                 ) : (
-                  <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-slate-100 dark:bg-slate-800 border-2 border-slate-300 dark:border-slate-700 text-slate-700 dark:text-slate-200 flex items-center justify-center hover:border-[#FF385C] hover:text-[#FF385C] transition-all shadow-sm">
+                  <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-slate-100 dark:bg-slate-800 border-2 border-slate-300 dark:border-slate-700 text-slate-700 dark:text-slate-200 flex items-center justify-center hover:border-[#1B5E4A] hover:text-[#1B5E4A] transition-all shadow-sm">
                     <User className="w-5 h-5" />
                   </div>
                 )}
@@ -261,7 +261,7 @@ export const Header: React.FC = () => {
                         <img 
                           src={currentUser.avatarUrl} 
                           alt={currentUser.name} 
-                          className="w-10 h-10 rounded-full object-cover ring-2 ring-[#FF385C] shrink-0"
+                          className="w-10 h-10 rounded-full object-cover ring-2 ring-[#1B5E4A] shrink-0"
                         />
                         <div className="min-w-0 flex-1">
                           <p className="font-extrabold text-sm text-slate-900 dark:text-white truncate">
@@ -340,7 +340,7 @@ export const Header: React.FC = () => {
                                 <Bell className="w-4 h-4 text-amber-500" /> Notifications
                               </span>
                               {unreadMessagesCount > 0 && (
-                                <span className="px-2 py-0.5 bg-[#FF385C] text-white text-[10px] font-black rounded-full">
+                                <span className="px-2 py-0.5 bg-[#1B5E4A] text-white text-[10px] font-black rounded-full">
                                   {unreadMessagesCount}
                                 </span>
                               )}
@@ -370,7 +370,7 @@ export const Header: React.FC = () => {
                                 <Bell className="w-4 h-4 text-amber-500" /> Notifications
                               </span>
                               {unreadMessagesCount > 0 && (
-                                <span className="px-2 py-0.5 bg-[#FF385C] text-white text-[10px] font-black rounded-full">
+                                <span className="px-2 py-0.5 bg-[#1B5E4A] text-white text-[10px] font-black rounded-full">
                                   {unreadMessagesCount}
                                 </span>
                               )}
@@ -406,7 +406,7 @@ export const Header: React.FC = () => {
                                 <Bell className="w-4 h-4 text-amber-500" /> Notifications
                               </span>
                               {unreadMessagesCount > 0 && (
-                                <span className="px-2 py-0.5 bg-[#FF385C] text-white text-[10px] font-black rounded-full">
+                                <span className="px-2 py-0.5 bg-[#1B5E4A] text-white text-[10px] font-black rounded-full">
                                   {unreadMessagesCount}
                                 </span>
                               )}
@@ -438,15 +438,15 @@ export const Header: React.FC = () => {
                         onClick={() => { openAuthModal('LOGIN'); setIsUserMenuOpen(false); }}
                         className="w-full text-left px-3.5 py-3 rounded-xl hover:bg-slate-100 dark:hover:bg-slate-800 flex items-center gap-3 font-extrabold text-slate-900 dark:text-white"
                       >
-                        <LogIn className="w-4.5 h-4.5 text-[#FF385C]" />
+                        <LogIn className="w-4.5 h-4.5 text-[#1B5E4A]" />
                         <span>Sign In / Login</span>
                       </button>
 
                       <button
                         onClick={() => { openAuthModal('REGISTER_GUEST'); setIsUserMenuOpen(false); }}
-                        className="w-full text-left px-3.5 py-3 rounded-xl hover:bg-slate-100 dark:hover:bg-slate-800 flex items-center gap-3 font-extrabold text-[#FF385C]"
+                        className="w-full text-left px-3.5 py-3 rounded-xl hover:bg-slate-100 dark:hover:bg-slate-800 flex items-center gap-3 font-extrabold text-[#1B5E4A]"
                       >
-                        <UserPlus className="w-4.5 h-4.5 text-[#FF385C]" />
+                        <UserPlus className="w-4.5 h-4.5 text-[#1B5E4A]" />
                         <span>Register as Guest</span>
                       </button>
 
@@ -475,7 +475,7 @@ export const Header: React.FC = () => {
             <div className="flex items-center justify-between pb-2 border-b border-slate-100 dark:border-slate-800">
               <div>
                 <h3 className="font-bold text-base text-slate-900 dark:text-white flex items-center gap-2 font-display">
-                  <Globe2 className="w-5 h-5 text-[#FF385C]" /> Global Language & Region
+                  <Globe2 className="w-5 h-5 text-[#1B5E4A]" /> Global Language & Region
                 </h3>
                 <p className="text-xs text-slate-500 font-medium mt-0.5">Select your preferred language for AdventistStay</p>
               </div>
@@ -509,7 +509,7 @@ export const Header: React.FC = () => {
                   }}
                   className={`p-3 rounded-2xl text-left transition-all flex items-center justify-between group ${
                     language === item.code 
-                      ? 'bg-[#FF385C] text-white shadow-md' 
+                      ? 'bg-[#1B5E4A] text-white shadow-md' 
                       : 'bg-slate-50 dark:bg-slate-800/80 hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-800 dark:text-slate-200 border border-slate-100 dark:border-slate-700/50'
                   }`}
                 >
@@ -522,7 +522,7 @@ export const Header: React.FC = () => {
                     </p>
                   </div>
                   {language === item.code ? (
-                    <span className="w-5 h-5 rounded-full bg-white text-[#FF385C] font-black text-xs flex items-center justify-center shrink-0">✓</span>
+                    <span className="w-5 h-5 rounded-full bg-white text-[#1B5E4A] font-black text-xs flex items-center justify-center shrink-0">✓</span>
                   ) : (
                     <span className="text-slate-300 dark:text-slate-600 text-xs group-hover:text-slate-500 font-bold shrink-0">→</span>
                   )}

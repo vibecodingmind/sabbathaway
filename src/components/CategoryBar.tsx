@@ -95,7 +95,7 @@ export const CategoryBar: React.FC = () => {
             onClick={toggleNearMe}
             className={`flex items-center gap-2 px-4 py-2 rounded-full text-xs font-bold whitespace-nowrap transition-all shadow-sm border flex-shrink-0 cursor-pointer ${
               isNearMeActive
-                ? 'bg-[#FF385C] text-white border-[#FF385C] ring-2 ring-[#FF385C]/20' 
+                ? 'bg-[#1B5E4A] text-white border-[#1B5E4A] ring-2 ring-[#1B5E4A]/20' 
                 : 'bg-slate-100 dark:bg-slate-800/90 text-slate-700 dark:text-slate-300 border-slate-200 dark:border-slate-700 hover:bg-slate-200 dark:hover:bg-slate-700'
             }`}
           >
@@ -115,7 +115,7 @@ export const CategoryBar: React.FC = () => {
                 onClick={() => toggleCategoryFilter(cat.name)}
                 className={`flex items-center gap-2 px-4 py-2 rounded-full text-xs font-bold whitespace-nowrap transition-all shadow-sm border flex-shrink-0 cursor-pointer ${
                   isSelected 
-                    ? 'bg-[#FF385C] text-white border-[#FF385C] ring-2 ring-[#FF385C]/20' 
+                    ? 'bg-[#1B5E4A] text-white border-[#1B5E4A] ring-2 ring-[#1B5E4A]/20' 
                     : 'bg-slate-100 dark:bg-slate-800/90 text-slate-700 dark:text-slate-300 border-slate-200 dark:border-slate-700 hover:bg-slate-200 dark:hover:bg-slate-700'
                 }`}
               >
@@ -129,7 +129,7 @@ export const CategoryBar: React.FC = () => {
           {(filters.selectedCategories.length > 0 || isNearMeActive) && (
             <button
               onClick={() => setFilters(prev => ({ ...prev, selectedCategories: [], destination: '' }))}
-              className="flex items-center gap-1.5 px-3 py-2 text-xs font-bold text-[#FF385C] hover:bg-[#FF385C]/10 rounded-full transition-colors flex-shrink-0 ml-1"
+              className="flex items-center gap-1.5 px-3 py-2 text-xs font-bold text-[#1B5E4A] hover:bg-[#1B5E4A]/10 rounded-full transition-colors flex-shrink-0 ml-1"
             >
               <RotateCcw className="w-3.5 h-3.5" />
               <span>Reset</span>
@@ -179,7 +179,7 @@ export const CategoryBar: React.FC = () => {
               }`}
               title="Map View"
             >
-              <MapPin className="w-3.5 h-3.5 text-[#FF385C]" />
+              <MapPin className="w-3.5 h-3.5 text-[#1B5E4A]" />
               <span className="hidden md:inline">Map</span>
             </button>
           </div>

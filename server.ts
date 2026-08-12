@@ -1,111 +1,65 @@
+import 'dotenv/config';
 import express from 'express';
 import path from 'path';
+import cookieParser from 'cookie-parser';
+import cors from 'cors';
 import { createServer as createViteServer } from 'vite';
+import { createApiRouter } from './server/routes.js';
 
 async function startServer() {
   const app = express();
-  const PORT = 3000;
+  const PORT = Number(process.env.PORT) || 3000;
 
-  app.use(express.json());
+  app.use(cors({ origin: true, credentials: true }));
+  app.use(express.json({ limit: '2mb' }));
+  app.use(cookieParser());
 
-  // In-memory data endpoints powering the REST API
-  app.get('/api/health', (req, res) => {
+  app.get('/api/health', (_req, res) => {
     res.json({
       status: 'HEALTHY',
       service: 'AdventistStay API Engine',
       timestamp: new Date().toISOString(),
-      version: '1.0.0',
+      version: '1.1.0',
+      persistence: 'sqlite+prisma',
       compliance: {
         nonCommercialHospitality: true,
         verificationTierSupport: true,
-        zeroAccommodationFees: true
-      }
+        zeroAccommodationFees: true,
+      },
     });
   });
 
-  // OpenAPI 3.0 Documentation Endpoint
-  app.get('/api/docs/openapi', (req, res) => {
+  app.get('/api/docs/openapi', (_req, res) => {
     res.json({
       openapi: '3.0.3',
       info: {
         title: 'AdventistStay Hospitality Platform API',
-        description: 'RESTful API standard for Seventh-day Adventist global Christian hospitality network, church verifications, and stay requests.',
-        version: '1.0.0',
+        description:
+          'RESTful API for Seventh-day Adventist global Christian hospitality, church verifications, memberships, and stay requests.',
+        version: '1.1.0',
         contact: {
           name: 'AdventistStay Engineering Team',
-          email: 'support@adventiststay.org'
-        }
+          email: 'support@adventiststay.org',
+        },
       },
-      servers: [
-        { url: '/api', description: 'Current Cloud Run Environment' }
-      ],
+      servers: [{ url: '/api', description: 'Current environment' }],
       paths: {
-        '/listings': {
-          get: {
-            summary: 'Search and filter active SDA host listings',
-            parameters: [
-              { name: 'city', in: 'query', schema: { type: 'string' } },
-              { name: 'purpose', in: 'query', schema: { type: 'string' } },
-              { name: 'guests', in: 'query', schema: { type: 'integer' } }
-            ],
-            responses: {
-              '200': { description: 'List of matching verified host listings' }
-            }
-          },
-          post: {
-            summary: 'Create a new host listing (Host / Admin only)',
-            responses: {
-              '201': { description: 'Listing successfully published' }
-            }
-          }
-        },
-        '/churches': {
-          get: {
-            summary: 'Query global SDA Church Directory',
-            responses: {
-              '200': { description: 'Official list of registered SDA local churches' }
-            }
-          }
-        },
-        '/verifications': {
-          get: {
-            summary: 'List verification applications (Pastor & Admin only)',
-            responses: {
-              '200': { description: 'List of church membership verification requests' }
-            }
-          },
-          post: {
-            summary: 'Submit new pastor endorsement or membership verification letter',
-            responses: {
-              '201': { description: 'Verification application submitted' }
-            }
-          }
-        },
-        '/stays': {
-          get: {
-            summary: 'Get stay requests for user or host',
-            responses: {
-              '200': { description: 'Stay requests history' }
-            }
-          },
-          post: {
-            summary: 'Submit a new stay request (Zero-payment Christian hospitality model)',
-            responses: {
-              '201': { description: 'Request created and host notified' }
-            }
-          }
-        },
-        '/ai/assistant': {
-          post: {
-            summary: 'AI-Powered Sabbath Travel & Concierge Assistant (Gemini-powered)',
-            responses: {
-              '200': { description: 'AI generated response' }
-            }
-          }
-        }
-      }
+        '/auth/register': { post: { summary: 'Register member with optional membership plan' } },
+        '/auth/login': { post: { summary: 'Email/password login' } },
+        '/auth/demo-login': { post: { summary: 'Demo role login for local testing' } },
+        '/bootstrap': { get: { summary: 'Hydrate client app state from database' } },
+        '/listings': { get: { summary: 'Search host listings' }, post: { summary: 'Create listing' } },
+        '/stays': { get: { summary: 'List stay requests' }, post: { summary: 'Create stay request' } },
+        '/churches': { get: { summary: 'SDA church directory' } },
+        '/verifications': { get: { summary: 'Verification queue' }, post: { summary: 'Submit verification' } },
+        '/memberships/subscribe': { post: { summary: 'Purchase or upgrade annual membership' } },
+        '/ai/assistant': { post: { summary: 'Gemini Sabbath concierge' } },
+      },
     });
   });
+
+  // Domain REST API (auth, listings, stays, memberships, etc.)
+  app.use('/api', createApiRouter());
 
   // AI Assistant Endpoint using @google/genai SDK
   app.post('/api/ai/assistant', async (req, res) => {
@@ -114,71 +68,70 @@ async function startServer() {
       const apiKey = process.env.GEMINI_API_KEY;
 
       if (!apiKey) {
-        // Fallback intelligent response if key is pending configuration
         if (action === 'ITINERARY') {
           return res.json({
-            text: `### 🌅 Sample Sabbath Itinerary for ${context?.destination || 'Your Destination'}
+            text: `### Sample Sabbath Itinerary for ${context?.destination || 'Your Destination'}
 
 **Friday Evening (Sunset)**
-- **6:30 PM**: Welcome sunset worship with host family, candle lighting, and scripture reading.
-- **7:15 PM**: Warm Sabbath eve supper (vegan/vegetarian soup, homemade bread & fresh salad).
+- Welcome sunset worship with host family, candle lighting, and scripture reading.
+- Warm Sabbath eve supper (plant-based).
 
 **Saturday (Sabbath Day)**
-- **9:30 AM**: Sabbath School & Bible Study at local Seventh-day Adventist Church.
-- **11:00 AM**: Divine Worship Service & Fellowship Sermon.
-- **12:45 PM**: Church Potluck or Host Family Fellowship Lunch.
-- **3:00 PM**: Afternoon nature walk & Sabbath rest.
-- **6:00 PM**: Sunset vespers prayer & week ahead blessing.`
+- Sabbath School & Divine Worship at the local Seventh-day Adventist Church.
+- Fellowship lunch and afternoon nature rest.
+- Sunset vespers prayer.`,
           });
         }
 
         return res.json({
-          text: `I am your AdventistStay AI Sabbath Concierge! I can help you find host families with matching dietary preferences (plant-based/vegetarian), local SDA church proximity, family fellowship, or draft custom Sabbath itineraries. How can I assist your travels today?`
+          text: `I am your AdventistStay AI Sabbath Concierge. I can help with dietary matches, church proximity, fellowship preferences, and Sabbath itineraries. How can I assist your travels today?`,
         });
       }
 
       const { GoogleGenAI } = await import('@google/genai');
       const ai = new GoogleGenAI({
-        apiKey: apiKey,
-        httpOptions: {
-          headers: {
-            'User-Agent': 'aistudio-build'
-          }
-        }
+        apiKey,
+        httpOptions: { headers: { 'User-Agent': 'adventiststay' } },
       });
 
-      let systemInstruction = "You are the AdventistStay AI Sabbath Assistant—a warm, respectful, knowledgeable Christian concierge for the global Seventh-day Adventist travel and stay community. Focus on Sabbath peace, vegetarian/vegan meal hospitality, local church fellowship, family safety, and Christian hospitality values.";
+      let systemInstruction =
+        'You are the AdventistStay AI Sabbath Assistant—a warm, respectful, knowledgeable Christian concierge for the global Seventh-day Adventist travel and stay community. Focus on Sabbath peace, vegetarian/vegan meal hospitality, local church fellowship, family safety, and Christian hospitality values.';
 
       if (action === 'ITINERARY') {
-        systemInstruction += " Focus on creating a restful, spiritually uplifting Friday Sunset to Saturday Sunset itinerary tailored to the destination, including local SDA church attendance, potluck fellowship, and nature reflection.";
+        systemInstruction +=
+          ' Focus on creating a restful Friday sunset to Saturday sunset itinerary including local SDA church attendance, potluck fellowship, and nature reflection.';
       } else if (action === 'LISTING_ASSISTANT') {
-        systemInstruction += " Help hosts write a warm, inviting, Christian host bio and list Sabbath house rules (e.g. sunset worship option, quiet Sabbath hours, vegetarian kitchen guidelines).";
+        systemInstruction +=
+          ' Help hosts write a warm Christian host bio and Sabbath house rules.';
       }
 
-      const userPrompt = prompt || `Help me plan a blessed Sabbath stay at ${context?.destination || 'my destination'}.`;
+      const userPrompt =
+        prompt ||
+        `Help me plan a blessed Sabbath stay at ${context?.destination || 'my destination'}.`;
 
       const response = await ai.models.generateContent({
-        model: 'gemini-3.6-flash',
+        model: process.env.GEMINI_MODEL || 'gemini-2.0-flash',
         contents: userPrompt,
         config: {
-          systemInstruction: systemInstruction,
+          systemInstruction,
           temperature: 0.7,
-        }
+        },
       });
 
       return res.json({
-        text: response.text || "May your stay be filled with Sabbath peace and Christian fellowship!"
+        text:
+          response.text ||
+          'May your stay be filled with Sabbath peace and Christian fellowship!',
       });
     } catch (err: any) {
       console.error('AI Assistant Error:', err);
       return res.status(500).json({
         error: 'Failed to process AI assistant request',
-        details: err?.message || 'Unknown error'
+        details: err?.message || 'Unknown error',
       });
     }
   });
 
-  // Vite middleware for development vs static build in production
   if (process.env.NODE_ENV !== 'production') {
     const vite = await createViteServer({
       server: { middlewareMode: true },
@@ -198,4 +151,7 @@ async function startServer() {
   });
 }
 
-startServer();
+startServer().catch((err) => {
+  console.error('Failed to start AdventistStay server:', err);
+  process.exit(1);
+});

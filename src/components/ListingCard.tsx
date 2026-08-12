@@ -67,7 +67,7 @@ export const ListingCard: React.FC<ListingCardProps> = ({ listing, onSelect, vie
             className="absolute top-3 right-3 p-2.5 rounded-full bg-slate-900/30 backdrop-blur-md text-white hover:scale-110 transition-transform shadow-md"
             title="Save to favorites"
           >
-            <Heart className={`w-4 h-4 stroke-[2.5] ${isFav ? 'text-[#FF385C] fill-[#FF385C]' : 'text-white'}`} />
+            <Heart className={`w-4 h-4 stroke-[2.5] ${isFav ? 'text-[#1B5E4A] fill-[#1B5E4A]' : 'text-white'}`} />
           </button>
 
           {/* Verified Badge & Active Status Overlay */}
@@ -123,7 +123,7 @@ export const ListingCard: React.FC<ListingCardProps> = ({ listing, onSelect, vie
             
             <div className="flex items-start justify-between gap-3">
               <div>
-                <h3 className="font-black text-slate-900 dark:text-white text-xl leading-snug group-hover:text-[#FF385C] transition-colors">
+                <h3 className="font-black text-slate-900 dark:text-white text-xl leading-snug group-hover:text-[#1B5E4A] transition-colors">
                   {familyTitle}
                 </h3>
                 <p className="text-xs text-slate-500 dark:text-slate-400 font-semibold mt-0.5">
@@ -142,7 +142,7 @@ export const ListingCard: React.FC<ListingCardProps> = ({ listing, onSelect, vie
             {/* Host & Guests */}
             <div className="flex items-center gap-3 text-xs pt-1 text-slate-600 dark:text-slate-400">
               <div className="flex items-center gap-1.5 font-semibold">
-                <Users className="w-3.5 h-3.5 text-[#FF385C]" />
+                <Users className="w-3.5 h-3.5 text-[#1B5E4A]" />
                 <span>Up to {listing.maxGuests} guests</span>
               </div>
               <span className="text-slate-300 dark:text-slate-700">•</span>
@@ -201,7 +201,7 @@ export const ListingCard: React.FC<ListingCardProps> = ({ listing, onSelect, vie
           className="absolute top-2.5 right-2.5 p-2 rounded-full bg-slate-900/30 backdrop-blur-md text-white hover:scale-110 transition-transform shadow-md"
           title="Save to favorites"
         >
-          <Heart className={`w-4 h-4 stroke-[2.5] ${isFav ? 'text-[#FF385C] fill-[#FF385C]' : 'text-white'}`} />
+          <Heart className={`w-4 h-4 stroke-[2.5] ${isFav ? 'text-[#1B5E4A] fill-[#1B5E4A]' : 'text-white'}`} />
         </button>
 
           {/* Verified Badge & Active Status Overlay */}
@@ -255,7 +255,7 @@ export const ListingCard: React.FC<ListingCardProps> = ({ listing, onSelect, vie
         
         {/* Line 1: Name & Star Rating + Reviews */}
         <div className="flex items-center justify-between gap-2 font-black text-slate-900 dark:text-white text-base">
-          <span className="truncate group-hover:text-[#FF385C] transition-colors">{familyTitle}</span>
+          <span className="truncate group-hover:text-[#1B5E4A] transition-colors">{familyTitle}</span>
           <div className="flex items-center gap-1 text-xs font-extrabold shrink-0">
             <Star className="w-3.5 h-3.5 text-amber-500 fill-amber-500" />
             <span className="text-slate-900 dark:text-white font-extrabold">{listing.rating}</span>
@@ -270,7 +270,7 @@ export const ListingCard: React.FC<ListingCardProps> = ({ listing, onSelect, vie
 
         {/* Line 3: Max Guests */}
         <div className="text-slate-500 dark:text-slate-400 font-medium text-xs flex items-center gap-1.5 pt-0.5">
-          <Users className="w-3.5 h-3.5 text-[#FF385C] shrink-0" />
+          <Users className="w-3.5 h-3.5 text-[#1B5E4A] shrink-0" />
           <span>Up to {listing.maxGuests} guests</span>
         </div>
 

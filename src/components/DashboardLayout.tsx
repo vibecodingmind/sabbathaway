@@ -100,7 +100,7 @@ export const DashboardLayout: React.FC<DashboardLayoutProps> = ({ children }) =>
   ).length;
 
   const pendingVerificationsCount = verifications.filter(v => v.status === 'PENDING').length;
-  const unreadMessagesCount = messages.filter(m => !m.read && m.receiverId === currentUser.id).length;
+  const unreadMessagesCount = messages.filter(m => !m.isRead && m.receiverId === currentUser.id).length;
   const openSafetyReportsCount = safetyReports.filter(r => r.status === 'OPEN').length;
 
   const totalNotifications = pendingRequestsCount + (currentUser.role === 'ADMIN' ? pendingVerificationsCount + openSafetyReportsCount : 0) + unreadMessagesCount;
@@ -129,7 +129,7 @@ export const DashboardLayout: React.FC<DashboardLayoutProps> = ({ children }) =>
       case 'PRICING':
         return { title: 'Membership Tier Plans', category: 'Pricing' };
       default:
-        return { title: 'Dashboard', category: 'SabbathIn' };
+        return { title: 'Dashboard', category: 'AdventistStay' };
     }
   };
 
@@ -326,13 +326,13 @@ export const DashboardLayout: React.FC<DashboardLayoutProps> = ({ children }) =>
               onClick={() => handleNavClick('EXPLORE')}
               className="flex items-center gap-3 cursor-pointer group overflow-hidden"
             >
-              <div className="w-10 h-10 rounded-xl bg-gradient-to-tr from-[#FF385C] to-rose-500 text-white flex items-center justify-center font-black shadow-md shadow-[#FF385C]/20 group-hover:scale-105 transition-transform shrink-0">
-                S
+              <div className="w-10 h-10 rounded-xl bg-[#1B5E4A] text-white flex items-center justify-center font-black shadow-md shadow-[#1B5E4A]/20 group-hover:scale-105 transition-transform shrink-0">
+                <Home className="w-5 h-5" />
               </div>
               {(!isCollapsed || isMobileOpen) && (
                 <div className="flex flex-col">
-                  <span className="font-extrabold text-base tracking-tight text-slate-900 dark:text-white flex items-center gap-1">
-                    SabbathIn
+                  <span className="font-extrabold text-base tracking-tight text-slate-900 dark:text-white flex items-center gap-1 font-display">
+                    AdventistStay
                   </span>
                   <span className="text-xs text-slate-500 dark:text-slate-400 font-semibold tracking-wide">
                     {currentUser.role === 'ADMIN' ? 'Platform Admin' : 'Family Hospitality'}
@@ -382,7 +382,7 @@ export const DashboardLayout: React.FC<DashboardLayoutProps> = ({ children }) =>
                       className={`
                         w-full flex items-center gap-3 px-3 py-2.5 rounded-xl font-semibold text-xs transition-all relative group
                         ${isActive 
-                          ? 'bg-[#FF385C] text-white shadow-md shadow-[#FF385C]/25' 
+                          ? 'bg-[#1B5E4A] text-white shadow-md shadow-[#1B5E4A]/25' 
                           : 'text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800/80 hover:text-slate-900 dark:hover:text-white'
                         }
                         ${isCollapsed && !isMobileOpen ? 'justify-center px-0' : ''}
@@ -399,8 +399,8 @@ export const DashboardLayout: React.FC<DashboardLayoutProps> = ({ children }) =>
                         <span className={`
                           px-1.5 py-0.5 text-[10px] font-extrabold rounded-full shrink-0
                           ${isActive 
-                            ? 'bg-white text-[#FF385C]' 
-                            : 'bg-[#FF385C] text-white'
+                            ? 'bg-white text-[#1B5E4A]' 
+                            : 'bg-[#1B5E4A] text-white'
                           }
                           ${isCollapsed && !isMobileOpen ? 'absolute -top-1 -right-1 px-1 py-0.2 text-[9px]' : ''}
                         `}>
@@ -504,7 +504,7 @@ export const DashboardLayout: React.FC<DashboardLayoutProps> = ({ children }) =>
                 >
                   <Bell className="w-5 h-5" />
                   {totalNotifications > 0 && (
-                    <span className="absolute top-1 right-1 w-4 h-4 bg-[#FF385C] text-white text-[9px] font-black rounded-full flex items-center justify-center ring-2 ring-white dark:ring-slate-900 animate-pulse">
+                    <span className="absolute top-1 right-1 w-4 h-4 bg-[#1B5E4A] text-white text-[9px] font-black rounded-full flex items-center justify-center ring-2 ring-white dark:ring-slate-900 animate-pulse">
                       {totalNotifications}
                     </span>
                   )}
@@ -515,10 +515,10 @@ export const DashboardLayout: React.FC<DashboardLayoutProps> = ({ children }) =>
                   <div className="absolute right-0 mt-3 w-80 sm:w-96 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl shadow-2xl py-3 z-50 text-xs animate-fade-in">
                     <div className="px-4 pb-2.5 border-b border-slate-100 dark:border-slate-800 flex items-center justify-between">
                       <div className="flex items-center gap-2 font-bold text-slate-900 dark:text-white">
-                        <Bell className="w-4 h-4 text-[#FF385C]" />
+                        <Bell className="w-4 h-4 text-[#1B5E4A]" />
                         <span>Platform Notifications</span>
                       </div>
-                      <span className="px-2 py-0.5 bg-[#FF385C]/10 text-[#FF385C] rounded-full text-[10px] font-extrabold">
+                      <span className="px-2 py-0.5 bg-[#1B5E4A]/10 text-[#1B5E4A] rounded-full text-[10px] font-extrabold">
                         {totalNotifications} Active
                       </span>
                     </div>
@@ -658,7 +658,7 @@ export const DashboardLayout: React.FC<DashboardLayoutProps> = ({ children }) =>
                               <Bell className="w-4 h-4 text-amber-500" /> Notifications
                             </span>
                             {unreadMessagesCount > 0 && (
-                              <span className="px-2 py-0.5 bg-[#FF385C] text-white text-[10px] font-black rounded-full">
+                              <span className="px-2 py-0.5 bg-[#1B5E4A] text-white text-[10px] font-black rounded-full">
                                 {unreadMessagesCount}
                               </span>
                             )}
@@ -688,7 +688,7 @@ export const DashboardLayout: React.FC<DashboardLayoutProps> = ({ children }) =>
                               <Bell className="w-4 h-4 text-amber-500" /> Notifications
                             </span>
                             {unreadMessagesCount > 0 && (
-                              <span className="px-2 py-0.5 bg-[#FF385C] text-white text-[10px] font-black rounded-full">
+                              <span className="px-2 py-0.5 bg-[#1B5E4A] text-white text-[10px] font-black rounded-full">
                                 {unreadMessagesCount}
                               </span>
                             )}
@@ -724,7 +724,7 @@ export const DashboardLayout: React.FC<DashboardLayoutProps> = ({ children }) =>
                               <Bell className="w-4 h-4 text-amber-500" /> Notifications
                             </span>
                             {unreadMessagesCount > 0 && (
-                              <span className="px-2 py-0.5 bg-[#FF385C] text-white text-[10px] font-black rounded-full">
+                              <span className="px-2 py-0.5 bg-[#1B5E4A] text-white text-[10px] font-black rounded-full">
                                 {unreadMessagesCount}
                               </span>
                             )}

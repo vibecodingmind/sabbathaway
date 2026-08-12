@@ -71,7 +71,7 @@ export const FamilyProfileModal: React.FC<FamilyProfileModalProps> = ({
                   key={idx}
                   onClick={() => setActivePhoto(idx)}
                   className={`w-12 h-12 rounded-xl overflow-hidden border-2 transition-all flex-shrink-0 ${
-                    activePhoto === idx ? 'border-[#FF385C] scale-105 shadow-md' : 'border-white/50 opacity-70'
+                    activePhoto === idx ? 'border-[#1B5E4A] scale-105 shadow-md' : 'border-white/50 opacity-70'
                   }`}
                 >
                   <img src={img} alt="" className="w-full h-full object-cover" />
@@ -82,7 +82,7 @@ export const FamilyProfileModal: React.FC<FamilyProfileModalProps> = ({
 
           {/* Verification Badge Header Overlay */}
           <div className="absolute top-4 left-6 z-10 flex items-center gap-2 px-3 py-1.5 rounded-full bg-slate-950/80 backdrop-blur-md text-white text-xs font-bold border border-rose-500/30 shadow-lg">
-            <ShieldCheck className="w-4 h-4 text-[#FF385C]" />
+            <ShieldCheck className="w-4 h-4 text-[#1B5E4A]" />
             <span>Verified</span>
           </div>
 
@@ -105,14 +105,14 @@ export const FamilyProfileModal: React.FC<FamilyProfileModalProps> = ({
               <img 
                 src={family.avatar} 
                 alt={family.familyName} 
-                className="w-16 h-16 rounded-full object-cover ring-4 ring-[#FF385C] flex-shrink-0"
+                className="w-16 h-16 rounded-full object-cover ring-4 ring-[#1B5E4A] flex-shrink-0"
               />
               <div>
                 <h2 className="text-2xl font-extrabold text-slate-900 dark:text-white font-display">
                   {family.familyName}
                 </h2>
                 <p className="text-xs text-slate-600 dark:text-slate-400 font-medium flex items-center gap-1.5 mt-0.5">
-                  <Globe2 className="w-4 h-4 text-[#FF385C]" />
+                  <Globe2 className="w-4 h-4 text-[#1B5E4A]" />
                   {family.city}, {family.country}
                 </p>
                 <p className="text-xs text-emerald-700 dark:text-emerald-400 font-semibold mt-1 flex items-center gap-1.5">
@@ -125,7 +125,7 @@ export const FamilyProfileModal: React.FC<FamilyProfileModalProps> = ({
             {/* Request Button */}
             <button
               onClick={() => onRequestExchange(family)}
-              className="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-2xl bg-[#FF385C] hover:bg-[#E00B41] text-white font-bold text-xs shadow-xl transition-all flex-shrink-0"
+              className="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-2xl bg-[#1B5E4A] hover:bg-[#E00B41] text-white font-bold text-xs shadow-xl transition-all flex-shrink-0"
             >
               <Send className="w-4 h-4" />
               <span>Send Exchange Request</span>
@@ -151,14 +151,14 @@ export const FamilyProfileModal: React.FC<FamilyProfileModalProps> = ({
 
             <div className="p-3.5 rounded-2xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 space-y-1">
               <span className="text-[10px] uppercase font-extrabold text-slate-400 block">PREFERRED DURATION</span>
-              <p className="font-bold text-[#FF385C]">{family.preferredDurations}</p>
+              <p className="font-bold text-[#1B5E4A]">{family.preferredDurations}</p>
             </div>
           </div>
 
           {/* Family Story */}
           <div className="space-y-3 pb-6 border-b border-slate-200 dark:border-slate-800">
             <h3 className="text-base font-bold text-slate-900 dark:text-white flex items-center gap-2">
-              <Heart className="w-5 h-5 text-[#FF385C]" /> About Our Family & Fellowship Journey
+              <Heart className="w-5 h-5 text-[#1B5E4A]" /> About Our Family & Fellowship Journey
             </h3>
             <p className="text-xs leading-relaxed text-slate-700 dark:text-slate-300 bg-rose-50/50 dark:bg-slate-800/50 p-4 rounded-2xl border border-rose-100 dark:border-slate-800">
               {family.familyStory}
@@ -204,11 +204,11 @@ export const FamilyProfileModal: React.FC<FamilyProfileModalProps> = ({
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pb-6 border-b border-slate-200 dark:border-slate-800 text-xs">
             <div className="p-4 rounded-2xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 space-y-2">
               <span className="font-extrabold text-slate-900 dark:text-white flex items-center gap-1.5">
-                <Calendar className="w-4 h-4 text-[#FF385C]" /> Available Hosting Months
+                <Calendar className="w-4 h-4 text-[#1B5E4A]" /> Available Hosting Months
               </span>
               <div className="flex flex-wrap gap-1.5">
                 {family.availableMonths.map((m, i) => (
-                  <span key={i} className="px-2.5 py-0.5 rounded-md bg-rose-100 dark:bg-rose-950 text-[#FF385C] font-bold text-[11px]">
+                  <span key={i} className="px-2.5 py-0.5 rounded-md bg-rose-100 dark:bg-rose-950 text-[#1B5E4A] font-bold text-[11px]">
                     {m}
                   </span>
                 ))}
@@ -232,7 +232,7 @@ export const FamilyProfileModal: React.FC<FamilyProfileModalProps> = ({
           {/* Reviews Section */}
           <div className="space-y-4">
             <h3 className="text-base font-bold text-slate-900 dark:text-white flex items-center gap-2">
-              <MessageSquare className="w-5 h-5 text-[#FF385C]" /> Family Exchange Fellowship Reviews
+              <MessageSquare className="w-5 h-5 text-[#1B5E4A]" /> Family Exchange Fellowship Reviews
             </h3>
 
             {reviews.length === 0 ? (

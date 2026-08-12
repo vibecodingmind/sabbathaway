@@ -124,11 +124,11 @@ Support & Safety Contact: support@adventiststay.org
 
       {/* Hero Banner Header */}
       <div className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-slate-900 via-slate-800 to-rose-950 p-6 sm:p-8 text-white border border-slate-800 shadow-xl">
-        <div className="absolute top-0 right-0 -mt-10 -mr-10 w-72 h-72 bg-[#FF385C]/20 rounded-full blur-3xl pointer-events-none" />
+        <div className="absolute top-0 right-0 -mt-10 -mr-10 w-72 h-72 bg-[#1B5E4A]/20 rounded-full blur-3xl pointer-events-none" />
         <div className="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-6">
           <div className="space-y-2">
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-rose-500/20 text-rose-200 text-xs font-bold border border-rose-500/30">
-              <Calendar className="w-3.5 h-3.5 text-[#FF385C]" />
+              <Calendar className="w-3.5 h-3.5 text-[#1B5E4A]" />
               <span>GUEST HOSPITALITY DASHBOARD</span>
             </div>
             <h1 className="text-2xl sm:text-3xl font-extrabold font-display">
@@ -150,7 +150,7 @@ Support & Safety Contact: support@adventiststay.org
               <span className="text-[10px] text-slate-300 uppercase font-bold">Confirmed Stays</span>
             </div>
             <div className="p-3.5 rounded-2xl bg-white/10 backdrop-blur-md border border-white/10 text-center col-span-2 sm:col-span-1">
-              <span className="text-2xl font-extrabold text-[#FF385C] block">$0</span>
+              <span className="text-2xl font-extrabold text-[#1B5E4A] block">$0</span>
               <span className="text-[10px] text-slate-300 uppercase font-bold">Member Hospitality</span>
             </div>
           </div>
@@ -198,7 +198,7 @@ Support & Safety Contact: support@adventiststay.org
       {/* Main Content Requests List */}
       {filteredRequests.length === 0 ? (
         <div className="p-12 text-center bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl space-y-4 shadow-sm">
-          <div className="w-16 h-16 rounded-full bg-rose-50 dark:bg-rose-950/60 text-[#FF385C] flex items-center justify-center mx-auto">
+          <div className="w-16 h-16 rounded-full bg-rose-50 dark:bg-rose-950/60 text-[#1B5E4A] flex items-center justify-center mx-auto">
             <Calendar className="w-8 h-8" />
           </div>
           <h3 className="text-lg font-extrabold text-slate-900 dark:text-white font-display">
@@ -209,7 +209,7 @@ Support & Safety Contact: support@adventiststay.org
           </p>
           <button
             onClick={() => setActiveTab('EXPLORE')}
-            className="px-6 py-3 rounded-2xl bg-[#FF385C] hover:bg-[#E00B41] text-white font-bold text-xs shadow-lg transition-all"
+            className="px-6 py-3 rounded-2xl bg-[#1B5E4A] hover:bg-[#E00B41] text-white font-bold text-xs shadow-lg transition-all"
           >
             Explore Active Host Listings
           </button>
@@ -244,13 +244,13 @@ Support & Safety Contact: support@adventiststay.org
                         {req.status}
                       </span>
                       <span className="text-xs font-bold text-slate-500 flex items-center gap-1">
-                        <MapPin className="w-3.5 h-3.5 text-[#FF385C]" /> {req.listingCity}
+                        <MapPin className="w-3.5 h-3.5 text-[#1B5E4A]" /> {req.listingCity}
                       </span>
                     </div>
 
                     <h3 
                       onClick={() => handleOpenListing(req.listingId)}
-                      className="text-lg font-extrabold text-slate-900 dark:text-white font-display hover:text-[#FF385C] cursor-pointer transition-colors"
+                      className="text-lg font-extrabold text-slate-900 dark:text-white font-display hover:text-[#1B5E4A] cursor-pointer transition-colors"
                     >
                       {req.listingTitle}
                     </h3>
@@ -260,7 +260,7 @@ Support & Safety Contact: support@adventiststay.org
                     </p>
 
                     <div className="flex items-center gap-2 text-xs text-rose-600 dark:text-rose-400 font-bold">
-                      <Calendar className="w-3.5 h-3.5 text-[#FF385C]" />
+                      <Calendar className="w-3.5 h-3.5 text-[#1B5E4A]" />
                       <span>Sabbath Dates: {req.checkInDate} to {req.checkOutDate}</span>
                     </div>
                   </div>
@@ -276,12 +276,12 @@ Support & Safety Contact: support@adventiststay.org
                   >
                     {isGeneratingPdf === req.id ? (
                       <>
-                        <Loader2 className="w-3.5 h-3.5 animate-spin text-[#FF385C]" />
+                        <Loader2 className="w-3.5 h-3.5 animate-spin text-[#1B5E4A]" />
                         <span>Generating PDF...</span>
                       </>
                     ) : (
                       <>
-                        <FileText className="w-3.5 h-3.5 text-[#FF385C]" />
+                        <FileText className="w-3.5 h-3.5 text-[#1B5E4A]" />
                         <span>Download Booking Details</span>
                       </>
                     )}
@@ -300,7 +300,7 @@ Support & Safety Contact: support@adventiststay.org
                       sendMessage(req.hostId, `Hello ${req.hostName}, regarding my stay request #${req.id}...`, req.id);
                       setActiveTab('MESSAGES');
                     }}
-                    className="inline-flex items-center gap-1.5 px-4 py-2.5 rounded-xl bg-[#FF385C] hover:bg-[#E00B41] text-white font-bold text-xs shadow-md transition-all"
+                    className="inline-flex items-center gap-1.5 px-4 py-2.5 rounded-xl bg-[#1B5E4A] hover:bg-[#E00B41] text-white font-bold text-xs shadow-md transition-all"
                   >
                     <MessageSquare className="w-3.5 h-3.5" />
                     <span>Message Host</span>

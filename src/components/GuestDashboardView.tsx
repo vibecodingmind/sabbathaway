@@ -105,7 +105,7 @@ export const GuestDashboardView: React.FC = () => {
           <div className="flex items-center gap-3">
             <button
               onClick={() => setActiveTab('EXPLORE')}
-              className="px-4 py-2.5 rounded-2xl bg-[#FF385C] hover:bg-[#E00B41] text-white font-bold text-xs shadow-md transition-all flex items-center gap-2"
+              className="px-4 py-2.5 rounded-2xl bg-[#1B5E4A] hover:bg-[#E00B41] text-white font-bold text-xs shadow-md transition-all flex items-center gap-2"
             >
               <Sparkles className="w-4 h-4" />
               <span>Explore Host Homes</span>
@@ -118,7 +118,7 @@ export const GuestDashboardView: React.FC = () => {
           <button
             onClick={() => setActiveGuestTab('REQUESTS')}
             className={`px-4 py-2.5 rounded-xl transition-all whitespace-nowrap flex items-center gap-2 ${
-              activeGuestTab === 'REQUESTS' ? 'bg-[#FF385C] text-white shadow-md' : 'bg-white/10 hover:bg-white/20 text-slate-200'
+              activeGuestTab === 'REQUESTS' ? 'bg-[#1B5E4A] text-white shadow-md' : 'bg-white/10 hover:bg-white/20 text-slate-200'
             }`}
           >
             <Clock className="w-4 h-4" />
@@ -128,7 +128,7 @@ export const GuestDashboardView: React.FC = () => {
           <button
             onClick={() => setActiveGuestTab('SAVED')}
             className={`px-4 py-2.5 rounded-xl transition-all whitespace-nowrap flex items-center gap-2 ${
-              activeGuestTab === 'SAVED' ? 'bg-[#FF385C] text-white shadow-md' : 'bg-white/10 hover:bg-white/20 text-slate-200'
+              activeGuestTab === 'SAVED' ? 'bg-[#1B5E4A] text-white shadow-md' : 'bg-white/10 hover:bg-white/20 text-slate-200'
             }`}
           >
             <Heart className="w-4 h-4" />
@@ -138,7 +138,7 @@ export const GuestDashboardView: React.FC = () => {
           <button
             onClick={() => setActiveGuestTab('EXPERIENCES')}
             className={`px-4 py-2.5 rounded-xl transition-all whitespace-nowrap flex items-center gap-2 ${
-              activeGuestTab === 'EXPERIENCES' ? 'bg-[#FF385C] text-white shadow-md' : 'bg-white/10 hover:bg-white/20 text-slate-200'
+              activeGuestTab === 'EXPERIENCES' ? 'bg-[#1B5E4A] text-white shadow-md' : 'bg-white/10 hover:bg-white/20 text-slate-200'
             }`}
           >
             <Star className="w-4 h-4" />
@@ -148,7 +148,7 @@ export const GuestDashboardView: React.FC = () => {
           <button
             onClick={() => setActiveGuestTab('MEMBERSHIP')}
             className={`px-4 py-2.5 rounded-xl transition-all whitespace-nowrap flex items-center gap-2 ${
-              activeGuestTab === 'MEMBERSHIP' ? 'bg-[#FF385C] text-white shadow-md' : 'bg-white/10 hover:bg-white/20 text-slate-200'
+              activeGuestTab === 'MEMBERSHIP' ? 'bg-[#1B5E4A] text-white shadow-md' : 'bg-white/10 hover:bg-white/20 text-slate-200'
             }`}
           >
             <CreditCard className="w-4 h-4" />
@@ -158,7 +158,7 @@ export const GuestDashboardView: React.FC = () => {
           <button
             onClick={() => setActiveGuestTab('SETTINGS')}
             className={`px-4 py-2.5 rounded-xl transition-all whitespace-nowrap flex items-center gap-2 ${
-              activeGuestTab === 'SETTINGS' ? 'bg-[#FF385C] text-white shadow-md' : 'bg-white/10 hover:bg-white/20 text-slate-200'
+              activeGuestTab === 'SETTINGS' ? 'bg-[#1B5E4A] text-white shadow-md' : 'bg-white/10 hover:bg-white/20 text-slate-200'
             }`}
           >
             <Settings className="w-4 h-4" />
@@ -179,7 +179,7 @@ export const GuestDashboardView: React.FC = () => {
             {myRequests.length === 0 ? (
               <div className="text-center py-10 space-y-3">
                 <p className="text-xs text-slate-500">You haven't requested any home stays yet.</p>
-                <button onClick={() => setActiveTab('EXPLORE')} className="px-5 py-2.5 bg-[#FF385C] text-white rounded-2xl text-xs font-bold hover:bg-[#E00B41]">
+                <button onClick={() => setActiveTab('EXPLORE')} className="px-5 py-2.5 bg-[#1B5E4A] text-white rounded-2xl text-xs font-bold hover:bg-[#E00B41]">
                   Browse Sabbath Host Homes
                 </button>
               </div>
@@ -257,7 +257,7 @@ export const GuestDashboardView: React.FC = () => {
                           setSelectedListing(listing);
                           setActiveTab('EXPLORE');
                         }}
-                        className="w-full py-2 bg-[#FF385C] text-white font-bold rounded-xl text-xs hover:bg-[#E00B41]"
+                        className="w-full py-2 bg-[#1B5E4A] text-white font-bold rounded-xl text-xs hover:bg-[#E00B41]"
                       >
                         View Host Details
                       </button>
@@ -430,7 +430,7 @@ export const GuestDashboardView: React.FC = () => {
                   <button type="button" onClick={() => setReviewListingId(null)} className="px-4 py-2 bg-slate-100 text-slate-600 rounded-xl font-bold">
                     Cancel
                   </button>
-                  <button type="submit" className="px-4 py-2 bg-[#FF385C] text-white rounded-xl font-bold hover:bg-[#E00B41]">
+                  <button type="submit" className="px-4 py-2 bg-[#1B5E4A] text-white rounded-xl font-bold hover:bg-[#E00B41]">
                     Submit Review
                   </button>
                 </div>

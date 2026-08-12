@@ -21,19 +21,19 @@ export const HeroSearch: React.FC = () => {
   return (
     <div id="hero-search-container" className="relative bg-gradient-to-b from-rose-950 via-slate-900 to-slate-950 text-white pt-10 pb-16 px-4 sm:px-6 lg:px-8 overflow-hidden rounded-3xl mb-10 shadow-2xl border border-rose-900/30">
       {/* Background Decorative Graphic Pattern */}
-      <div className="absolute inset-0 opacity-10 bg-[radial-gradient(#FF385C_1px,transparent_1px)] [background-size:16px_16px] pointer-events-none" />
+      <div className="absolute inset-0 opacity-10 bg-[radial-gradient(#1B5E4A_1px,transparent_1px)] [background-size:16px_16px] pointer-events-none" />
       
       <div className="relative max-w-6xl mx-auto text-center space-y-6">
         
         {/* Sabbath Family Hospitality Badge */}
         <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-rose-500/20 border border-rose-400/30 text-rose-200 text-xs sm:text-sm font-semibold backdrop-blur-md">
-          <Heart className="w-4 h-4 text-[#FF385C] fill-[#FF385C]" />
+          <Heart className="w-4 h-4 text-[#1B5E4A] fill-[#1B5E4A]" />
           <span>Sabbath Family Hospitality Platform • Non-Commercial Fellowship</span>
         </div>
 
         {/* Hero Title */}
         <h1 className="text-3xl sm:text-5xl font-extrabold tracking-tight font-display leading-tight">
-          Find Your Next <span className="text-[#FF385C]">Sabbath Stay</span> with an Adventist Family
+          Find Your Next <span className="text-[#1B5E4A]">Sabbath Stay</span> with an Adventist Family
         </h1>
         
         <p className="max-w-2xl mx-auto text-sm sm:text-base text-rose-100/80 leading-relaxed font-normal">
@@ -48,7 +48,7 @@ export const HeroSearch: React.FC = () => {
             {/* 1. Where (Destination) */}
             <div className="space-y-1">
               <label className="text-[11px] font-black uppercase tracking-wider text-slate-500 dark:text-slate-400 flex items-center gap-1">
-                <MapPin className="w-3.5 h-3.5 text-[#FF385C]" />
+                <MapPin className="w-3.5 h-3.5 text-[#1B5E4A]" />
                 Where
               </label>
               <input
@@ -57,21 +57,21 @@ export const HeroSearch: React.FC = () => {
                 placeholder="City, State, Church..."
                 value={filters.destination}
                 onChange={e => setFilters(prev => ({ ...prev, destination: e.target.value }))}
-                className="w-full px-3 py-2.5 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-xs font-bold focus:outline-none focus:ring-2 focus:ring-[#FF385C]"
+                className="w-full px-3 py-2.5 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-xs font-bold focus:outline-none focus:ring-2 focus:ring-[#1B5E4A]"
               />
             </div>
 
             {/* 2. Countries Dropdown */}
             <div className="space-y-1">
               <label className="text-[11px] font-black uppercase tracking-wider text-slate-500 dark:text-slate-400 flex items-center gap-1">
-                <Globe className="w-3.5 h-3.5 text-[#FF385C]" />
+                <Globe className="w-3.5 h-3.5 text-[#1B5E4A]" />
                 Country
               </label>
               <select
                 id="search-country"
                 value={filters.country || 'ALL'}
                 onChange={e => setFilters(prev => ({ ...prev, country: e.target.value === 'ALL' ? undefined : e.target.value }))}
-                className="w-full px-3 py-2.5 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-xs font-bold focus:outline-none focus:ring-2 focus:ring-[#FF385C] cursor-pointer"
+                className="w-full px-3 py-2.5 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-xs font-bold focus:outline-none focus:ring-2 focus:ring-[#1B5E4A] cursor-pointer"
               >
                 <option value="ALL">All Countries Worldwide</option>
                 <option value="United States">United States</option>
@@ -97,14 +97,14 @@ export const HeroSearch: React.FC = () => {
             {/* 3. Reason to Stay */}
             <div className="space-y-1">
               <label className="text-[11px] font-black uppercase tracking-wider text-slate-500 dark:text-slate-400 flex items-center gap-1">
-                <Sparkles className="w-3.5 h-3.5 text-[#FF385C]" />
+                <Sparkles className="w-3.5 h-3.5 text-[#1B5E4A]" />
                 Reason to Stay
               </label>
               <select
                 id="search-purpose"
                 value={filters.purpose}
                 onChange={handlePurposeChange}
-                className="w-full px-3 py-2.5 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-xs font-bold focus:outline-none focus:ring-2 focus:ring-[#FF385C] cursor-pointer"
+                className="w-full px-3 py-2.5 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-xs font-bold focus:outline-none focus:ring-2 focus:ring-[#1B5E4A] cursor-pointer"
               >
                 <option value="ALL">All Purpose Stays</option>
                 <option value="WORSHIP_VISIT">Sabbath Worship & Church Visit</option>
@@ -120,7 +120,7 @@ export const HeroSearch: React.FC = () => {
             {/* 4. Sabbath Dates */}
             <div className="space-y-1">
               <label className="text-[11px] font-black uppercase tracking-wider text-slate-500 dark:text-slate-400 flex items-center gap-1">
-                <Calendar className="w-3.5 h-3.5 text-[#FF385C]" />
+                <Calendar className="w-3.5 h-3.5 text-[#1B5E4A]" />
                 Select Sabbath
               </label>
               <input
@@ -128,21 +128,21 @@ export const HeroSearch: React.FC = () => {
                 type="date"
                 value={filters.checkInDate}
                 onChange={e => setFilters(prev => ({ ...prev, checkInDate: e.target.value }))}
-                className="w-full px-3 py-2.5 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-xs font-bold focus:outline-none focus:ring-2 focus:ring-[#FF385C] cursor-pointer"
+                className="w-full px-3 py-2.5 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-xs font-bold focus:outline-none focus:ring-2 focus:ring-[#1B5E4A] cursor-pointer"
               />
             </div>
 
             {/* 5. Guests Numbers */}
             <div className="space-y-1">
               <label className="text-[11px] font-black uppercase tracking-wider text-slate-500 dark:text-slate-400 flex items-center gap-1">
-                <Users className="w-3.5 h-3.5 text-[#FF385C]" />
+                <Users className="w-3.5 h-3.5 text-[#1B5E4A]" />
                 Guest Numbers
               </label>
               <select
                 id="search-guests"
                 value={filters.guestCount}
                 onChange={e => setFilters(prev => ({ ...prev, guestCount: parseInt(e.target.value) || 1 }))}
-                className="w-full px-3 py-2.5 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-xs font-bold focus:outline-none focus:ring-2 focus:ring-[#FF385C] cursor-pointer"
+                className="w-full px-3 py-2.5 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-xs font-bold focus:outline-none focus:ring-2 focus:ring-[#1B5E4A] cursor-pointer"
               >
                 <option value={1}>1 Guest</option>
                 <option value={2}>2 Guests</option>
@@ -174,7 +174,7 @@ export const HeroSearch: React.FC = () => {
                 onClick={() => setFilters(prev => ({ ...prev, verifiedHostsOnly: !prev.verifiedHostsOnly }))}
                 className={`px-3 py-1.5 rounded-full border transition-all ${
                   filters.verifiedHostsOnly 
-                    ? 'bg-rose-100 dark:bg-rose-950 text-[#FF385C] border-rose-400 font-bold' 
+                    ? 'bg-rose-100 dark:bg-rose-950 text-[#1B5E4A] border-rose-400 font-bold' 
                     : 'bg-slate-50 dark:bg-slate-800 text-slate-600 dark:text-slate-400 border-slate-200 dark:border-slate-700'
                 }`}
               >
@@ -185,7 +185,7 @@ export const HeroSearch: React.FC = () => {
             <button
               id="btn-reset-filters"
               onClick={resetFilters}
-              className="text-slate-500 dark:text-slate-400 hover:text-[#FF385C] font-bold underline"
+              className="text-slate-500 dark:text-slate-400 hover:text-[#1B5E4A] font-bold underline"
             >
               Reset Filters
             </button>

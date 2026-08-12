@@ -206,7 +206,7 @@ export const AdminDashboard: React.FC = () => {
           <button
             onClick={() => setActiveTab('OVERVIEW')}
             className={`px-3.5 py-2 rounded-xl transition-all whitespace-nowrap flex items-center gap-1.5 ${
-              activeTab === 'OVERVIEW' ? 'bg-[#FF385C] text-white shadow-md' : 'bg-white/10 hover:bg-white/20 text-slate-200'
+              activeTab === 'OVERVIEW' ? 'bg-[#1B5E4A] text-white shadow-md' : 'bg-white/10 hover:bg-white/20 text-slate-200'
             }`}
           >
             <BarChart3 className="w-3.5 h-3.5" />
@@ -216,7 +216,7 @@ export const AdminDashboard: React.FC = () => {
           <button
             onClick={() => setActiveTab('USERS')}
             className={`px-3.5 py-2 rounded-xl transition-all whitespace-nowrap flex items-center gap-1.5 ${
-              activeTab === 'USERS' ? 'bg-[#FF385C] text-white shadow-md' : 'bg-white/10 hover:bg-white/20 text-slate-200'
+              activeTab === 'USERS' ? 'bg-[#1B5E4A] text-white shadow-md' : 'bg-white/10 hover:bg-white/20 text-slate-200'
             }`}
           >
             <Users className="w-3.5 h-3.5" />
@@ -226,7 +226,7 @@ export const AdminDashboard: React.FC = () => {
           <button
             onClick={() => setActiveTab('HOSTS')}
             className={`px-3.5 py-2 rounded-xl transition-all whitespace-nowrap flex items-center gap-1.5 ${
-              activeTab === 'HOSTS' ? 'bg-[#FF385C] text-white shadow-md' : 'bg-white/10 hover:bg-white/20 text-slate-200'
+              activeTab === 'HOSTS' ? 'bg-[#1B5E4A] text-white shadow-md' : 'bg-white/10 hover:bg-white/20 text-slate-200'
             }`}
           >
             <Building2 className="w-3.5 h-3.5" />
@@ -236,7 +236,7 @@ export const AdminDashboard: React.FC = () => {
           <button
             onClick={() => setActiveTab('GUESTS')}
             className={`px-3.5 py-2 rounded-xl transition-all whitespace-nowrap flex items-center gap-1.5 ${
-              activeTab === 'GUESTS' ? 'bg-[#FF385C] text-white shadow-md' : 'bg-white/10 hover:bg-white/20 text-slate-200'
+              activeTab === 'GUESTS' ? 'bg-[#1B5E4A] text-white shadow-md' : 'bg-white/10 hover:bg-white/20 text-slate-200'
             }`}
           >
             <UserCheck className="w-3.5 h-3.5" />
@@ -246,7 +246,7 @@ export const AdminDashboard: React.FC = () => {
           <button
             onClick={() => setActiveTab('STAYS')}
             className={`px-3.5 py-2 rounded-xl transition-all whitespace-nowrap flex items-center gap-1.5 ${
-              activeTab === 'STAYS' ? 'bg-[#FF385C] text-white shadow-md' : 'bg-white/10 hover:bg-white/20 text-slate-200'
+              activeTab === 'STAYS' ? 'bg-[#1B5E4A] text-white shadow-md' : 'bg-white/10 hover:bg-white/20 text-slate-200'
             }`}
           >
             <Layers className="w-3.5 h-3.5" />
@@ -256,7 +256,7 @@ export const AdminDashboard: React.FC = () => {
           <button
             onClick={() => setActiveTab('FAMILY_EXCHANGE')}
             className={`px-3.5 py-2 rounded-xl transition-all whitespace-nowrap flex items-center gap-1.5 ${
-              activeTab === 'FAMILY_EXCHANGE' ? 'bg-[#FF385C] text-white shadow-md' : 'bg-white/10 hover:bg-white/20 text-slate-200'
+              activeTab === 'FAMILY_EXCHANGE' ? 'bg-[#1B5E4A] text-white shadow-md' : 'bg-white/10 hover:bg-white/20 text-slate-200'
             }`}
           >
             <HeartHandshake className="w-3.5 h-3.5" />
@@ -266,7 +266,7 @@ export const AdminDashboard: React.FC = () => {
           <button
             onClick={() => setActiveTab('MEMBERSHIPS')}
             className={`px-3.5 py-2 rounded-xl transition-all whitespace-nowrap flex items-center gap-1.5 ${
-              activeTab === 'MEMBERSHIPS' ? 'bg-[#FF385C] text-white shadow-md' : 'bg-white/10 hover:bg-white/20 text-slate-200'
+              activeTab === 'MEMBERSHIPS' ? 'bg-[#1B5E4A] text-white shadow-md' : 'bg-white/10 hover:bg-white/20 text-slate-200'
             }`}
           >
             <CreditCard className="w-3.5 h-3.5" />
@@ -276,7 +276,7 @@ export const AdminDashboard: React.FC = () => {
           <button
             onClick={() => setActiveTab('FEATURED')}
             className={`px-3.5 py-2 rounded-xl transition-all whitespace-nowrap flex items-center gap-1.5 ${
-              activeTab === 'FEATURED' ? 'bg-[#FF385C] text-white shadow-md' : 'bg-white/10 hover:bg-white/20 text-slate-200'
+              activeTab === 'FEATURED' ? 'bg-[#1B5E4A] text-white shadow-md' : 'bg-white/10 hover:bg-white/20 text-slate-200'
             }`}
           >
             <Sparkles className="w-3.5 h-3.5" />
@@ -286,7 +286,7 @@ export const AdminDashboard: React.FC = () => {
           <button
             onClick={() => setActiveTab('PAYMENTS')}
             className={`px-3.5 py-2 rounded-xl transition-all whitespace-nowrap flex items-center gap-1.5 ${
-              activeTab === 'PAYMENTS' ? 'bg-[#FF385C] text-white shadow-md' : 'bg-white/10 hover:bg-white/20 text-slate-200'
+              activeTab === 'PAYMENTS' ? 'bg-[#1B5E4A] text-white shadow-md' : 'bg-white/10 hover:bg-white/20 text-slate-200'
             }`}
           >
             <DollarSign className="w-3.5 h-3.5" />
@@ -296,7 +296,7 @@ export const AdminDashboard: React.FC = () => {
           <button
             onClick={() => setActiveTab('REVIEWS_REPORTS')}
             className={`px-3.5 py-2 rounded-xl transition-all whitespace-nowrap flex items-center gap-1.5 ${
-              activeTab === 'REVIEWS_REPORTS' ? 'bg-[#FF385C] text-white shadow-md' : 'bg-white/10 hover:bg-white/20 text-slate-200'
+              activeTab === 'REVIEWS_REPORTS' ? 'bg-[#1B5E4A] text-white shadow-md' : 'bg-white/10 hover:bg-white/20 text-slate-200'
             }`}
           >
             <AlertTriangle className="w-3.5 h-3.5" />
@@ -306,7 +306,7 @@ export const AdminDashboard: React.FC = () => {
           <button
             onClick={() => setActiveTab('CONTENT_CATEGORIES')}
             className={`px-3.5 py-2 rounded-xl transition-all whitespace-nowrap flex items-center gap-1.5 ${
-              activeTab === 'CONTENT_CATEGORIES' ? 'bg-[#FF385C] text-white shadow-md' : 'bg-white/10 hover:bg-white/20 text-slate-200'
+              activeTab === 'CONTENT_CATEGORIES' ? 'bg-[#1B5E4A] text-white shadow-md' : 'bg-white/10 hover:bg-white/20 text-slate-200'
             }`}
           >
             <Tags className="w-3.5 h-3.5" />
@@ -316,7 +316,7 @@ export const AdminDashboard: React.FC = () => {
           <button
             onClick={() => setActiveTab('SETTINGS')}
             className={`px-3.5 py-2 rounded-xl transition-all whitespace-nowrap flex items-center gap-1.5 ${
-              activeTab === 'SETTINGS' ? 'bg-[#FF385C] text-white shadow-md' : 'bg-white/10 hover:bg-white/20 text-slate-200'
+              activeTab === 'SETTINGS' ? 'bg-[#1B5E4A] text-white shadow-md' : 'bg-white/10 hover:bg-white/20 text-slate-200'
             }`}
           >
             <Settings className="w-3.5 h-3.5" />
@@ -374,7 +374,7 @@ export const AdminDashboard: React.FC = () => {
               <div className="flex items-center justify-between">
                 <div>
                   <h3 className="font-extrabold text-sm text-slate-900 dark:text-white flex items-center gap-2">
-                    <TrendingUp className="w-4 h-4 text-[#FF385C]" /> Platform Growth & Revenue Trend
+                    <TrendingUp className="w-4 h-4 text-[#1B5E4A]" /> Platform Growth & Revenue Trend
                   </h3>
                   <p className="text-[11px] text-slate-400">Monthly new members and stay reservations</p>
                 </div>
@@ -393,8 +393,8 @@ export const AdminDashboard: React.FC = () => {
                   ]}>
                     <defs>
                       <linearGradient id="colorMembers" x1="0" y1="0" x2="0" y2="1">
-                        <stop offset="5%" stopColor="#FF385C" stopOpacity={0.8}/>
-                        <stop offset="95%" stopColor="#FF385C" stopOpacity={0}/>
+                        <stop offset="5%" stopColor="#1B5E4A" stopOpacity={0.8}/>
+                        <stop offset="95%" stopColor="#1B5E4A" stopOpacity={0}/>
                       </linearGradient>
                       <linearGradient id="colorStays" x1="0" y1="0" x2="0" y2="1">
                         <stop offset="5%" stopColor="#10B981" stopOpacity={0.8}/>
@@ -407,7 +407,7 @@ export const AdminDashboard: React.FC = () => {
                     <Tooltip 
                       contentStyle={{ backgroundColor: '#0f172a', borderColor: '#334155', borderRadius: '12px', color: '#fff', fontSize: '12px' }}
                     />
-                    <Area type="monotone" dataKey="Members" stroke="#FF385C" fillOpacity={1} fill="url(#colorMembers)" />
+                    <Area type="monotone" dataKey="Members" stroke="#1B5E4A" fillOpacity={1} fill="url(#colorMembers)" />
                     <Area type="monotone" dataKey="Stays" stroke="#10B981" fillOpacity={1} fill="url(#colorStays)" />
                   </AreaChart>
                 </ResponsiveContainer>
@@ -431,7 +431,7 @@ export const AdminDashboard: React.FC = () => {
                         { name: 'Approved', value: stayRequests.filter(s => s.status === 'APPROVED').length || 3 },
                         { name: 'Pending', value: stayRequests.filter(s => s.status === 'PENDING').length || 2 },
                         { name: 'Completed', value: stayRequests.filter(s => s.status === 'COMPLETED').length || 4 },
-                        { name: 'Rejected/Cancelled', value: stayRequests.filter(s => s.status === 'REJECTED' || s.status === 'CANCELLED').length || 1 }
+                        { name: 'Rejected/Cancelled', value: stayRequests.filter(s => s.status === 'DECLINED' || s.status === 'CANCELLED').length || 1 }
                       ]}
                       cx="50%"
                       cy="50%"
@@ -472,19 +472,19 @@ export const AdminDashboard: React.FC = () => {
           <div className="bg-slate-50 dark:bg-slate-900/60 rounded-3xl p-6 border border-slate-200 dark:border-slate-800 space-y-4">
             <h3 className="text-sm font-black text-slate-900 dark:text-white uppercase tracking-wider">Quick Platform Actions</h3>
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-              <button onClick={() => setActiveTab('USERS')} className="p-4 bg-white dark:bg-slate-800 rounded-2xl border border-slate-200 dark:border-slate-700 text-left hover:border-[#FF385C] transition-all">
+              <button onClick={() => setActiveTab('USERS')} className="p-4 bg-white dark:bg-slate-800 rounded-2xl border border-slate-200 dark:border-slate-700 text-left hover:border-[#1B5E4A] transition-all">
                 <Users className="w-5 h-5 text-blue-500 mb-2" />
                 <h4 className="font-bold text-xs text-slate-900 dark:text-white">Manage User Accounts</h4>
                 <p className="text-[11px] text-slate-500">Suspend, reactivate, or edit user profiles</p>
               </button>
 
-              <button onClick={() => setActiveTab('HOSTS')} className="p-4 bg-white dark:bg-slate-800 rounded-2xl border border-slate-200 dark:border-slate-700 text-left hover:border-[#FF385C] transition-all">
+              <button onClick={() => setActiveTab('HOSTS')} className="p-4 bg-white dark:bg-slate-800 rounded-2xl border border-slate-200 dark:border-slate-700 text-left hover:border-[#1B5E4A] transition-all">
                 <Building2 className="w-5 h-5 text-emerald-500 mb-2" />
                 <h4 className="font-bold text-xs text-slate-900 dark:text-white">Approve & Verify Hosts</h4>
                 <p className="text-[11px] text-slate-500">Grant host verification and audit listings</p>
               </button>
 
-              <button onClick={() => setActiveTab('MEMBERSHIPS')} className="p-4 bg-white dark:bg-slate-800 rounded-2xl border border-slate-200 dark:border-slate-700 text-left hover:border-[#FF385C] transition-all">
+              <button onClick={() => setActiveTab('MEMBERSHIPS')} className="p-4 bg-white dark:bg-slate-800 rounded-2xl border border-slate-200 dark:border-slate-700 text-left hover:border-[#1B5E4A] transition-all">
                 <CreditCard className="w-5 h-5 text-purple-500 mb-2" />
                 <h4 className="font-bold text-xs text-slate-900 dark:text-white">Configure Plan Pricing</h4>
                 <p className="text-[11px] text-slate-500">Adjust $39, $59, $79 annual plan pricing</p>
@@ -505,7 +505,7 @@ export const AdminDashboard: React.FC = () => {
                 placeholder="Search users by name, email, or church..."
                 value={userSearch}
                 onChange={e => setUserSearch(e.target.value)}
-                className="w-full pl-9 pr-4 py-2 rounded-xl bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-xs text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-[#FF385C]"
+                className="w-full pl-9 pr-4 py-2 rounded-xl bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-xs text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-[#1B5E4A]"
               />
             </div>
             <div className="flex items-center gap-2 text-xs font-bold">
@@ -841,7 +841,7 @@ export const AdminDashboard: React.FC = () => {
               {featuredPackages.map(pkg => (
                 <div key={pkg.id} className="p-4 bg-slate-50 dark:bg-slate-800/50 rounded-2xl border border-slate-200 dark:border-slate-700 space-y-3">
                   <h4 className="font-extrabold text-slate-900 dark:text-white text-sm">{pkg.name}</h4>
-                  <p className="text-2xl font-black text-[#FF385C]">${pkg.price}</p>
+                  <p className="text-2xl font-black text-[#1B5E4A]">${pkg.price}</p>
                   <p className="text-xs text-slate-500">{pkg.durationDays} Days Duration • {pkg.activeCampaigns} Active Campaigns</p>
                   <p className="text-xs font-bold text-emerald-600">Total Revenue Generated: ${pkg.revenue}</p>
                 </div>
@@ -932,7 +932,7 @@ export const AdminDashboard: React.FC = () => {
                 <Tags className="w-5 h-5 text-indigo-500" />
                 Stay & Living Environment Categories
               </h3>
-              <button onClick={() => setIsAddingCategory(!isAddingCategory)} className="px-3.5 py-2 bg-[#FF385C] text-white rounded-xl text-xs font-bold flex items-center gap-1.5 hover:bg-[#E00B41]">
+              <button onClick={() => setIsAddingCategory(!isAddingCategory)} className="px-3.5 py-2 bg-[#1B5E4A] text-white rounded-xl text-xs font-bold flex items-center gap-1.5 hover:bg-[#E00B41]">
                 <Plus className="w-4 h-4" /> Add Category
               </button>
             </div>
@@ -988,13 +988,13 @@ export const AdminDashboard: React.FC = () => {
             <div className="p-4 bg-slate-50 dark:bg-slate-800/40 rounded-2xl border border-slate-200 dark:border-slate-700 space-y-2">
               <h4 className="font-bold text-slate-900 dark:text-white">Host Verification Requirements</h4>
               <p className="text-slate-500">Require church membership verification prior to hosting approval.</p>
-              <input type="checkbox" defaultChecked className="rounded border-slate-300 text-[#FF385C] focus:ring-[#FF385C]" />
+              <input type="checkbox" defaultChecked className="rounded border-slate-300 text-[#1B5E4A] focus:ring-[#1B5E4A]" />
             </div>
 
             <div className="p-4 bg-slate-50 dark:bg-slate-800/40 rounded-2xl border border-slate-200 dark:border-slate-700 space-y-2">
               <h4 className="font-bold text-slate-900 dark:text-white">Global Safety Audits</h4>
               <p className="text-slate-500">Enable automated safety reporting flag on unverified guest inquiries.</p>
-              <input type="checkbox" defaultChecked className="rounded border-slate-300 text-[#FF385C] focus:ring-[#FF385C]" />
+              <input type="checkbox" defaultChecked className="rounded border-slate-300 text-[#1B5E4A] focus:ring-[#1B5E4A]" />
             </div>
           </div>
         </div>
