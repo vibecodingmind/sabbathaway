@@ -1,0 +1,6 @@
+{
+  "name": "AdventistStay",
+  "description": "Secure global Christian hospitality platform connecting verified Seventh-day Adventist hosts and travelers for fellowship and stay.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
