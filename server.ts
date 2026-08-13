@@ -1,20 +1,40 @@
 import express from 'express';
 import path from 'path';
+import cookieParser from 'cookie-parser';
 import { createServer as createViteServer } from 'vite';
+import { getStore } from './server/db';
+import apiRouter from './server/api';
 
 async function startServer() {
   const app = express();
   const PORT = Number(process.env.PORT) || 3000;
 
-  app.use(express.json());
+  app.use(express.json({ limit: '2mb' }));
+  app.use(cookieParser());
 
-  // In-memory data endpoints powering the REST API
-  app.get('/api/health', (req, res) => {
+  // Initialize the persistence layer (Postgres when DATABASE_URL is set, else in-memory).
+  try {
+    await getStore();
+    console.log('AdventistStay data store initialized.');
+  } catch (err) {
+    console.error('Failed to initialize data store:', err);
+  }
+
+  app.get('/api/health', async (req, res) => {
+    let database = 'in-memory';
+    try {
+      const store = await getStore();
+      await store.listCollection('stayCategories');
+      database = process.env.DATABASE_URL ? 'connected' : 'in-memory';
+    } catch {
+      database = 'error';
+    }
     res.json({
       status: 'HEALTHY',
       service: 'AdventistStay API Engine',
       timestamp: new Date().toISOString(),
-      version: '1.0.0',
+      version: '2.0.0',
+      database,
       compliance: {
         nonCommercialHospitality: true,
         verificationTierSupport: true,
@@ -22,6 +42,9 @@ async function startServer() {
       }
     });
   });
+
+  // Persistent REST API (auth, state, marketplace mutations, admin)
+  app.use('/api', apiRouter);
 
   // OpenAPI 3.0 Documentation Endpoint
   app.get('/api/docs/openapi', (req, res) => {
