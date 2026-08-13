@@ -23,3 +23,18 @@ for both the API and the frontend.
   starts pre-authenticated as a demo guest user.
 - HMR can be disabled by setting `DISABLE_HMR=true` (used by AI Studio); leave it unset for
   normal hot-reloading during development.
+
+## Deployment (Railway)
+
+- The app is deployed to Railway, project `triumphant-unity`, service `sabbathaway`,
+  environment `production`. Live URL: https://sabbathaway-production.up.railway.app
+- Deployment builds from `Dockerfile` (multi-stage: `oven/bun` builds, `node:22-slim` runs
+  `node dist/server.cjs`). `railway.json` pins the Dockerfile builder and sets the
+  `/api/health` healthcheck.
+- The server listens on `process.env.PORT`; Railway injects `PORT=8080`, so the service
+  domain's target port is `8080`. Keep these in sync if the domain is recreated.
+- Production build command: `bun run build` (Vite build + esbuild bundles `server.ts` to
+  `dist/server.cjs`); run with `NODE_ENV=production node dist/server.cjs`.
+- To redeploy the current working directory from the repo root:
+  `railway up -p <projectId> -s <serviceId> -e production --ci -y` (auth via the
+  `RAILWAY_API_TOKEN` env var).
