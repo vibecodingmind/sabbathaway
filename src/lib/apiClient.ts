@@ -33,7 +33,8 @@ export async function apiRequest<T = unknown>(
   options: RequestInit = {}
 ): Promise<T> {
   const headers = new Headers(options.headers || {});
-  if (!headers.has('Content-Type') && options.body) {
+  const isFormData = typeof FormData !== 'undefined' && options.body instanceof FormData;
+  if (!headers.has('Content-Type') && options.body && !isFormData) {
     headers.set('Content-Type', 'application/json');
   }
 
@@ -78,10 +79,13 @@ export const api = {
       body: JSON.stringify({ role }),
     }),
   register: (payload: Record<string, unknown>) =>
-    apiRequest<{ token: string; user: any; membership?: any }>('/auth/register', {
-      method: 'POST',
-      body: JSON.stringify(payload),
-    }),
+    apiRequest<{ token: string; user: any; membership?: any; checkoutUrl?: string; sessionId?: string }>(
+      '/auth/register',
+      {
+        method: 'POST',
+        body: JSON.stringify(payload),
+      }
+    ),
   me: () => apiRequest('/auth/me'),
   createStay: (payload: Record<string, unknown>) =>
     apiRequest('/stays', { method: 'POST', body: JSON.stringify(payload) }),
@@ -99,10 +103,22 @@ export const api = {
   enableListing: (id: string) => apiRequest(`/listings/${id}/enable`, { method: 'POST' }),
   removeListing: (id: string) => apiRequest(`/listings/${id}`, { method: 'DELETE' }),
   subscribe: (payload: Record<string, unknown>) =>
-    apiRequest('/memberships/subscribe', { method: 'POST', body: JSON.stringify(payload) }),
+    apiRequest<{
+      id?: string;
+      plan?: string;
+      checkoutUrl?: string;
+      sessionId?: string;
+      membership?: unknown;
+    }>('/memberships/subscribe', { method: 'POST', body: JSON.stringify(payload) }),
   cancelMembership: () => apiRequest('/memberships/cancel', { method: 'POST' }),
-  submitVerification: (payload: Record<string, unknown>) =>
-    apiRequest('/verifications', { method: 'POST', body: JSON.stringify(payload) }),
+  submitVerification: (payload: Record<string, unknown> | FormData) => {
+    if (payload instanceof FormData) {
+      return apiRequest('/verifications', { method: 'POST', body: payload });
+    }
+    return apiRequest('/verifications', { method: 'POST', body: JSON.stringify(payload) });
+  },
+  paymentConfig: () =>
+    apiRequest<{ stripeEnabled: boolean; providers: Record<string, string> }>('/payments/config'),
   updateVerification: (id: string, payload: { status: string; notes?: string }) =>
     apiRequest(`/verifications/${id}`, { method: 'PATCH', body: JSON.stringify(payload) }),
   addReview: (payload: Record<string, unknown>) =>

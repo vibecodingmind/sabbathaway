@@ -21,6 +21,7 @@ export const VerificationCenter: React.FC = () => {
   const [pastorName, setPastorName] = useState(currentUser.pastorName);
   const [pastorEmail, setPastorEmail] = useState('pastor.nelson@andrews.edu');
   const [documentType, setDocumentType] = useState<'PASTOR_LETTER' | 'BAPTISM_CERTIFICATE' | 'MEMBERSHIP_LETTER'>('PASTOR_LETTER');
+  const [documentFile, setDocumentFile] = useState<File | null>(null);
   const [submitted, setSubmitted] = useState(false);
 
   const myVerifications = (verifications || []).filter(v => v.userId === currentUser?.id);
@@ -37,7 +38,8 @@ export const VerificationCenter: React.FC = () => {
       pastorName,
       pastorEmail,
       pastorPhone: '+1 (269) 555-0199',
-      documentType
+      documentType,
+      documentFile: documentFile || undefined,
     });
     setSubmitted(true);
   };
@@ -191,17 +193,25 @@ export const VerificationCenter: React.FC = () => {
                 </select>
               </div>
 
-              <div className="p-4 rounded-2xl bg-slate-50 dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700 flex items-center justify-between">
+              <div className="p-4 rounded-2xl bg-slate-50 dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700 space-y-3">
                 <div className="flex items-center gap-2">
                   <Upload className="w-5 h-5 text-amber-600" />
                   <div>
-                    <p className="font-bold text-slate-800 dark:text-slate-200">Upload Verification Document (Optional PDF/JPG)</p>
-                    <p className="text-[11px] text-slate-500">Maximum file size: 10MB</p>
+                    <p className="font-bold text-slate-800 dark:text-slate-200">Upload Verification Document</p>
+                    <p className="text-[11px] text-slate-500">PDF or image · max 8MB · optional but recommended</p>
                   </div>
                 </div>
-                <button type="button" className="px-3 py-1.5 rounded-lg bg-amber-600 text-white font-bold text-xs">
-                  Choose File
-                </button>
+                <input
+                  type="file"
+                  accept=".pdf,image/jpeg,image/png,image/webp"
+                  onChange={(e) => setDocumentFile(e.target.files?.[0] || null)}
+                  className="block w-full text-xs text-slate-600 file:mr-3 file:py-2 file:px-3 file:rounded-lg file:border-0 file:bg-amber-600 file:text-white file:font-bold file:cursor-pointer"
+                />
+                {documentFile && (
+                  <p className="text-[11px] font-semibold text-emerald-700 dark:text-emerald-400">
+                    Selected: {documentFile.name}
+                  </p>
+                )}
               </div>
 
               <button

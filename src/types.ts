@@ -266,6 +266,8 @@ export interface VerificationRequest {
   pastorPhone: string;
   status: 'PENDING' | 'VERIFIED' | 'REJECTED';
   documentType: 'PASTOR_LETTER' | 'BAPTISM_CERTIFICATE' | 'MEMBERSHIP_LETTER';
+  documentUrl?: string;
+  documentFileName?: string;
   submittedAt: string;
   reviewedBy?: string;
   notes?: string;

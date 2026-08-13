@@ -154,6 +154,10 @@ export const AuthModal: React.FC = () => {
       });
 
       if (result.success) {
+        if ((result as { checkoutUrl?: string }).checkoutUrl) {
+          window.location.href = (result as { checkoutUrl: string }).checkoutUrl;
+          return;
+        }
         setSuccessMsg(result.message);
         setTimeout(() => {
           closeAuthModal();

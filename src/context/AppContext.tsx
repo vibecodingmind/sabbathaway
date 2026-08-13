@@ -185,7 +185,7 @@ interface AppContextType {
     householdName: string;
     plan: SubscriptionPlan;
     provider: PaymentProvider;
-  }) => Promise<{ success: boolean; message: string }>;
+  }) => Promise<{ success: boolean; message: string; checkoutUrl?: string }>;
 
   userMembership: UserMembership;
   memberships: UserMembership[];
@@ -195,7 +195,7 @@ interface AppContextType {
     provider: PaymentProvider;
     householdName?: string;
     coveredMembers?: string[];
-  }) => Promise<{ success: boolean; message: string }>;
+  }) => Promise<{ success: boolean; message: string; checkoutUrl?: string }>;
   renewMembership: () => Promise<{ success: boolean; message: string }>;
   cancelMembership: () => void;
 
@@ -262,7 +262,9 @@ interface AppContextType {
   createStayRequest: (req: Omit<StayRequest, 'id' | 'createdAt' | 'status'>) => void;
   updateStayRequestStatus: (requestId: string, status: StayRequest['status'], checkInInstructions?: string) => void;
   sendMessage: (receiverId: string, content: string, stayRequestId?: string) => void;
-  submitVerificationRequest: (req: Omit<VerificationRequest, 'id' | 'submittedAt' | 'status'>) => void;
+  submitVerificationRequest: (
+    req: Omit<VerificationRequest, 'id' | 'submittedAt' | 'status'> & { documentFile?: File }
+  ) => void;
   updateVerificationStatus: (reqId: string, status: 'VERIFIED' | 'REJECTED', notes?: string) => void;
   addListing: (listing: Omit<Listing, 'id' | 'hostId' | 'hostName' | 'hostAvatar' | 'hostChurchName' | 'hostVerificationTier' | 'rating' | 'reviewCount'>) => void;
   addReview: (review: Omit<Review, 'id' | 'createdAt'>) => void;
@@ -905,7 +907,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
     householdName: string;
     plan: SubscriptionPlan;
     provider: PaymentProvider;
-  }): Promise<{ success: boolean; message: string }> => {
+  }): Promise<{ success: boolean; message: string; checkoutUrl?: string }> => {
     if (apiOnline) {
       try {
         const result = await api.register({
@@ -923,6 +925,13 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
         setCurrentUser(result.user as UserProfile);
         await refreshFromApi();
         setIsAuthModalOpen(false);
+        if (result.checkoutUrl) {
+          return {
+            success: true,
+            message: 'Account created — redirecting to Stripe Checkout…',
+            checkoutUrl: result.checkoutUrl,
+          };
+        }
         return {
           success: true,
           message: `Welcome to AdventistStay! Registration and ${params.plan.replace('_', ' ')} subscription active.`,
@@ -1011,16 +1020,23 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
     provider: PaymentProvider;
     householdName?: string;
     coveredMembers?: string[];
-  }): Promise<{ success: boolean; message: string }> => {
+  }): Promise<{ success: boolean; message: string; checkoutUrl?: string }> => {
     if (apiOnline) {
       try {
-        await api.subscribe({
+        const result = await api.subscribe({
           plan: params.plan,
           provider: params.provider,
           householdName: params.householdName,
           coveredMembers: params.coveredMembers,
         });
         await refreshFromApi();
+        if (result.checkoutUrl) {
+          return {
+            success: true,
+            message: 'Redirecting to secure Stripe Checkout…',
+            checkoutUrl: result.checkoutUrl,
+          };
+        }
         return {
           success: true,
           message: `Successfully subscribed to ${params.plan.replace('_', ' ')} membership!`,
@@ -1351,18 +1367,21 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
   };
 
   const submitVerificationRequest = (
-    req: Omit<VerificationRequest, 'id' | 'submittedAt' | 'status'>
+    req: Omit<VerificationRequest, 'id' | 'submittedAt' | 'status'> & { documentFile?: File }
   ) => {
     if (apiOnline) {
+      const form = new FormData();
+      form.append('churchName', req.churchName);
+      form.append('conference', req.conference || '');
+      form.append('pastorName', req.pastorName || '');
+      form.append('pastorEmail', req.pastorEmail || '');
+      form.append('pastorPhone', req.pastorPhone || '');
+      form.append('documentType', req.documentType);
+      if (req.documentFile) {
+        form.append('document', req.documentFile);
+      }
       api
-        .submitVerification({
-          churchName: req.churchName,
-          conference: req.conference,
-          pastorName: req.pastorName,
-          pastorEmail: req.pastorEmail,
-          pastorPhone: req.pastorPhone,
-          documentType: req.documentType,
-        })
+        .submitVerification(form)
         .then((verification) =>
           setVerifications((prev) => [verification as VerificationRequest, ...prev])
         )

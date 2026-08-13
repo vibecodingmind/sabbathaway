@@ -43,10 +43,37 @@ Demo role buttons in the auth modal also provide instant access for local testin
 | Backend    | Express (TypeScript via `tsx`) |
 | Database   | Prisma ORM + SQLite |
 | Auth       | JWT (email/password + demo login) |
-| Payments   | Pluggable adapters (Stripe / PayPal / PesaPal; simulated in local/dev) |
+| Payments   | Stripe Checkout when `STRIPE_SECRET_KEY` is set; otherwise simulated adapters |
+| Email      | Resend or SMTP when configured; otherwise logged to DB + console |
 | AI         | Google Gemini API |
 
 The production build bundles the Express server with `esbuild` and serves the Vite-built static assets from `dist/`.
+
+## Payments & Email
+
+**Stripe Checkout**
+1. Set `STRIPE_SECRET_KEY` and `STRIPE_WEBHOOK_SECRET`
+2. Point Stripe webhook to `POST /api/payments/stripe/webhook` for `checkout.session.completed`
+3. Subscribe flow redirects to Stripe; webhook activates membership
+
+Without Stripe keys, membership checkout settles instantly in simulated mode (local/demo).
+
+**Email**
+- Prefer `RESEND_API_KEY` + `EMAIL_FROM`
+- Or configure `SMTP_HOST` / `SMTP_USER` / `SMTP_PASS`
+- Stay request / accept / decline and membership activation emails are always persisted in `EmailNotificationLog`
+
+## Verification documents
+
+Members can upload pastor letters / membership PDFs (PDF or image, max 8MB) from the Verification Center. Files are stored under `/uploads/verifications` and served at `/uploads/...`.
+
+## Smoke tests
+
+With the server running and DB seeded:
+
+```bash
+npm run test:smoke
+```
 
 ## Environment Variables
 
@@ -61,7 +88,11 @@ Copy `.env.example` to `.env` and configure:
 | `GOOGLE_MAPS_PLATFORM_KEY` | Google Maps API key for interactive map |
 | `APP_URL` | Public app URL (e.g. `http://localhost:3000`) |
 | `PORT` | Server port (default: `3000`) |
-| `STRIPE_SECRET_KEY` | Stripe secret key for membership payments |
+| `STRIPE_SECRET_KEY` | Stripe secret key (`sk_…`) for Checkout |
+| `STRIPE_WEBHOOK_SECRET` | Stripe webhook signing secret (`whsec_…`) |
+| `RESEND_API_KEY` | Resend API key for transactional email |
+| `EMAIL_FROM` | From address for outbound email |
+| `SMTP_*` | Optional SMTP fallback settings |
 
 ## Mission Note
 

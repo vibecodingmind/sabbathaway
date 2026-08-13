@@ -8,6 +8,7 @@ coverage/
 *.db
 *.db-journal
 /generated
+/uploads
 .agents/
 .claude/
 .windsurf/

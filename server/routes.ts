@@ -36,9 +36,11 @@ import {
   executePayment,
   calculateExpirationDate,
   PLAN_PRICING,
+  isStripeConfigured,
   type PaymentProvider,
   type SubscriptionPlan,
 } from './payments.js';
+import { verificationUpload, publicUploadPath } from './uploads.js';
 
 function clientIp(req: Request): string {
   const forwarded = req.headers['x-forwarded-for'];
@@ -232,16 +234,59 @@ export function createApiRouter(): Router {
         },
       });
 
-      const { verification, transaction } = await executePayment({
+      const paymentResult = await executePayment({
         userId: user.id,
         userName: user.name,
         userEmail: user.email,
         householdName: householdName || `${name} Household`,
+        coveredMembers: [name],
         plan: subscriptionPlan,
         amount,
         currency: 'USD',
         provider: paymentProvider,
       });
+
+      if (paymentResult.mode === 'checkout') {
+        // Create pending membership; Stripe webhook activates after payment
+        const now = new Date().toISOString();
+        const expirationDate = calculateExpirationDate(now);
+        const membership = await prisma.membership.create({
+          data: {
+            userId: user.id,
+            userName: user.name,
+            householdName: householdName || `${name} Household`,
+            coveredMembersJson: JSON.stringify([name]),
+            plan: subscriptionPlan,
+            price: amount,
+            currency: 'USD',
+            startDate: now,
+            expirationDate,
+            paymentReference: paymentResult.sessionId,
+            paymentProvider: 'stripe',
+            status: 'PENDING',
+          },
+        });
+
+        await writeAuditLog({
+          actorId: user.id,
+          actorName: user.name,
+          actorRole: user.role,
+          action: 'USER_REGISTERED_CHECKOUT_PENDING',
+          details: `Registered; awaiting Stripe Checkout for ${subscriptionPlan}`,
+          ipAddress: clientIp(req),
+        });
+
+        const token = signToken({ userId: user.id, role: user.role, email: user.email });
+        return res.status(201).json({
+          token,
+          user: mapUser(user),
+          membership: mapMembership(membership),
+          checkoutUrl: paymentResult.checkoutUrl,
+          sessionId: paymentResult.sessionId,
+        });
+      }
+
+      const { verification, transaction } = paymentResult;
 
       if (!verification.success) {
         await prisma.user.delete({ where: { id: user.id } });
@@ -997,7 +1042,7 @@ export function createApiRouter(): Router {
     }
   });
 
-  router.post('/verifications', authRequired, async (req: AuthedRequest, res) => {
+  router.post('/verifications', authRequired, verificationUpload.single('document'), async (req: AuthedRequest, res) => {
     try {
       const user = await loadUserById(req.user!.userId);
       if (!user) {
@@ -1017,6 +1062,8 @@ export function createApiRouter(): Router {
         return res.status(400).json({ error: 'churchName is required' });
       }
 
+      const file = (req as any).file as Express.Multer.File | undefined;
+
       const verification = await prisma.verificationRequest.create({
         data: {
           userId: user.id,
@@ -1029,8 +1076,19 @@ export function createApiRouter(): Router {
           pastorEmail: pastorEmail || '',
           pastorPhone: pastorPhone || '',
           documentType: documentType || 'MEMBERSHIP_LETTER',
+          documentUrl: file ? publicUploadPath(file.filename) : null,
+          documentFileName: file?.originalname || null,
           status: 'PENDING',
         },
+      });
+
+      await writeAuditLog({
+        actorId: user.id,
+        actorName: user.name,
+        actorRole: user.role,
+        action: 'VERIFICATION_SUBMITTED',
+        details: `Submitted ${documentType || 'MEMBERSHIP_LETTER'}${file ? ` with ${file.originalname}` : ''}`,
+        ipAddress: clientIp(req),
       });
 
       return res.status(201).json(mapVerification(verification));
@@ -1038,6 +1096,18 @@ export function createApiRouter(): Router {
       const message = err instanceof Error ? err.message : 'Failed to submit verification';
       return res.status(500).json({ error: message });
     }
+  });
+
+  router.get('/payments/config', (_req, res) => {
+    res.json({
+      stripeEnabled: isStripeConfigured(),
+      providers: {
+        stripe: isStripeConfigured() ? 'live_checkout' : 'simulated',
+        paypal: 'simulated',
+        pesapal: 'simulated',
+        free: 'instant',
+      },
+    });
   });
 
   router.patch('/verifications/:id', authRequired, requireRole('ADMIN'), async (req: AuthedRequest, res) => {
@@ -1092,16 +1162,64 @@ export function createApiRouter(): Router {
       const paymentProvider = (provider || 'stripe') as PaymentProvider;
       const amount = PLAN_PRICING[subscriptionPlan] ?? 0;
 
-      const { verification, transaction } = await executePayment({
+      const paymentResult = await executePayment({
         userId: user.id,
         userName: user.name,
         userEmail: user.email,
         householdName: householdName || `${user.name} Household`,
+        coveredMembers:
+          Array.isArray(coveredMembers) && coveredMembers.length > 0
+            ? coveredMembers
+            : [user.name],
         plan: subscriptionPlan,
         amount,
         currency: 'USD',
         provider: paymentProvider,
       });
+
+      if (paymentResult.mode === 'checkout') {
+        const now = new Date().toISOString();
+        const expirationDate = calculateExpirationDate(now);
+        const members =
+          Array.isArray(coveredMembers) && coveredMembers.length > 0
+            ? coveredMembers
+            : [user.name];
+
+        await prisma.membership.deleteMany({ where: { userId: user.id } });
+        const membership = await prisma.membership.create({
+          data: {
+            userId: user.id,
+            userName: user.name,
+            householdName: householdName || `${user.name} Household`,
+            coveredMembersJson: JSON.stringify(members),
+            plan: subscriptionPlan,
+            price: amount,
+            currency: 'USD',
+            startDate: now,
+            expirationDate,
+            paymentReference: paymentResult.sessionId,
+            paymentProvider: 'stripe',
+            status: 'PENDING',
+          },
+        });
+
+        await writeAuditLog({
+          actorId: user.id,
+          actorName: user.name,
+          actorRole: user.role,
+          action: 'MEMBERSHIP_CHECKOUT_STARTED',
+          details: `Started Stripe Checkout for ${subscriptionPlan}`,
+          ipAddress: clientIp(req),
+        });
+
+        return res.status(201).json({
+          membership: mapMembership(membership),
+          checkoutUrl: paymentResult.checkoutUrl,
+          sessionId: paymentResult.sessionId,
+        });
+      }
+
+      const { verification, transaction } = paymentResult;
 
       if (!verification.success) {
         return res.status(402).json({

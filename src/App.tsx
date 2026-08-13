@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { AppProvider, useApp } from './context/AppContext';
 import { Header } from './components/Header';
 import { CategoryBar } from './components/CategoryBar';
@@ -24,7 +24,7 @@ import { PaymentCheckoutModal } from './components/PaymentCheckoutModal';
 import { AuthModal } from './components/AuthModal';
 import { Listing } from './types';
 import { filterListings } from './lib/filterUtils';
-import { HeartHandshake, SlidersHorizontal } from 'lucide-react';
+import { HeartHandshake, SlidersHorizontal, CheckCircle2, X } from 'lucide-react';
 
 const MainContent: React.FC = () => {
   const { 
@@ -39,10 +39,25 @@ const MainContent: React.FC = () => {
     isPaymentCheckoutOpen,
     setIsPaymentCheckoutOpen,
     checkoutTargetPlan,
-    exploreViewMode
+    exploreViewMode,
+    apiOnline
   } = useApp();
 
   const [detailListing, setDetailListing] = useState<Listing | null>(null);
+  const [membershipBanner, setMembershipBanner] = useState<string | null>(null);
+
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const membership = params.get('membership');
+    if (membership === 'success') {
+      setMembershipBanner('Membership payment received. Your plan will activate once Stripe confirms the webhook.');
+      setActiveTab('MEMBERSHIP');
+      window.history.replaceState({}, '', window.location.pathname);
+    } else if (membership === 'cancelled') {
+      setMembershipBanner('Checkout cancelled. You can resume membership anytime from Pricing.');
+      window.history.replaceState({}, '', window.location.pathname);
+    }
+  }, [setActiveTab]);
 
   // Filter listings based on user search parameters & stay categories
   const filteredListings = filterListings(listings, filters);
@@ -93,6 +108,26 @@ const MainContent: React.FC = () => {
       <div className="min-h-screen flex flex-col bg-white dark:bg-slate-950 text-slate-900 dark:text-white transition-colors font-sans antialiased">
         <Header />
         <CategoryBar />
+
+        {membershipBanner && (
+          <div className="max-w-[1920px] w-full mx-auto px-4 sm:px-6 lg:px-8 pt-4">
+            <div className="flex items-start gap-3 rounded-2xl border border-[#1B5E4A]/25 bg-[#EEF5F1] px-4 py-3 text-sm text-[#134536]">
+              <CheckCircle2 className="w-5 h-5 shrink-0 mt-0.5" />
+              <p className="flex-1 font-medium">{membershipBanner}</p>
+              <button type="button" onClick={() => setMembershipBanner(null)} className="p-1 rounded-lg hover:bg-white/70">
+                <X className="w-4 h-4" />
+              </button>
+            </div>
+          </div>
+        )}
+
+        {!apiOnline && (
+          <div className="max-w-[1920px] w-full mx-auto px-4 sm:px-6 lg:px-8 pt-3">
+            <p className="text-xs font-semibold text-amber-700 bg-amber-50 border border-amber-200 rounded-xl px-3 py-2">
+              API offline — showing local demo data. Start the server to persist changes.
+            </p>
+          </div>
+        )}
 
         <main className="flex-1 max-w-[1920px] w-full mx-auto px-4 sm:px-6 lg:px-8 py-6">
           {activeTab === 'EXPLORE' && (

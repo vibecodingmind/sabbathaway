@@ -208,23 +208,25 @@ model Church {
 }
 
 model VerificationRequest {
-  id            String   @id @default(cuid())
-  userId        String
-  user          User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-  userName      String
-  userEmail     String
-  userPhone     String   @default("")
-  churchName    String
-  conference    String   @default("")
-  pastorName    String   @default("")
-  pastorEmail   String   @default("")
-  pastorPhone   String   @default("")
-  status        String   @default("PENDING")
-  documentType  String   @default("MEMBERSHIP_LETTER")
-  reviewedBy    String?
-  notes         String?
-  submittedAt   DateTime @default(now())
-  updatedAt     DateTime @updatedAt
+  id               String   @id @default(cuid())
+  userId           String
+  user             User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userName         String
+  userEmail        String
+  userPhone        String   @default("")
+  churchName       String
+  conference       String   @default("")
+  pastorName       String   @default("")
+  pastorEmail      String   @default("")
+  pastorPhone      String   @default("")
+  status           String   @default("PENDING")
+  documentType     String   @default("MEMBERSHIP_LETTER")
+  documentUrl      String?
+  documentFileName String?
+  reviewedBy       String?
+  notes            String?
+  submittedAt      DateTime @default(now())
+  updatedAt        DateTime @updatedAt
 }
 
 model Membership {

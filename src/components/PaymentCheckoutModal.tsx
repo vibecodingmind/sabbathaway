@@ -73,6 +73,11 @@ export const PaymentCheckoutModal: React.FC<PaymentCheckoutModalProps> = ({
     setIsProcessing(false);
 
     if (res.success) {
+      if (res.checkoutUrl) {
+        window.location.href = res.checkoutUrl;
+        return;
+      }
+
       const expDate = new Date();
       expDate.setFullYear(expDate.getFullYear() + 1);
 
@@ -94,10 +99,10 @@ export const PaymentCheckoutModal: React.FC<PaymentCheckoutModalProps> = ({
       <div className="bg-white dark:bg-slate-900 rounded-3xl max-w-xl w-full border border-slate-200 dark:border-slate-800 shadow-2xl overflow-hidden my-8">
         
         {/* Header */}
-        <div className="p-6 bg-gradient-to-r from-slate-900 via-rose-950 to-slate-900 text-white relative flex items-center justify-between">
+        <div className="p-6 bg-gradient-to-r from-slate-900 via-[#134536] to-slate-900 text-white relative flex items-center justify-between">
           <div className="space-y-1">
             <div className="flex items-center gap-2">
-              <Sparkles className="w-5 h-5 text-rose-400" />
+              <Sparkles className="w-5 h-5 text-amber-300" />
               <h2 className="text-xl font-black tracking-tight">Complete Membership Activation</h2>
             </div>
             <p className="text-xs text-rose-200/90 font-medium">

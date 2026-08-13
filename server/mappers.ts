@@ -269,6 +269,8 @@ export function mapVerification(v: any) {
     pastorPhone: v.pastorPhone,
     status: v.status,
     documentType: v.documentType,
+    documentUrl: v.documentUrl || undefined,
+    documentFileName: v.documentFileName || undefined,
     submittedAt: v.submittedAt instanceof Date ? v.submittedAt.toISOString() : v.submittedAt,
     reviewedBy: v.reviewedBy || undefined,
     notes: v.notes || undefined,
