@@ -3,17 +3,44 @@ import express from 'express';
 import path from 'path';
 import cookieParser from 'cookie-parser';
 import cors from 'cors';
+import helmet from 'helmet';
+import rateLimit from 'express-rate-limit';
 import { createServer as createViteServer } from 'vite';
 import { createApiRouter } from './server/routes.js';
 import { stripeWebhookHandler } from './server/stripeWebhook.js';
 import { uploadsAbsoluteDir } from './server/uploads.js';
 import { isStripeConfigured } from './server/payments.js';
+import { isPostgresUrl, resolveDatabaseUrl } from './server/db.js';
 
 async function startServer() {
   const app = express();
   const PORT = Number(process.env.PORT) || 3000;
+  const isProd = process.env.NODE_ENV === 'production';
 
+  app.set('trust proxy', 1);
+  app.use(
+    helmet({
+      contentSecurityPolicy: false, // SPA + Vite inline scripts in dev
+      crossOriginEmbedderPolicy: false,
+    })
+  );
   app.use(cors({ origin: true, credentials: true }));
+
+  const apiLimiter = rateLimit({
+    windowMs: 15 * 60 * 1000,
+    max: isProd ? 400 : 2000,
+    standardHeaders: true,
+    legacyHeaders: false,
+    message: { error: 'Too many requests — please try again shortly.' },
+  });
+
+  const authLimiter = rateLimit({
+    windowMs: 15 * 60 * 1000,
+    max: isProd ? 40 : 200,
+    standardHeaders: true,
+    legacyHeaders: false,
+    message: { error: 'Too many auth attempts — please wait and try again.' },
+  });
 
   // Stripe webhook needs the raw body for signature verification
   app.post(
@@ -25,14 +52,17 @@ async function startServer() {
   app.use(express.json({ limit: '2mb' }));
   app.use(cookieParser());
   app.use('/uploads', express.static(uploadsAbsoluteDir()));
+  app.use('/api/', apiLimiter);
+  app.use('/api/auth/', authLimiter);
 
   app.get('/api/health', (_req, res) => {
     res.json({
       status: 'HEALTHY',
       service: 'AdventistStay API Engine',
       timestamp: new Date().toISOString(),
-      version: '1.2.0',
-      persistence: 'sqlite+prisma',
+      version: '1.3.0',
+      persistence: isPostgresUrl() ? 'postgresql+prisma' : 'sqlite+prisma',
+      database: isPostgresUrl(resolveDatabaseUrl()) ? 'postgres' : 'sqlite',
       integrations: {
         stripe: isStripeConfigured() ? 'checkout_enabled' : 'simulated',
         email: process.env.RESEND_API_KEY
@@ -40,6 +70,7 @@ async function startServer() {
           : process.env.SMTP_HOST
             ? 'smtp'
             : 'logged_only',
+        maps: Boolean(process.env.GOOGLE_MAPS_PLATFORM_KEY) ? 'google' : 'vector_fallback',
       },
       compliance: {
         nonCommercialHospitality: true,
@@ -56,7 +87,7 @@ async function startServer() {
         title: 'AdventistStay Hospitality Platform API',
         description:
           'RESTful API for Seventh-day Adventist global Christian hospitality, church verifications, memberships, and stay requests.',
-        version: '1.2.0',
+        version: '1.3.0',
         contact: {
           name: 'AdventistStay Engineering Team',
           email: 'support@adventiststay.org',
@@ -154,7 +185,7 @@ async function startServer() {
     }
   });
 
-  if (process.env.NODE_ENV !== 'production') {
+  if (!isProd) {
     const vite = await createViteServer({
       server: { middlewareMode: true },
       appType: 'spa',
@@ -170,6 +201,11 @@ async function startServer() {
 
   app.listen(PORT, '0.0.0.0', () => {
     console.log(`AdventistStay Server running on http://0.0.0.0:${PORT}`);
+    console.log(
+      `Database: ${isPostgresUrl() ? 'PostgreSQL' : 'SQLite'} | Stripe: ${
+        isStripeConfigured() ? 'Checkout' : 'simulated'
+      }`
+    );
   });
 }
 

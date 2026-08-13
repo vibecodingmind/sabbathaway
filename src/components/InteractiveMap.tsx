@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { 
   Church, 
   Home, 
@@ -20,6 +20,12 @@ import { ListingCard } from './ListingCard';
 import { GoogleMapsView } from './GoogleMapsView';
 import { filterListings, matchesDestination } from '../lib/filterUtils';
 
+const mapsKey =
+  process.env.GOOGLE_MAPS_PLATFORM_KEY ||
+  (import.meta as any).env?.VITE_GOOGLE_MAPS_PLATFORM_KEY ||
+  '';
+const hasGoogleMapsKey = Boolean(mapsKey) && mapsKey !== 'YOUR_API_KEY';
+
 export const InteractiveMap: React.FC = () => {
   const { listings, churches, setSelectedListing, filters, setFilters } = useApp();
   
@@ -27,7 +33,13 @@ export const InteractiveMap: React.FC = () => {
   const [showChurches, setShowChurches] = useState(true);
   const [activePin, setActivePin] = useState<{ type: 'HOST' | 'CHURCH'; data: Listing | SdaChurch } | null>(null);
   const [searchQuery, setSearchQuery] = useState('');
-  const [mapEngineMode, setMapEngineMode] = useState<'VECTOR' | 'GOOGLE'>('VECTOR');
+  const [mapEngineMode, setMapEngineMode] = useState<'VECTOR' | 'GOOGLE'>(
+    hasGoogleMapsKey ? 'GOOGLE' : 'VECTOR'
+  );
+
+  useEffect(() => {
+    if (hasGoogleMapsKey) setMapEngineMode('GOOGLE');
+  }, []);
 
   // Filter listings based on global filters + local searchQuery
   const displayListings = filterListings(listings, filters, searchQuery);
@@ -130,7 +142,7 @@ export const InteractiveMap: React.FC = () => {
                   key={list.id} 
                   onMouseEnter={() => setActivePin({ type: 'HOST', data: list })}
                   className={`transition-all rounded-2xl p-1.5 ${
-                    activePin?.data.id === list.id ? 'bg-rose-50/80 dark:bg-rose-950/40 ring-2 ring-[#1B5E4A]' : ''
+                    activePin?.data.id === list.id ? 'bg-[#EEF5F1] dark:bg-[#1B5E4A]/20 ring-2 ring-[#1B5E4A]' : ''
                   }`}
                 >
                   <ListingCard
@@ -172,7 +184,7 @@ export const InteractiveMap: React.FC = () => {
                     onChange={e => setShowHosts(e.target.checked)} 
                     className="rounded text-[#1B5E4A] focus:ring-[#1B5E4A]"
                   />
-                  <span className="text-rose-400 flex items-center gap-1">
+                  <span className="text-[#C4A35A] flex items-center gap-1">
                     <Home className="w-3.5 h-3.5" /> Hosts ({displayListings.length})
                   </span>
                 </label>

@@ -1,0 +1,44 @@
+services:
+  db:
+    image: postgres:16-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: adventiststay
+      POSTGRES_PASSWORD: adventiststay
+      POSTGRES_DB: adventiststay
+    ports:
+      - "5432:5432"
+    volumes:
+      - adventiststay_pg:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U adventiststay -d adventiststay"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  app:
+    build: .
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
+    environment:
+      NODE_ENV: production
+      PORT: "3000"
+      DATABASE_URL: postgresql://adventiststay:adventiststay@db:5432/adventiststay
+      JWT_SECRET: ${JWT_SECRET:-change-me-in-production}
+      APP_URL: ${APP_URL:-http://localhost:3000}
+      GEMINI_API_KEY: ${GEMINI_API_KEY:-}
+      STRIPE_SECRET_KEY: ${STRIPE_SECRET_KEY:-}
+      STRIPE_WEBHOOK_SECRET: ${STRIPE_WEBHOOK_SECRET:-}
+      RESEND_API_KEY: ${RESEND_API_KEY:-}
+      EMAIL_FROM: ${EMAIL_FROM:-AdventistStay <noreply@adventiststay.org>}
+      GOOGLE_MAPS_PLATFORM_KEY: ${GOOGLE_MAPS_PLATFORM_KEY:-}
+    depends_on:
+      db:
+        condition: service_healthy
+    volumes:
+      - adventiststay_uploads:/app/uploads
+
+volumes:
+  adventiststay_pg:
+  adventiststay_uploads:

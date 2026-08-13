@@ -67,12 +67,36 @@ Without Stripe keys, membership checkout settles instantly in simulated mode (lo
 
 Members can upload pastor letters / membership PDFs (PDF or image, max 8MB) from the Verification Center. Files are stored under `/uploads/verifications` and served at `/uploads/...`.
 
-## Smoke tests
+## Deploy with Docker (PostgreSQL)
+
+```bash
+# Requires Docker / Docker Compose
+cp .env.example .env   # set JWT_SECRET at minimum
+docker compose up --build
+```
+
+This starts Postgres + the AdventistStay app on port 3000, applies the schema, and seeds demo data (`RUN_SEED=false` to skip).
+
+**Local SQLite (default)** stays available via `npm run db:push && npm run db:seed && npm run dev`.
+
+**Postgres without Docker**
+```bash
+export DATABASE_URL="postgresql://user:pass@localhost:5432/adventiststay"
+npm run db:generate:pg
+npm run db:push:pg
+npm run db:seed
+npm run dev
+```
+
+> When using PostgreSQL, generate the Prisma client with `db:generate:pg` (uses `prisma/schema.postgres.prisma`).
+
+## Smoke / API tests
 
 With the server running and DB seeded:
 
 ```bash
 npm run test:smoke
+npm run test:api
 ```
 
 ## Environment Variables
@@ -81,11 +105,11 @@ Copy `.env.example` to `.env` and configure:
 
 | Variable | Description |
 |----------|-------------|
-| `DATABASE_URL` | SQLite connection string (default: `file:./dev.db`) |
+| `DATABASE_URL` | `file:./dev.db` (SQLite) or `postgresql://…` |
 | `JWT_SECRET` | Secret for signing auth tokens |
 | `GEMINI_API_KEY` | Google Gemini API key (optional, for AI concierge) |
 | `GEMINI_MODEL` | Gemini model name (default: `gemini-2.0-flash`) |
-| `GOOGLE_MAPS_PLATFORM_KEY` | Google Maps API key for interactive map |
+| `GOOGLE_MAPS_PLATFORM_KEY` | Google Maps API key (auto-enables Google map engine) |
 | `APP_URL` | Public app URL (e.g. `http://localhost:3000`) |
 | `PORT` | Server port (default: `3000`) |
 | `STRIPE_SECRET_KEY` | Stripe secret key (`sk_…`) for Checkout |

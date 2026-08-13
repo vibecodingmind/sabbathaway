@@ -161,6 +161,7 @@ interface AppContextType {
 
   isBootstrapping?: boolean;
   apiOnline?: boolean;
+  refreshFromApi?: () => Promise<boolean>;
 
   stayCategories: StayCategory[];
   addCategory: (cat: Omit<StayCategory, 'id'>) => void;
@@ -1588,6 +1589,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
         setExploreViewMode,
         isBootstrapping,
         apiOnline,
+        refreshFromApi,
         stayCategories,
         addCategory,
         updateCategory,

@@ -1,0 +1,15 @@
+node_modules
+.git
+.env
+*.db
+*.db-journal
+dist
+coverage
+uploads
+.agents
+.claude
+.windsurf
+generated
+dev.db
+*.log
+.DS_Store

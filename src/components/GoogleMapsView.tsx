@@ -98,29 +98,27 @@ export const GoogleMapsView: React.FC = () => {
 
   if (!hasValidKey) {
     return (
-      <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl p-8 text-center max-w-2xl mx-auto my-8 shadow-xl">
-        <div className="w-12 h-12 rounded-2xl bg-amber-100 dark:bg-amber-950/60 text-amber-700 dark:text-amber-400 flex items-center justify-center mx-auto mb-4 font-bold">
+      <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl p-8 text-center max-w-2xl mx-auto my-8 shadow-xl animate-rise-in">
+        <div className="w-12 h-12 rounded-2xl bg-[#EEF5F1] text-[#1B5E4A] flex items-center justify-center mx-auto mb-4 font-bold">
           <MapPin className="w-6 h-6" />
         </div>
-        <h2 className="text-xl font-bold text-slate-900 dark:text-white mb-2">
-          Google Maps Platform Integration
+        <h2 className="text-xl font-bold text-slate-900 dark:text-white mb-2 font-display">
+          Google Maps ready — add your API key
         </h2>
-        <p className="text-xs text-slate-600 dark:text-slate-400 mb-6 leading-relaxed">
-          Google Maps search and precise geolocation is fully configured. To activate Google Maps API key rendering on your domain:
+        <p className="text-sm text-slate-600 dark:text-slate-400 mb-6 leading-relaxed">
+          Set <code className="font-semibold">GOOGLE_MAPS_PLATFORM_KEY</code> (or{' '}
+          <code className="font-semibold">VITE_GOOGLE_MAPS_PLATFORM_KEY</code>) in your environment,
+          then restart the server. Until then, use the built-in AdventistStay world map.
         </p>
 
-        <div className="bg-slate-50 dark:bg-slate-800 p-4 rounded-2xl text-left text-xs text-slate-700 dark:text-slate-300 space-y-2 mb-6 border border-slate-200 dark:border-slate-700">
-          <p><strong>Step 1:</strong> Get an API key from Google Cloud Console.</p>
-          <p><strong>Step 2:</strong> Add key as secret in AI Studio:</p>
-          <ul className="list-disc list-inside space-y-1 pl-2 text-slate-500 dark:text-slate-400">
-            <li>Open <strong>Settings</strong> (⚙️ gear icon in top-right)</li>
-            <li>Select <strong>Secrets</strong></li>
-            <li>Type <code>GOOGLE_MAPS_PLATFORM_KEY</code> as secret name and paste key</li>
-          </ul>
+        <div className="bg-[#EEF5F1] dark:bg-slate-800 p-4 rounded-2xl text-left text-xs text-slate-700 dark:text-slate-300 space-y-2 mb-6 border border-[#1B5E4A]/20">
+          <p><strong>1.</strong> Create a Maps JavaScript API key in Google Cloud Console.</p>
+          <p><strong>2.</strong> Add it to <code>.env</code> as <code>GOOGLE_MAPS_PLATFORM_KEY=…</code></p>
+          <p><strong>3.</strong> Restart <code>npm run dev</code> and open the Map tab.</p>
         </div>
 
-        <p className="text-xs font-semibold text-emerald-600 dark:text-emerald-400">
-          Note: Until a key is set, AdventistStay seamlessly provides our high-resolution Interactive World Map!
+        <p className="text-xs font-semibold text-[#1B5E4A]">
+          Vector world map stays available as a zero-config fallback.
         </p>
       </div>
     );

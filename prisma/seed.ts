@@ -1,6 +1,5 @@
 import 'dotenv/config';
 import path from 'path';
-import { PrismaBetterSqlite3 } from '@prisma/adapter-better-sqlite3';
 import { PrismaClient } from '../generated/prisma/client.js';
 import bcrypt from 'bcryptjs';
 import {
@@ -22,14 +21,26 @@ import { additionalListings } from '../src/data/additionalListings.ts';
 import { additionalFamilyProfiles } from '../src/data/additionalFamilyProfiles.ts';
 import type { Listing } from '../src/types.ts';
 
-const raw = process.env.DATABASE_URL || 'file:./prisma/dev.db';
+const raw = process.env.DATABASE_URL || 'file:./dev.db';
 const url =
-  raw.startsWith('file:') && !raw.slice(5).startsWith('/')
+  raw.startsWith('file:') && !path.isAbsolute(raw.slice(5))
     ? `file:${path.resolve(process.cwd(), raw.slice(5))}`
     : raw;
 
-const adapter = new PrismaBetterSqlite3({ url });
-const prisma = new PrismaClient({ adapter });
+async function createPrisma() {
+  if (/^postgres(ql)?:\/\//i.test(url)) {
+    const [{ PrismaPg }, { default: pg }] = await Promise.all([
+      import('@prisma/adapter-pg'),
+      import('pg'),
+    ]);
+    const pool = new pg.Pool({ connectionString: url });
+    return new PrismaClient({ adapter: new PrismaPg(pool) });
+  }
+  const { PrismaBetterSqlite3 } = await import('@prisma/adapter-better-sqlite3');
+  return new PrismaClient({ adapter: new PrismaBetterSqlite3({ url }) });
+}
+
+const prisma = await createPrisma();
 
 function dedupeById<T extends { id: string }>(items: T[]): T[] {
   const map = new Map<string, T>();

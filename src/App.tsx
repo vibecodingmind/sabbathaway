@@ -40,7 +40,8 @@ const MainContent: React.FC = () => {
     setIsPaymentCheckoutOpen,
     checkoutTargetPlan,
     exploreViewMode,
-    apiOnline
+    apiOnline,
+    refreshFromApi
   } = useApp();
 
   const [detailListing, setDetailListing] = useState<Listing | null>(null);
@@ -50,14 +51,17 @@ const MainContent: React.FC = () => {
     const params = new URLSearchParams(window.location.search);
     const membership = params.get('membership');
     if (membership === 'success') {
-      setMembershipBanner('Membership payment received. Your plan will activate once Stripe confirms the webhook.');
+      setMembershipBanner(
+        'Membership payment received. Your plan activates when Stripe confirms the webhook (or instantly in simulated mode).'
+      );
       setActiveTab('MEMBERSHIP');
+      void refreshFromApi?.();
       window.history.replaceState({}, '', window.location.pathname);
     } else if (membership === 'cancelled') {
       setMembershipBanner('Checkout cancelled. You can resume membership anytime from Pricing.');
       window.history.replaceState({}, '', window.location.pathname);
     }
-  }, [setActiveTab]);
+  }, [setActiveTab, refreshFromApi]);
 
   // Filter listings based on user search parameters & stay categories
   const filteredListings = filterListings(listings, filters);
